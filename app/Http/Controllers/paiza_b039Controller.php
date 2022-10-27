@@ -8,6 +8,11 @@ use App\Models\paiza_b039;
 class paiza_b039Controller extends Controller
 {
     //
+
+    public function b039_test(){
+        return true;
+    }
+
     public function index(){
 #        $b039 = new paiza_b039();
         $grapes = paiza_b039::where('x', '=', '6')->get()->toArray();
