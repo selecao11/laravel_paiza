@@ -15,8 +15,10 @@ class paiza_b039Controller extends Controller
 
     public function index(){
 #        $b039 = new paiza_b039();
-        $grapes = paiza_b039::where('x', '=', '6')->get()->toArray();
-        dd($grapes);
+//        $grapes = paiza_b039::where('x', '=', '6')->get()->toArray();
+        $grapes = 11; 
+        return view('b039',compact('grapes'));
+        //        dd($grapes);
 
         /*
         paiza_b039::where('x', '=', 5)->update([
@@ -30,7 +32,7 @@ class paiza_b039Controller extends Controller
             'a' => 22,
             'b' => 23,
         ]);
- */        return view('b039');
+*/
     }
 /*         $r_input = $this->input();
         $last_month_data = $r_input['last_month_data'];
