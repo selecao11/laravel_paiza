@@ -24,5 +24,6 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/B032','App\\Http\\Controllers\\B032_v2_20220929_Controller@test_output');
 // Route::get('/B035','App\\Http\\Controllers\\B035_v1_20221012_Controller@index');
 Route::get('/B039','App\\Http\\Controllers\\paiza_b039Controller@index');
-
-
+//Route::get('/phpinfo', function () {
+//    phpinfo();
+//});
