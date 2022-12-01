@@ -12,7 +12,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_B039_example()
     {
         $b039 = new paiza_b039Controller();
         $this->assertTrue($b039->b039_test(), true);

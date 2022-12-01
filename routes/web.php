@@ -23,7 +23,12 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/B032','App\\Http\\Controllers\\B032_v2_20220929_Controller@index');
 // Route::post('/B032','App\\Http\\Controllers\\B032_v2_20220929_Controller@test_output');
 // Route::get('/B035','App\\Http\\Controllers\\B035_v1_20221012_Controller@index');
-Route::get('/B039','App\\Http\\Controllers\\paiza_b039Controller@index');
+//Route::get('/B039','App\\Http\\Controllers\\paiza_b039Controller@index');
+Route::get('/C099','App\\Http\\Controllers\\C099_v1_20221124_Controller@index');
+Route::post('/C099','App\\Http\\Controllers\\C099_v1_20221124_Controller@output');
+Route::get('/validate','App\\Http\\Controllers\\validate__Controller@index');
+Route::post('/validate','App\\Http\\Controllers\\validate__Controller@output');
+
 //Route::get('/phpinfo', function () {
 //    phpinfo();
 //});
