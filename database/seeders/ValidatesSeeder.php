@@ -15,7 +15,7 @@ class ValidatesSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //test
         Validates::create([
                 'name' => 'name!!!!',#←初期化内容
                 'sex' => 'sex!!!!',#←初期化内容
