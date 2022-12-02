@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator; // Validatorだけでも実行できる
 use App\Models\Validates;
+use App\Models\Validates;
 
 class validate__Controller extends Controller
 {
@@ -31,30 +32,6 @@ class validate__Controller extends Controller
          return view('validate',);
     }
     public function index(){
-        $id =4;
-        Validates::where('name', '=', 'p')->delete();
-        Validates::where('name', '=', 'llll')->delete();
-/*         $val = Validates::find($id);
-        if ($val!=Null){ 			#データがある場合
-            $h = Validates::find($id)->delete();
-        }else{
-            dd("エラー：");
- */
-
-
-/*         try{
-            Validates::find(5)->delete();
-          }catch(Exception $e){
-            dd("エラー：");
-          }
- */#        dd($val);
-
-/*     $val = Validates::find(1);
-    $val->name = 'name_更新';
-    $val->sex = 'sex_更新';
-    $val->save();
- */
-#        dd($val);
         return view('validate');
     }
 }
