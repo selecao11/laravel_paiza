@@ -14,7 +14,7 @@ class validate__Controller extends Controller
         $title = $request->input('title');
         $body = $request->input('body');
 
-        $validate__Controller = 1;
+        $validate__Controller = 2;
 
 
         $request->validate([
