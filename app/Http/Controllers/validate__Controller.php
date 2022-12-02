@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator; // Validatorだけでも実行できる
 use App\Models\Validates;
-use App\Models\Validates;
 
 class validate__Controller extends Controller
 {
 
+
     public function output(Request $request){
         $title = $request->input('title');
         $body = $request->input('body');
+
+        $validate__Controller = 1;
+
 
         $request->validate([
             'title' => 'numeric|between:1,10',
