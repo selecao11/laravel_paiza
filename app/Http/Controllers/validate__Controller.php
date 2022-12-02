@@ -14,7 +14,7 @@ class validate__Controller extends Controller
         $title = $request->input('title');
         $body = $request->input('body');
 
-        $validate__Controller = 'rset_test';
+        $validate__Controller = 'reset';
 
         $request->validate([
             'title' => 'numeric|between:1,10',
