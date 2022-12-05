@@ -11,10 +11,10 @@ class validate__Controller extends Controller
 
 
     public function output(Request $request){
-        $title = $request->input('title');
+        $title = $request->input('titletitletitletitle');
         $body = $request->input('body');
 
-        $validate__Controller = 'reset';
+        $validate__Controller = 'reset'; 
 
         $request->validate([ 
             'title' => 'numeric|between:1,10',
