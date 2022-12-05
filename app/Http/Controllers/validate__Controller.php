@@ -11,7 +11,7 @@ class validate__Controller extends Controller
 
 
     public function output(Request $request){
-        $title = $request->input('titletitletitletitle');
+        $title = $request->input('title');
         $body = $request->input('body');
 
         $validate__Controller = 'reset'; 
