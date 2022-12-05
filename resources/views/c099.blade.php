@@ -5,8 +5,8 @@
     <body >
     
     <form action="/C099" method="POST">
-    <input name="title" type="text" value="">枚数<br>
-    <input name="count" type="text" value="">長さ<br>    
+    <input name="count" type="text" value="">枚数<br>
+    <input name="len" type="text" value="">長さ<br>    
     <input class="xxxxx" type="submit" value="Click Me!">
     {{ csrf_field() }}
 </form>
