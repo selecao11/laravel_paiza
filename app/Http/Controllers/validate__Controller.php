@@ -24,7 +24,7 @@ class validate__Controller extends Controller
                 'count.numeric' => '数字ではない',      #validation.phpのnumericの内容を更新する
                 'count.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
                 'len.numeric' => '数字ではない',      #validation.phpのnumericの内容を更新する
-                'len.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
+                'len.between' => '数がおおきい ',      #validation.phpのnumericの内容を更新する
          ]);
 /*          if ($validator->fails()) {
              return redirect('/validate')
