@@ -10,6 +10,8 @@
     <input class="xxxxx" type="submit" value="Click Me!">
     {{ csrf_field() }}
 </form>
+これはいかん！！！
+
 @error('title')
 ERR {{$message }}<br>
 count= {{$count}}<br>
