@@ -11,19 +11,20 @@ class validate__Controller extends Controller
 
 
     public function output(Request $request){
-        $title = $request->input('title');
+        $title = $request->input('titletitletitletitle');
         $body = $request->input('body');
 
         $validate__Controller = 'reset'; 
 
         $request->validate([ 
-            'title' => 'numeric|between:1,10',
-            'body' => 'required',
+            'count' => 'numeric|between:1,10',
+            'len' => 'numeric|between:1,10',
         ],
          [
-                'title.numeric' => '数字ではない',      #validation.phpのnumericの内容を更新する
-                'title.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
-                'body.required'  => 'bodyは必須項目です。',#validation.phpのrequiredの内容を更新する
+                'count.numeric' => '数字ではない',      #validation.phpのnumericの内容を更新する
+                'count.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
+                'len.numeric' => '数字ではない',      #validation.phpのnumericの内容を更新する
+                'len.between' => '数がおおきい ',      #validation.phpのnumericの内容を更新する
          ]);
 /*          if ($validator->fails()) {
              return redirect('/validate')
