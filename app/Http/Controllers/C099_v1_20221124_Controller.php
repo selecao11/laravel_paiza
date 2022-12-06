@@ -64,7 +64,8 @@ class C099_v1_20221124_Controller extends Controller
     }
 
     public function input(){
-        $file_name = "C:\\laravel_paiza\\app\Http\\Controllers\\C099.txt";
+#        $file_name = "C:\\laravel_paiza\\app\Http\\Controllers\\C099.txt";
+        $file_name = "/var/www/html/laravel_app/app/Http/Controllers/C099.txt";
         $csv_file = file_get_contents($file_name);
         //データファイルの末尾改行の削除
         $csv_file = trim($csv_file);
