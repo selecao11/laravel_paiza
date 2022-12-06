@@ -118,7 +118,6 @@ class C099_v1_20221124_Controller extends Controller
         }
         //抽出結果で面積を計算する
         $area = $this->resurt_add($origamis_len,$one_len);
-        
     return view('C099',compact('area'));
     }
 }
