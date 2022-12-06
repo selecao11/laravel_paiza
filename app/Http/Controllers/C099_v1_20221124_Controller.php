@@ -81,27 +81,18 @@ class C099_v1_20221124_Controller extends Controller
         $title = $request->input('title');
         $count = $request->input('count');
 
-        $rulus = [
-            'title' => 'integer|between:1,10',
-            'count'  => 'integer|between:1,10',
-          ];
+        $request->validate([
+            'count' => 'numeric|between:1,10',
+            'len' => 'numeric|between:1,10',
+        ],
+         [
+            'count.numeric' => '枚数が数字ではない',      #validation.phpのnumericの内容を更新する
+            'count.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
+            'len.numeric' => '長さが数字ではない',      #validation.phpのnumericの内容を更新する
+            'len.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
+        ]);
 
-        $message = [
-        'title' => '長さは整数で入力してください',
-#        'count.integer' => '枚数は整数で入力してください',
-        ];
-
-        $validator = Validator::make($request->all(), $rulus, $message);
-        if ($validator->fails()) {
-            return view('C099',compact('title','count'));
-        }
-/*         if ($validator->fails()) {
-            dd($validator);
-            return redirect('C099',)
-            ->withErrors($validator)
-            ->withInput();
-          }
- */        $header[0] =(int)$len;
+        $header[0] =(int)$len;
         $header[1] =(int)$count;
         #            return redirect('/errorpage')
 #            ->withErrors($validator)
