@@ -78,8 +78,8 @@ class C099_v1_20221124_Controller extends Controller
         return view('C099');
     }
     public function output(Request $request){
-        $title = $request->input('title');
-        $count = $request->input('count');
+        $count = $request->input('title');
+        $len = $request->input('count');
 
         $request->validate([
             'count' => 'numeric|between:1,10',
