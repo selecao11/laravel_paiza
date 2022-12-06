@@ -5,16 +5,17 @@
     <body >
     
     <form action="/C099" method="POST">
-    <input name="count" type="text" value="">枚数<br>
-    <input name="len" type="text" value="">長さ<br>    
+    <input name="count" type="text" value="{{old('count')}}">枚数<br>
+    <input name="len" type="text" value="{{old('len')}}">長さ<br>    
     <input class="xxxxx" type="submit" value="Click Me!">
     {{ csrf_field() }}
 </form>
-@error('title')
-ERR {{$message }}<br>
-count= {{$count}}<br>
-len= {{$len}}<br>
-@enderror
+@if ($errors->has('count'))
+			  <span class="text-danger">{{$errors->first('count')}}<br></span>
+@endif
+@if ($errors->has('len'))
+			  <span class="text-danger">{{$errors->first('len')}}<br></span>
+@endif
 
 以下。。入力データ<br>
 <br>
