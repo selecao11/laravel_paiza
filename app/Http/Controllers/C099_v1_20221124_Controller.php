@@ -89,7 +89,7 @@ class C099_v1_20221124_Controller extends Controller
             'count.numeric' => '枚数が数字ではない',      #validation.phpのnumericの内容を更新する
             'count.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
             'len.numeric' => '長さが数字ではない',      #validation.phpのnumericの内容を更新する
-            'len.between' => '数がおおきい',      #validation.phpのnumericの内容を更新する
+            'len.between' => '数がおおきい ',      #validation.phpのnumericの内容を更新する
         ]);
 
         $header[0] =(int)$len;
