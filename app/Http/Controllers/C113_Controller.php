@@ -39,13 +39,13 @@ class C113_Controller extends Controller
 
 
     public function input(){
-        $file_name = "/var/www/html/laravel_app/app/Http/Controllers/C113.txt";
+        //$file_name = "/var/www/html/laravel_app/app/Http/Controllers/C113.txt";
+        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";
         $csv_file = file_get_contents($file_name);
         //データファイルの末尾改行の削除
         $csv_file = trim($csv_file);
-        $N = explode("\n", $csv_file);
+        $overlap_len_datas = explode("\n", $csv_file);
 #        $overlap_len_datas = $this->kaigyou_del($overlap_lens);
-        dd($N);
         return $overlap_len_datas;
     }
 
@@ -64,7 +64,8 @@ class C113_Controller extends Controller
 
         //各折り紙の重なっている長さを取得
         $overlap_len_datas = $this->input();
-#        $header = $this->get_header($overlap_len_datas);
+        dd($overlap_len_datas);
+        #        $header = $this->get_header($overlap_len_datas);
         //入力データからヘッダーを削除
         $overlap_len_datas = $this-> unset_overlap_len_datas($overlap_len_datas);
 
