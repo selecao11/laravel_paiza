@@ -37,6 +37,13 @@ class C113_Controller extends Controller
         return $overlap_len_datas;
     }
 
+    
+    public function get_header($overlap_len_datas){
+        $w = explode(" ", $overlap_len_datas[0]);
+        $head['masu']=intval($w[0]);
+        $head['saikoro']=intval($w[1]);
+        return $head;
+    }
 
     public function input(){
         //$file_name = "/var/www/html/laravel_app/app/Http/Controllers/C113.txt";
@@ -44,8 +51,8 @@ class C113_Controller extends Controller
         $csv_file = file_get_contents($file_name);
         //データファイルの末尾改行の削除
         $csv_file = trim($csv_file);
-        $overlap_len_datas = explode("\n", $csv_file);
-#        $overlap_len_datas = $this->kaigyou_del($overlap_lens);
+        $overlap_len_datas = explode("\r\n", $csv_file);
+        #        $overlap_len_datas = $this->kaigyou_del($overlap_lens);
         return $overlap_len_datas;
     }
 
@@ -64,8 +71,7 @@ class C113_Controller extends Controller
 
         //各折り紙の重なっている長さを取得
         $overlap_len_datas = $this->input();
-        dd($overlap_len_datas);
-        #        $header = $this->get_header($overlap_len_datas);
+        $header = $this->get_header($overlap_len_datas);
         //入力データからヘッダーを削除
         $overlap_len_datas = $this-> unset_overlap_len_datas($overlap_len_datas);
 
