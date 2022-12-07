@@ -51,7 +51,7 @@ class C113_Controller extends Controller
 
 
     public function index(Request $request){
-        return view('C099');
+        return view('C113');
     }
 
     public function output(){
