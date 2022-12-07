@@ -22,32 +22,12 @@ class C099_v1_20221124_Controller extends Controller
         return $len_add;
     }
 
-    //処理件数を取得
-/*     private function origami_count_get($header){
-        $origami_count = $header['0']; 
-        return  $origami_count;
-    }
- */
-/*     //折り紙の長さを取得
-    private function origami_len_get($header){
-        $one_len = $header['1']; 
-        return  $one_len;
-    }
- */
     //入力データからヘッダーを削除
     public function unset_overlap_len_datas($overlap_len_datas){
         unset($overlap_len_datas['0']);
         return $overlap_len_datas;
     }
 
-    //入力データからheaderを取得
-/*     public function get_header($overlap_len_datas){
-        $overlap_len_datas['0'] = str_replace(array("\r\n", "\r", "\n"), "", $overlap_len_datas['0']);
-        $header = $overlap_len_datas['0'];
-        $header = explode(" ", $header);
-        return $header;
-    }
- */
     //入力データから改行を削除    
     public function kaigyou_del($overlap_len_datas){
         foreach ($overlap_len_datas as $i => $v){
@@ -57,11 +37,6 @@ class C099_v1_20221124_Controller extends Controller
         return $overlap_len_datas;
     }
 
-    public function store(Request $request)
-    {
-
-        //
-    }
 
     public function input(){
         $file_name = "/var/www/html/laravel_app/app/Http/Controllers/C099.txt";
@@ -94,13 +69,7 @@ class C099_v1_20221124_Controller extends Controller
 
         $header[0] =(int)$len;
         $header[1] =(int)$count;
-        #            return redirect('/errorpage')
-#            ->withErrors($validator)
-#            ->withInput();
-/*           } else {
-            return view('sample.index', ['msg' => 'OK']);
-          }
- */
+
         //各折り紙の重なっている長さを取得
         $overlap_len_datas = $this->input();
 #        $header = $this->get_header($overlap_len_datas);
