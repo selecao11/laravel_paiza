@@ -37,9 +37,53 @@ class C113_Controller extends Controller
         return $overlap_len_datas;
     }
 
-    
-    public function get_header($overlap_len_datas){
-        $w = explode(" ", $overlap_len_datas[0]);
+    public function saikoro_set($masu_saikoro,
+                                $masu_saikoro_datas,
+                                $saikoro_shake_datas){
+        $p=$masu_saikoro_datas['saikoro_p'];
+        $saikoro_shake_datas = array_slice($masu_saikoro, $p);
+        $saikoro_shake_datas = array_map('intval', $saikoro_shake_datas);
+        $masu_saikoro_datas['saikoro']=$saikoro_shake_datas;
+        return $masu_saikoro_datas;
+    }
+
+    #マスデータセット
+    public function masu_set($masu_saikoro,$masu_datas){
+        foreach ($masu_saikoro as $i => $ms){
+            if(is_numeric($ms)){
+                break;
+            }
+            if ($ms == "+"){
+                $masu_datas[$i]="+";
+            } elseif ($ms == "-"){
+                $masu_datas[$i]="-";
+            } elseif ($ms == "r"){
+                $masu_datas[$i]="r";
+            } elseif ($ms == "x"){
+                $masu_datas[$i]="x";
+            }
+        }
+        $masu_saikoro_datas['masu']=$masu_datas;
+        $masu_saikoro_datas['saikoro_p']=$i;
+        return $masu_saikoro_datas;
+    }
+
+    public function masu_saikoro_split($head,$masu_saikoro){
+        #マス　サイコロ混合データ
+        $masu_saikoro = array_merge($masu_saikoro);
+        #マスデータ初期化
+        $masu_datas = array_fill(0, $head['masu'], "");
+        #サイコロデータ初期化
+        $saikoro_shake_datas = array_fill(0, $head['saikoro'], 0);
+        $masu_saikoro_datas = $this->masu_set($masu_saikoro,$masu_datas);
+        $masu_saikoro_datas = $this->saikoro_set($masu_saikoro,
+                                    $masu_saikoro_datas,
+                                    $saikoro_shake_datas);
+        return $masu_saikoro_datas;
+                                }
+
+    public function get_header($input_datas){
+        $w = explode(" ", $input_datas[0]);
         $head['masu']=intval($w[0]);
         $head['saikoro']=intval($w[1]);
         return $head;
@@ -52,13 +96,85 @@ class C113_Controller extends Controller
         //データファイルの末尾改行の削除
         $csv_file = trim($csv_file);
         $overlap_len_datas = explode("\r\n", $csv_file);
-        #        $overlap_len_datas = $this->kaigyou_del($overlap_lens);
         return $overlap_len_datas;
     }
 
 
     public function index(Request $request){
         return view('C113');
+    }
+
+    #スゴロクゴールの編集
+    public function player_goal_judgment($i,$masu_saikoro_datas){
+        $masu_saikoro_datas['sugoroku_goal']="goal";
+        $masu_saikoro_datas['sugoroku_saikoro']=$i;
+        return $masu_saikoro_datas;
+    }    
+
+    #プレイヤの位置編集
+    public function player_position_edit($player_position,$edit_mode){
+        if ($edit_mode=='zero'){
+            $player_position =0;
+            return $player_position;
+        }elseif($edit_mode=='add') {
+            $player_position +=1;
+            return $player_position;
+        }elseif($edit_mode=='sub') {
+            $player_position -=1;
+            return $player_position;
+        }elseif($edit_mode=='start') {
+            $player_position=0;
+            return $player_position;
+        }
+    }
+
+    #マスの判断
+    public function masu_judgment($saikoro,$masu_saikoro_datas){
+        $masu = $masu_saikoro_datas['masu'];
+        foreach($saikoro as $i=>$sa){
+            $player_position +=$sa;
+            if ($masu[$player_position] >= $masu_len){
+                $masu_saikoro_datas = $this->player_goal_judgment($i,$masu_saikoro_datas);
+                break;
+            } elseif($masu[$player_position] <= 0){
+                #スタートよりさらに戻る
+                $edit_mode='zero';
+                $player_position = $this->player_position_edit($player_position,$edit_mode);
+            } elseif($masu[$player_position] == "+"){
+                #マスを1つ進む
+                $edit_mode='add';
+                $player_position = $this->player_position_edit($player_position,$edit_mode);
+            } elseif ($masu[$player_position] == "-"){
+                #マスを1つ戻る
+                $edit_mode='sub';
+                $player_position = $this->player_position_edit($player_position,$edit_mode);
+            } elseif ($masu[$player_position] == "r"){
+                #スタートに戻る
+                $edit_mode='start';
+                $player_position = $this->player_position_edit($player_position,$edit_mode);
+            }
+
+        }
+    }
+
+    public function saikoro_move_on_init($masu_saikoro_datas){    
+        $masu_saikoro_datas['player_position']=0;
+        $masu_saikoro_datas['sugoroku_goal']="";
+        return $masu_saikoro_datas; 
+    }
+
+    public function saikoro_move_on($head,$masu__saikoro_datas){
+        #スゴロク結果初期化        
+        $masu_saikoro_datas = $this->saikoro_move_on_init($masu_saikoro_datas);
+        #プレイヤー初期化
+        $player_position = $masu_saikoro_datas['player_position'];
+        #スゴロクの長さ
+        $masu_len= $head[0];
+        #サイコロの内容
+        $saikoro = $masu_saikoro_datas['saikoro'];
+        #マスの判断
+        $masu_saikoro_datas = $this->masu_judgment($saikoro,$masu_saikoro_datas);
+        return  $masu_saikoro_datas;
     }
 
     public function output(){
@@ -69,23 +185,24 @@ class C113_Controller extends Controller
 #        $header[0] =(int)$len;
 #        $header[1] =(int)$count;
 
-        //各折り紙の重なっている長さを取得
-        $overlap_len_datas = $this->input();
-        $header = $this->get_header($overlap_len_datas);
+        //C113データを全て読み込み
+        $input_datas = $this->input();
+        $head = $this->get_header($input_datas);
         //入力データからヘッダーを削除
-        $overlap_len_datas = $this-> unset_overlap_len_datas($overlap_len_datas);
+        $masu_saikoro = $this-> unset_overlap_len_datas($input_datas);
 
-        //1枚目の折り紙の長さを取得
-        $one_len = $header[0];
-        $origami_count = $header[1];
+        //データファイルからマスとサイコロデータを分割取得
+        $masu__saikoro_datas = $this-> masu_saikoro_split($head,$masu_saikoro);
 
-        //各折り紙のデータを計算する
-        foreach($overlap_len_datas as $i=> $overlap_len){
-            //前の折り紙と重なっている長さを計算
-            $origamis_len["$i"] = $this->origami_half_div($overlap_len,$one_len);
-        }
+        //すごろく開始
+        $masu_saikoro_datas=$this-> saikoro_move_on($head,$masu__saikoro_datas);
+
+        //すごろく結果判断
+        if ($masu_saikoro_datas['sugoroku_goal'] == ""){
+            $masu_saikoro_datas['player_position']=$player_position;
+        } 
+
         //抽出結果で面積を計算する
-        $area = $this->resurt_add($origamis_len,$one_len);
     return view('C099',compact('area'));
     }
 }
