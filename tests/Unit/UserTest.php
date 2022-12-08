@@ -41,5 +41,5 @@ class UserTest extends TestCase
         $unset = $C113->unset_overlap_len_datas($input_datas);
         print_r($unset['data']);
         $this->assertTrue($unset['success'], true);
-    }    
+    }
 }
