@@ -7,15 +7,6 @@ use Validator; // Validatorだけでも実行できる
 
 class C113_Controller extends Controller
 {
-    //折り紙を重ねた場合の面積の計算
-    private function resurt_add($origamis_len,$one_len){
-        $len_sum=0;
-        foreach ($origamis_len as $i => $len_v){
-            $len_sum += $len_v;
-        }
-        return $len_sum * $one_len;
-    }
-
     //入力データからヘッダーを削除
     public function unset_overlap_len_datas($overlap_len_datas){
         unset($overlap_len_datas['0']);
@@ -83,13 +74,13 @@ class C113_Controller extends Controller
         return $head;
     }
 
-    public function input(){
+    public function input($file_name){
         //$file_name = "/var/www/html/laravel_app/app/Http/Controllers/C113.txt";
-        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";
         $csv_file = file_get_contents($file_name);
         //データファイルの末尾改行の削除
         $csv_file = trim($csv_file);
-        $overlap_len_datas = explode("\r\n", $csv_file);
+        $overlap_len_datas['data'] = explode("\r\n", $csv_file);
+        $overlap_len_datas['success'] = true;
         return $overlap_len_datas;
     }
 
@@ -176,7 +167,8 @@ class C113_Controller extends Controller
 
     public function output(){
         //C113データを全て読み込み
-        $input_datas = $this->input();
+        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";
+        $input_datas = $this->input($file_name);
         $head = $this->get_header($input_datas);
         //入力データからヘッダーを削除
         $masu_saikoro = $this-> unset_overlap_len_datas($input_datas);

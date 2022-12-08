@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use App\Http\Controllers\paiza_b039Controller;
+use App\Http\Controllers\C113_Controller;
 
 class UserTest extends TestCase
 {
@@ -14,7 +14,10 @@ class UserTest extends TestCase
      */
     public function test_B039_example()
     {
-        $b039 = new paiza_b039Controller();
-        $this->assertTrue($b039->b039_test(), true);
+        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";
+        $C113 = new C113_Controller();
+        $rC113 = $C113->input($file_name);
+        print_r($rC113['data']);
+        $this->assertTrue($rC113['success'], true);
     }
 }
