@@ -16,12 +16,6 @@ class C113_Controller extends Controller
         return $len_sum * $one_len;
     }
 
-    //前の折り紙と重なっている長さを計算
-    private function origami_half_div($overlap_len,$one_len){
-        $len_add = $one_len -  intval($overlap_len);
-        return $len_add;
-    }
-
     //入力データからヘッダーを削除
     public function unset_overlap_len_datas($overlap_len_datas){
         unset($overlap_len_datas['0']);
