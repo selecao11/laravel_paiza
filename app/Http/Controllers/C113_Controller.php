@@ -21,19 +21,19 @@ class C113_Controller extends Controller
     public function kaigyou_del($overlap_len_datas){
         foreach ($overlap_len_datas as $i => $v){
             $v = trim($v);
-            $overlap_len_datas["$i"] = $v;
+            $kaigyou_del["$i"] = $v;
         }
-        return $overlap_len_datas;
+        return $kaigyou_del;
     }
-
+    #サイコロデータセット
     public function saikoro_set($masu_saikoro,
                                 $masu_saikoro_datas,
                                 $saikoro_shake_datas){
         $p=$masu_saikoro_datas['saikoro_p'];
         $saikoro_shake_datas = array_slice($masu_saikoro, $p);
         $saikoro_shake_datas = array_map('intval', $saikoro_shake_datas);
-        $masu_saikoro_datas['saikoro']=$saikoro_shake_datas;
-        return $masu_saikoro_datas;
+        $saikoro_set['saikoro']=$saikoro_shake_datas;
+        return $saikoro_set;
     }
 
     #マスデータセット
@@ -52,9 +52,9 @@ class C113_Controller extends Controller
                 $masu_datas[$i]="x";
             }
         }
-        $masu_saikoro_datas['masu']=$masu_datas;
-        $masu_saikoro_datas['saikoro_p']=$i;
-        return $masu_saikoro_datas;
+        $masu_set['masu']=$masu_datas;
+        $masu_set['saikoro_p']=$i;
+        return $masu_set;
     }
 
     public function masu_saikoro_split($head,$masu_saikoro){
@@ -64,12 +64,12 @@ class C113_Controller extends Controller
         $masu_datas = array_fill(0, $head['masu'], "");
         #サイコロデータ初期化
         $saikoro_shake_datas = array_fill(0, $head['saikoro'], 0);
-        $masu_saikoro_datas = $this->masu_set($masu_saikoro,$masu_datas);
-        $masu_saikoro_datas = $this->saikoro_set($masu_saikoro,
+        $masu_saikoro_split = $this->masu_set($masu_saikoro,$masu_datas);
+        $masu_saikoro_split = $this->saikoro_set($masu_saikoro,
                                     $masu_saikoro_datas,
                                     $saikoro_shake_datas);
-        return $masu_saikoro_datas;
-                                }
+        return $masu_saikoro_split;
+        }
 
     public function get_header($input_datas){
         if (substr_count( $input_datas[0],' ')!=1){
@@ -82,10 +82,10 @@ class C113_Controller extends Controller
             return $head;
         }else{
             $w = explode(" ", $input_datas[0]);
-            $head['masu']=intval($w[0]);
-            $head['saikoro']=intval($w[1]);
-            $head['success'] = true;
-            return $head;
+            $get_header['masu']=intval($w[0]);
+            $get_header['saikoro']=intval($w[1]);
+            $get_header['success'] = true;
+            return $get_header;
         }
     }
 
@@ -94,9 +94,9 @@ class C113_Controller extends Controller
         $csv_file = file_get_contents($file_name);
         //データファイルの末尾改行の削除
         $csv_file = trim($csv_file);
-        $overlap_len_datas['data'] = explode("\r\n", $csv_file);
-        $overlap_len_datas['success'] = true;
-        return $overlap_len_datas;
+        $input['data'] = explode("\r\n", $csv_file);
+        $input['success'] = true;
+        return $input;
     }
 
 
@@ -106,25 +106,25 @@ class C113_Controller extends Controller
 
     #スゴロクゴールの編集
     public function player_goal_judgment($i,$masu_saikoro_datas){
-        $masu_saikoro_datas['sugoroku_goal']="goal";
-        $masu_saikoro_datas['sugoroku_saikoro']=$i;
-        return $masu_saikoro_datas;
+        $player_goal_judgment['sugoroku_goal']="goal";
+        $player_goal_judgment['sugoroku_saikoro']=$i;
+        return $player_goal_judgment;
     }    
 
     #プレイヤの位置編集
     public function player_position_edit($player_position,$edit_mode){
         if ($edit_mode=='zero'){
-            $player_position =0;
-            return $player_position;
+            $player_position_edit =0;
+            return $player_position_edit;
         }elseif($edit_mode=='add') {
-            $player_position +=1;
-            return $player_position;
+            $player_position_edit +=1;
+            return $player_position_edit;
         }elseif($edit_mode=='sub') {
-            $player_position -=1;
-            return $player_position;
+            $player_position_edit -=1;
+            return $player_position_edit;
         }elseif($edit_mode=='start') {
-            $player_position=0;
-            return $player_position;
+            $player_position_edit=0;
+            return $player_position_edit;
         }
     }
 
