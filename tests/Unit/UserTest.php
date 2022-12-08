@@ -30,4 +30,16 @@ class UserTest extends TestCase
         print_r("saikoro=".$head['saikoro']."\n");
         $this->assertTrue($head['success'], true);
     }
+
+    public function test_C113_unset_overlap_len_datas()
+    {
+        $input_datas[0] = '4 2';
+        $input_datas[1] = '+';
+        $input_datas[2] = '1';
+        $input_datas[3] = '1';
+        $C113 = new C113_Controller();
+        $unset = $C113->unset_overlap_len_datas($input_datas);
+        print_r($unset['data']);
+        $this->assertTrue($unset['success'], true);
+    }    
 }

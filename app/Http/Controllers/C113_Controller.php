@@ -8,9 +8,13 @@ use Validator; // Validatorだけでも実行できる
 class C113_Controller extends Controller
 {
     //入力データからヘッダーを削除
-    public function unset_overlap_len_datas($overlap_len_datas){
-        unset($overlap_len_datas['0']);
-        return $overlap_len_datas;
+    public function unset_overlap_len_datas($input_datas){
+        unset($input_datas['0']);
+        $unset['data']=$input_datas;
+#        print_r($input_datas);
+#        print_r($unset['data']);
+        $unset['success'] = true;
+        return $unset;
     }
 
     //入力データから改行を削除    
