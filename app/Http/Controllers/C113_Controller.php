@@ -68,10 +68,21 @@ class C113_Controller extends Controller
                                 }
 
     public function get_header($input_datas){
-        $w = explode(" ", $input_datas[0]);
-        $head['masu']=intval($w[0]);
-        $head['saikoro']=intval($w[1]);
-        return $head;
+        if (substr_count( $input_datas[0],' ')!=1){
+            #半角空白２つ以上か半角空白存在しない
+            $head['success'] = false;
+            return $head;
+        }elseif(preg_match('/^[a-zA-Z]+$/', $input_datas[0])) {
+            #英字の場合
+            $head['success'] = false;
+            return $head;
+        }else{
+            $w = explode(" ", $input_datas[0]);
+            $head['masu']=intval($w[0]);
+            $head['saikoro']=intval($w[1]);
+            $head['success'] = true;
+            return $head;
+        }
     }
 
     public function input($file_name){
