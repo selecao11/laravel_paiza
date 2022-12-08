@@ -31,15 +31,36 @@ class UserTest extends TestCase
         $this->assertTrue($head['success'], true);
     }
 
-    public function test_C113_unset_overlap_len_datas()
+    public function test_C113_unset_head()
     {
         $input_datas[0] = '4 2';
         $input_datas[1] = '+';
         $input_datas[2] = '1';
         $input_datas[3] = '1';
         $C113 = new C113_Controller();
-        $unset = $C113->unset_overlap_len_datas($input_datas);
-        print_r($unset['data']);
-        $this->assertTrue($unset['success'], true);
+        $unset_head = $C113->unset_head($input_datas);
+        print_r($unset_head['data']);
+        $this->assertTrue($unset_head['success'], true);
+    }
+
+    public function test_C113_masu_judgment(){
+        $C113 = new C113_Controller();
+/*         5 3
+        x
+        -
+        +
+        1
+        1
+        6
+ */
+        $masu_len = 5;
+        $player_position = 0;
+        $saikoro = 3;
+        $masu_saikoro_array =array("x","-","+");
+        $masu_judgment = $C113->masu_judgment( $masu_len,
+                                                    $player_position,
+                                                    $saikoro,
+                                                    $masu_saikoro_array);
+
     }
 }
