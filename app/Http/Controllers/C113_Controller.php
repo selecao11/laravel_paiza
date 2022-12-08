@@ -8,12 +8,10 @@ use Validator; // Validatorだけでも実行できる
 class C113_Controller extends Controller
 {
     //入力データからヘッダーを削除
-    public function unset_overlap_len_datas($input_datas){
+    public function unset_head($input_datas){
         unset($input_datas['0']);
-        $unset['data']=$input_datas;
-#        print_r($input_datas);
-#        print_r($unset['data']);
-        $unset['success'] = true;
+        $unset_head['data']=$input_datas;
+        $unset_head['success'] = true;
         return $unset;
     }
 
@@ -73,13 +71,11 @@ class C113_Controller extends Controller
 
     public function get_header($input_datas){
         if (substr_count( $input_datas[0],' ')!=1){
-            #半角空白２つ以上か半角空白存在しない
-            $head['success'] = false;
-            return $head;
+            #半角空白２つ以上か半角空白が存在しない
+            throw new Exception('半角空白２つ以上か半角空白が存在しない。');
         }elseif(preg_match('/^[a-zA-Z]+$/', $input_datas[0])) {
             #英字の場合
-            $head['success'] = false;
-            return $head;
+            throw new Exception('コマ数かサイコロに英字が入力されている。');
         }else{
             $w = explode(" ", $input_datas[0]);
             $get_header['masu']=intval($w[0]);
@@ -183,10 +179,14 @@ class C113_Controller extends Controller
     public function output(){
         //C113データを全て読み込み
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";
-        $input_datas = $this->input($file_name);
-        $head = $this->get_header($input_datas);
+        try {
+            $input_datas = $this->input($file_name);
+            $head = $this->get_header($input_datas);
+        } catch (Exception $e) {
+            echo '捕捉した例外: ',  $e->getMessage(), "\n";
+        }
         //入力データからヘッダーを削除
-        $masu_saikoro = $this-> unset_overlap_len_datas($input_datas);
+        $unset_head = $this-> unset_head($input_datas);
 
         //データファイルからマスとサイコロデータを分割取得
         $masu__saikoro_datas = $this-> masu_saikoro_split($head,$masu_saikoro);
