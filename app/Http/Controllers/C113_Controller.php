@@ -171,18 +171,10 @@ class C113_Controller extends Controller
                                                     $player_position,
                                                     $saikoro,
                                                     $masu_saikoro_datas);
-        dd($masu_saikoro_datas);
         return  $masu_saikoro_datas;
     }
 
     public function output(){
-#    public function output(Request $request){
-#        $count = $request->input('title');
-#        $len = $request->input('count');
-
-#        $header[0] =(int)$len;
-#        $header[1] =(int)$count;
-
         //C113データを全て読み込み
         $input_datas = $this->input();
         $head = $this->get_header($input_datas);
