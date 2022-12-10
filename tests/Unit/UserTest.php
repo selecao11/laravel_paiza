@@ -12,11 +12,11 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function test_C113_input()
+    public function test_C113_input_file()
     {
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";
         $C113 = new C113_Controller();
-        $overlap_len_datas = $C113->input($file_name);
+        $overlap_len_datas = $C113->input_file($file_name);
         print_r($overlap_len_datas['data']);
         $this->assertTrue($overlap_len_datas['success'], true);
     }
