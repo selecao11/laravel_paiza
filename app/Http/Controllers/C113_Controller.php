@@ -347,7 +347,7 @@ class C113_Controller extends Controller
         * @var boolean  $headers['is_success'] 処理が正常終了したか。 
         */
         $SPACE_COUNT = 1;
-        $SPACE = "";
+        $SPACE = " ";
         if (substr_count( $c113_datas[0],$SPACE)!=$SPACE_COUNT){
             #半角空白２つ以上か半角空白が存在しない
             throw new Exception('半角空白２つ以上か半角空白が存在しない。');
