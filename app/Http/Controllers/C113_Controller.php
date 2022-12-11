@@ -253,33 +253,6 @@ class C113_Controller extends Controller
     }
 
     /**
-    * 全データを分割前にマス配列をサイコロ配列を初期化
-    *
-    * @param    int     $head ヘッダ配列
-    * @return   string  $masu_saikoros マスとサイコロデータ初期化済配列
-    * @todo             スゴロクとサイコロ配列を初期化する
-    */
-    public function init_split_masu_saikoro($head){
-        /**
-        * split_masu_saikoro_init
-        *
-        * @var ini      $ARRAY_INIT 配列の開始indexを0に定義
-        * @var ini      $ARRAY_VALUE 配列の内容を0に定義
-        * @var ini      $masu_saikoros['masu'] 初期化済マス配列
-        * @var ini      $masu_saikoros['saikoros'] 初期化済サイコロ配列
-        * @var boolean  $masu_saikoros['is_success']   処理結果 true:false 
-        */
-        $ARRAY_INIT = 0;
-        $ARRAY_VALUE = 0;
-        $masu_saikoros[] =  array(
-                            'masu'=>array_fill($ARRAY_INIT, $headers['masu'], ""),
-                            'saikoros'=>array_fill($ARRAY_INIT,$ARRAY_VALUE,0),
-                            'is_success'=>true
-                        );
-        return $masu_saikoros;
-    }
-
-    /**
     * 全データからスゴロクとサイコロデータを分割
     *
     * @param    string  $head ヘッダ配列
@@ -294,19 +267,25 @@ class C113_Controller extends Controller
         * @var string   $masu_datas マスデータ配列
         * @var ini      $ARRAY_INIT 配列の開始indexを0に定義
         * @var ini      $ARRAY_VALUE 配列の内容を0に定義
-        * @var boolean  $masu_saikoro_splits['is_success']   処理結果 true:false 
+        * @var ini      $masu_saikoros['masu'] 初期化済マス配列
+        * @var ini      $masu_saikoros['saikoros'] 初期化済サイコロ配列
         */
         #配列のindexを振り直し
         $c113_datas = array_merge($c113_datas);
         #マスデータとサイコロデータ配列を初期化
-        $masu_saikoros = $this->init_split_masu_saikoro();
+        $ARRAY_INIT = 0;
+        $ARRAY_VALUE = 0;
+        $masu_saikoros[] =  array(
+                            'masu'=>array_fill($ARRAY_INIT, $headers['masu'], ""),
+                            'saikoros'=>array_fill($ARRAY_INIT,$ARRAY_VALUE,0),
+                            'is_success'=>true
+                        );
 
-        #マス、サイコロデータ分割
+        #マス、サイコロデータ分割実行
         $masu_saikoro_splits['masu'] = $this->set_masu($masu_saikoro,$c113_datas);
         $masu_saikoro_splits['saikoro'] = $this->set_saikoro($masu_saikoro,
                                             $c113_datas,
                                             $saikoro_shake_datas);
-        $masu_saikoro_splits['is_success']=true;
         return $masu_saikoro_splits;
     }
 
@@ -324,9 +303,9 @@ class C113_Controller extends Controller
         * @var boolean  $c113_datas['is_success']   処理結果 true:false 
         */
         unset($c113_datas['0']);
-        $c113_datas['is_success'] = true;
         return $c113_datas;
     }
+
 
     /**
     * 全データからヘッダデータの取得
@@ -341,27 +320,65 @@ class C113_Controller extends Controller
         *
         * @var string   $headers['masu']      マスの数
         * @var string   $headers['saikoro']   サイコロの内容
-        * @var int      $space_count          正常な半角空白の数
-        * @var string   $space                正常な半角空白
-        * @var int      $w_masu_saikoro       分割されたマスの数とサイコロを振った数
+        * @var int      $masu_saikoro_count   分割されたマスの数とサイコロを振った数
         * @var boolean  $headers['is_success'] 処理が正常終了したか。 
         */
-        $SPACE_COUNT = 1;
+        #データの空白が２つ以上かCHECK
+        $masu_saikoro_count = explode(" ", $c113_datas[0]);
+        $headers['masu']=intval($masu_saikoro_count[0]);
+        $headers['saikoro']=intval($masu_saikoro_count[1]);
+        return $headers;
+    }
+
+    /**
+    * マスデータの複数空白チェック
+    *
+    * @param    strng   $c113_datas 全データ配列
+    * @todo             全データの空白数のCHECK
+    */
+    public function check_multiple_blanks($c113_datas){
+        /**
+        * check_multiple_blanks
+        *
+        * @var int      $SPACE_COUNT_ONE      正常な半角空白の数
+        * @var string   $SPACE                正常な半角空白
+        */
+        $SPACE_COUNT_ONE= 1;
+        $SPACE_COUNT_ZERO= 0;
         $SPACE = " ";
-        if (substr_count( $c113_datas[0],$SPACE)!=$SPACE_COUNT){
-            #半角空白２つ以上か半角空白が存在しない
-            throw new Exception('半角空白２つ以上か半角空白が存在しない。');
-        }elseif(preg_match('/^[a-zA-Z]+$/', $c113_datas[0])) {
-            #英字の場合
-            throw new Exception('コマ数かサイコロに英字が入力されている。');
-        }else{
-            $w_masu_saikoro = explode(" ", $c113_datas[0]);
-            $headers['masu']=intval($w_masu_saikoro[0]);
-            $headers['saikoro']=intval($w_masu_saikoro[1]);
-            $headers['is_success'] = true;
-            return $headers;
+        foreach($c113_datas as $c113_i =>$c113_v){
+            #ヘッダであり半角空白２つ以上ある半角空白が存在しない
+            if (substr_count(   $c113_v,$SPACE)!=$SPACE_COUNT_ONE and
+                                $c113_i == 0){
+                throw new Exception('半角空白２つ以上か半角空白が存在しない。');
+            }
+            #データであり半角空白1以上ある
+            if (substr_count(   $c113_v,$SPACE)!=$SPACE_COUNT_ZERO and
+                                $c113_i >= 1){
+                    throw new Exception('半角空白1つ以上ある。');
+            }
         }
     }
+
+    /**
+    * サイコロデータの数字チェック
+    *
+    * @param    strng   $c113_datas 全データ配列
+    * @todo             ヘッダーとサイコロデータの数字チェック
+    */
+    public function check_numerical($datas){
+        /**
+        * check_numerical_saikoro
+        *
+        */
+        foreach ($datas as $v){
+            if(!preg_match('/^[0-9]+$/', $v)){
+                #英字の場合
+                throw new Exception('コマ数かサイコロに数字以外が入力されている。');
+            }
+        }
+    }
+
     /**
     * ファイルの読み込みと配列への格納
     *
@@ -374,8 +391,7 @@ class C113_Controller extends Controller
         $c113_file = file_get_contents($c113_file_name);
         //データファイルのファイル末尾改行の削除
         $c113_file = trim($c113_file);
-        $c113_datas['data'] = explode("\r\n", $c113_file);
-        $c113_datas['is_success'] = true;
+        $c113_datas = explode("\r\n", $c113_file);
         return $c113_datas;
     }
 
@@ -383,19 +399,20 @@ class C113_Controller extends Controller
         //C113データを全て読み込み
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";
         try {
-            $input_datas = $this->input_file($file_name);
-            $head = $this->get_data_header($input_datas);
+            $c113_datas = $this->input_file($file_name);
+            $this->check_multiple_blanks($c113_datas);
+            $this->check_numerical($c113_datas);
+            $head = $this->get_data_header($c113_datas);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
         //入力データからヘッダーを削除
-        $unset_head = $this-> unset_data_head($input_datas);
-
+        $c113_datas = $this-> unset_data_head($c113_datas);
         //データファイルからマスとサイコロデータを分割取得
-        $masu__saikoro_datas = $this-> split_masu_saikoro($head,$masu_saikoro);
+        $masu_saikoro_datas = $this->split_masu_saikoro($head,$c113_datas);
 
         //すごろく開始
-        $masu_saikoro_datas=$this-> shake_saikoro($head,$masu__saikoro_datas);
+        $masu_saikoro_datas=$this-> shake_saikoro($head,$masu_saikoro_datas);
 
         //すごろく結果判断
         if ($masu_saikoro_datas['sugoroku_goal'] == ""){
