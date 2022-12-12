@@ -50,9 +50,14 @@ class UserTest extends TestCase
         print_r("input_datas=");
         print_r($input_datas);
         print_r("\n");
-        print_r("masu=".$headers['masu']."\n");
-        print_r("saikoro=".$headers['saikoro']."\n");
-        $this->assertTrue($headers['is_success'], true);
+        print_r("masu = ".$headers['masu']."\n");
+        print_r("saikoro = ".$headers['saikoro']."\n");
+        $masu_correct = 5;
+        $saikoro_correct = 3;
+        print_r("masu_correct = ".$masu_correct."\n");
+        print_r("saikoro_correct = ".$saikoro_correct."\n");
+        $this->assertEquals($headers['masu'], $masu_correct);
+        $this->assertEquals($headers['saikoro'], $saikoro_correct);
     }
 
     public function test_C113_unset_data_head()
@@ -77,22 +82,21 @@ class UserTest extends TestCase
         print_r("input_datas=");
         print_r($input_datas);
         print_r("\n");
-        print_r("c113_datas=");
-        print_r($c113_datas);
+        $datas_correct[0] = 'x';
+        $datas_correct[1] = '-';
+        $datas_correct[2] = '+';
+        $datas_correct[3] = '1';
+        $datas_correct[4] = '1';
+        $datas_correct[5] = '6';
         print_r("\n");
-        $this->assertTrue($c113_datas['is_success'], true);
+        print_r("datas_correct = ");
+        print_r($datas_correct);
+        print_r("\n");
+        $this->assertEquals($c113_datas, $datas_correct);
     }
 
     public function test_C113_masu_judgment(){
         $C113 = new C113_Controller();
-/*         5 3
-        x
-        -
-        +
-        1
-        1
-        6
- */
         $masu_len = 5;
         $player_position = 0;
         $saikoro = 3;

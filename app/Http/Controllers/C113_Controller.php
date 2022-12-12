@@ -270,8 +270,6 @@ class C113_Controller extends Controller
         * @var ini      $masu_saikoros['masu'] 初期化済マス配列
         * @var ini      $masu_saikoros['saikoros'] 初期化済サイコロ配列
         */
-        #配列のindexを振り直し
-        $c113_datas = array_merge($c113_datas);
         #マスデータとサイコロデータ配列を初期化
         $ARRAY_INIT = 0;
         $ARRAY_VALUE = 0;
@@ -303,6 +301,8 @@ class C113_Controller extends Controller
         * @var boolean  $c113_datas['is_success']   処理結果 true:false 
         */
         unset($c113_datas['0']);
+        #配列のindexを振り直し
+        $c113_datas = array_merge($c113_datas);
         return $c113_datas;
     }
 
