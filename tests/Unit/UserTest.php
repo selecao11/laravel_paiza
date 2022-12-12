@@ -8,7 +8,7 @@ use App\Http\Controllers\C113_Controller;
 class UserTest extends TestCase
 {
     /**
-     * A basic unit test example.　 テスト
+     * A basic unit test example.　 テスト2
      *
      * @return void
      */
