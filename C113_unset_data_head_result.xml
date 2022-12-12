@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest" file="C:\laravel_paiza\tests\Unit\UserTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.012930">
-    <testcase name="test_C113_unset_data_head" class="Tests\Unit\UserTest" classname="Tests.Unit.UserTest" file="C:\laravel_paiza\tests\Unit\UserTest.php" line="57" assertions="1" time="0.012930">
+  <testsuite name="Tests\Unit\UserTest" file="C:\laravel_paiza\tests\Unit\UserTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.011904">
+    <testcase name="test_C113_unset_data_head" class="Tests\Unit\UserTest" classname="Tests.Unit.UserTest" file="C:\laravel_paiza\tests\Unit\UserTest.php" line="63" assertions="1" time="0.011904">
       <system-out>
 input_datas=Array
 (
@@ -14,15 +14,15 @@ input_datas=Array
     [6] =&gt; 6
 )
 
-c113_datas=Array
+
+datas_correct = Array
 (
-    [1] =&gt; x
-    [2] =&gt; -
-    [3] =&gt; +
+    [0] =&gt; x
+    [1] =&gt; -
+    [2] =&gt; +
+    [3] =&gt; 1
     [4] =&gt; 1
-    [5] =&gt; 1
-    [6] =&gt; 6
-    [is_success] =&gt; 1
+    [5] =&gt; 6
 )
 
 </system-out>
