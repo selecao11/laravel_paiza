@@ -25,6 +25,7 @@ class UserTest extends TestCase
         $c113_datas = $C113->input_file($file_name);
         print_r($c113_datas['data']);
         $this->assertTrue($c113_datas['is_success'], true);
+        $c113_datas;
     }
 
     public function test_C113_get_data_header()
