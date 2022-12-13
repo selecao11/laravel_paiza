@@ -66,6 +66,22 @@ class C113_Controller extends Controller
     } 
 
     /**
+    * マスの条件がrプラスの場合
+    *
+    * @param    int     $player_position        プレイヤの位置
+    * @param    string  $edit_mode              コマの内容
+    * @return   int     $edit_player_position   処理結果配列
+    * @todo             プレイヤの位置をスタートに戻す
+    */
+    public function start_position($sk,$player_position,$headers){
+        $SET_ZERO = 0;
+        if($sk == 'r'){
+            $player_position = $SET_ZERO;
+        }
+        return $player_position;
+    }
+
+    /**
     * マスの条件が+プラスの場合
     *
     * @param    int     $player_position        プレイヤの位置
@@ -73,7 +89,7 @@ class C113_Controller extends Controller
     * @return   int     $edit_player_position   処理結果配列
     * @todo             プレイヤの位置を+1する
     */
-    public function one_add($sk,$player_position,$headers){
+    public function add_position_one($sk,$player_position,$headers){
         $ADD_1 = 1;
         if($sk == '+'){
             $player_position += $ADD_1;
@@ -94,14 +110,13 @@ class C113_Controller extends Controller
     * @return   int     $edit_player_position   処理結果配列
     * @todo             プレイヤの位置を-1する
     */
-    public function zero_less($sk,$player_position){
+    public function less_zero_position($sk,$player_position){
         $SUB_1 = 1;
         $SET_ZERO = 0;
         if($sk == '-'){
             $player_position -= $SUB_1;
             if($player_position <= 0){
                 #スタートよりさらに戻る
-                $edit_mode='zero';
                 $player_position = $SET_ZERO;
             }
         }
@@ -139,24 +154,11 @@ class C113_Controller extends Controller
         #サイコロを順次実行する
         foreach($saikoros as $saikoros_i=>$sk){
             $player_position +=$sa;
-            if ($masu[$player_position] >= $masu_len){
-                #スゴロクでゴールした場合。
-                $goal_judgments = $this->judgment_goal( $saikoros_i,
-                                                        $masu_saikoro_datas);
-                break;
-            } elseif($masu[$player_position] == "+"){
-                #マスを1つ進む
-                $edit_mode='add';
-                $player_position = $this->edit_player_position($player_position,$edit_mode);
-            } elseif ($masu[$player_position] == "-"){
-                #マスを1つ戻る
-                $edit_mode='sub';
-                $player_position = $this->edit_player_position($player_position,$edit_mode);
-            } elseif ($masu[$player_position] == "r"){
-                #スタートに戻る
-                $edit_mode='start';
-                $player_position = $this->edit_player_position($player_position,$edit_mode);
-            }
+            $player_position = $this->start_position($player_position,$sk); 
+            $player_position = $this->add_position_one($player_position,$sk);
+            $goal_judgments = $this->start_position($player_position,$sk); 
+            $goal_judgments = $this->judgment_goal($player_position);
+            break;
         }
         $masu_judgment['player_position'] = $player_position;
         $masu_judgment['is_success'] = true;
