@@ -126,28 +126,6 @@ class C113_Controller extends Controller
     }
 
     /**
-    * スゴロク実行前初期化
-    *
-    * @return array strng $saikoro_move_on_init 
-    * @todo         プレイヤー、ゴールフラグを初期化する
-    */
-    public function init_sugoroku(){    
-        /**
-        * init_sugoroku
-        *
-        * @var ini      $saikoro_move_on_init['player_position']   
-        *               プレイヤ位置初期化 
-        * @var ini      $saikoro_move_on_init['sugoroku_goal']   
-        *               スゴロクゴールフラグ初期化 
-        * @var boolean  $masu_saikoros['is_success']   処理結果 true:false 
-        */
-        $saikoro_move_on_init['player_position']=0;
-        $saikoro_move_on_init['sugoroku_goal']="";
-        $saikoro_move_on_init['is_success']=true;
-        return $saikoro_move_on_init; 
-    }
-
-    /**
     * スゴロクを進める
     *
     * @param int        $head           ヘッダ配列
@@ -163,10 +141,15 @@ class C113_Controller extends Controller
         * @var ini      $player_position        プレイヤの位置
         * @var ini      $masu_len               スゴロクの長さ
         * @var ini      $saikoros                サイコロの内容配列
+        * @var ini      $saikoro_move_on_init['player_position']   
+        *               プレイヤ位置初期化 
+        * @var ini      $saikoro_move_on_init['sugoroku_goal']   
+        *               スゴロクゴールフラグ初期化 
         * @var boolean  $masu_saikoros['is_success']   処理結果 true:false 
         */
         #スゴロク実行結果初期化
-        $saikoro_move_on_init = $this->init_sugoroku();
+        $saikoro_move_on_init['player_position']=0;
+        $saikoro_move_on_init['sugoroku_goal']="";
         #プレイヤー初期化
         $player_position = $saikoro_move_on_init['player_position'];
         #スゴロクの長さ
