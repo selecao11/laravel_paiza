@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_C113_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C113_input_file.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.015714">
+    <testcase name="test_C113_input_file" class="Tests\Unit\UserTest_C113_input_file" classname="Tests.Unit.UserTest_C113_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C113_input_file.php" line="15" assertions="1" time="0.015714">
+      <system-out>
+ファイル生データ = 5 3&#13;
+x&#13;
+-&#13;
++&#13;
+1&#13;
+1&#13;
+6
+c113_datas = Array
+(
+    [0] =&gt; 5 3
+    [1] =&gt; x
+    [2] =&gt; -
+    [3] =&gt; +
+    [4] =&gt; 1
+    [5] =&gt; 1
+    [6] =&gt; 6
+)
+
+c113_datas_correct = Array
+(
+    [0] =&gt; 5 3
+    [1] =&gt; x
+    [2] =&gt; -
+    [3] =&gt; +
+    [4] =&gt; 1
+    [5] =&gt; 1
+    [6] =&gt; 6
+)
+
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>
