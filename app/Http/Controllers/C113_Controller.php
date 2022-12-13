@@ -19,7 +19,7 @@ class C113_Controller extends Controller
         /**
         * judgment_goal
         *
-        * @var string   goal_judgments['sugoroku_goal']
+        * @var string   $goal_judgments['sugoroku_goal']
         *               Goal文字配列
         * @var string   $goal_judgments['goal_saikoro_count']
         *               Goal時のサイコロを振った回数配列
@@ -37,12 +37,18 @@ class C113_Controller extends Controller
     } 
     /**
     * マスの条件が+プラスの場合
-    *
+    * @param    string  $masus                  マス条件の配列
+    * @param    int     $sk                     サイコロ
     * @param    int     $player_position        プレイヤの位置
-    * @return   int     $player_position        プレイヤの位置
+    * @return   int     $headers                サイコロの長さ
     * @todo             プレイヤの位置を+1する
     */
     public function add_position_one($masus,$sk,$player_position,$headers){
+        /**
+        * add_position_one
+        *
+        * @var ini      $ADD_1              加算の１を定義   
+        */
         $ADD_1 = 1;
         if($masus[$player_position + $sk] == '+'){
             $player_position += $ADD_1;
@@ -53,14 +59,23 @@ class C113_Controller extends Controller
         }
         return $player_position;
     }
+
     /**
     * マスの条件が-マイナスの場合
     *
+    * @param    string  $masus                  マス条件の配列
+    * @param    int     $sk                     サイコロ
     * @param    int     $player_position        プレイヤの位置
-    * @return   int     $edit_player_position   処理結果配列
+    * @return   int     $player_position        処理結果配列
     * @todo             プレイヤの位置を-1する
     */
     public function sub_position_one($masus,$sk,$player_position){
+        /**
+        * sub_position_one
+        *
+        * @var ini      $SUB_1              減算の1を定義   
+        * @var ini      $SET_ZERO           スタートの0を定義   
+        */
         $SUB_1 = 1;
         $SET_ZERO = 0;
         if($masus[$player_position + $sk] == '-'){
@@ -75,11 +90,18 @@ class C113_Controller extends Controller
     /**
     * マスの条件がrプラスの場合
     *
-    * @param    int     $player_position    プレイヤの位置
-    * @return   int     $player_position    プレイヤの位置
+    * @param    string  $masus                  マス条件の配列
+    * @param    int     $sk                     サイコロ
+    * @param    int     $player_position        プレイヤの位置
+    * @return   int     $player_position        処理結果配列
     * @todo             プレイヤの位置をスタートに戻す
     */
     public function start_position($masus,$sk,$player_position){
+        /**
+        * start_position
+        *
+        * @var ini      $SET_ZERO           スタートの0を定義   
+        */
         $SET_ZERO = 0;
         if($masus[$player_position + $sk] == 'r'){
             $player_position = $SET_ZERO;
