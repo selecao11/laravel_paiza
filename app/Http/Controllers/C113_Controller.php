@@ -219,7 +219,7 @@ class C113_Controller extends Controller
     * @param    strng $masu_set         初期化済マス配列
     * @param    strng $c113_datas       全データ配列
     * @return   strng $saikoro_sets      サイコロ数値設定済配列
-    * @todo  各サイコロ数値を配列に設定する
+    * @todo     各サイコロ数値を配列に設定する
     */
     public function set_saikoro($masu_set,$c113_datas){
         /**
@@ -237,7 +237,7 @@ class C113_Controller extends Controller
         $saikoros = array_slice($c113_datas, $saikoro_position);
         #サイコロ配列のindexを0から振り直す。
         $saikoro_set['saikoro']=array_map('intval', $saikoros);
-        $$saikoro_set['is_success'] = true;
+        $saikoro_set['is_success'] = true;
         return $saikoro_sets;
     }
     
@@ -452,7 +452,7 @@ class C113_Controller extends Controller
         } 
 
         //抽出結果で面積を計算する
-    return view_C113('C099',compact('area'));
+        return view_C113('C099',compact('area'));
     }
 
     public function index_C113(Request $request){
