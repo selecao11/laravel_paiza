@@ -7,37 +7,6 @@ use Validator; // Validatorだけでも実行できる
 
 class C113_Controller extends Controller
 {
-    /**
-    * プレイヤの位置編集
-    *
-    * @param    int     $player_position        プレイヤの位置
-    * @param    string  $edit_mode              コマの内容
-    * @return   int     $edit_player_position   処理結果配列
-    * @todo             到着マスの内容を判断してプレイヤの位置を移動する
-    */
-    public function edit_player_position($player_position,$edit_mode){
-        /**
-        * edit_player_position
-        *
-        * @var ini      $edit_mode          プレイヤーの編集フラグ   
-        * @var ini      $edit_player_position['player_position']
-        *               編集済プレイヤーの位置
-        * @var boolean  $edit_player_position['is_success']   
-        *               処理結果 true:false
-        */
-        if ($edit_mode=='zero'){
-            $player_position = 0;
-        }elseif($edit_mode=='add') {
-            $player_position += 1;
-        }elseif($edit_mode=='sub') {
-            $player_position -= 1;
-        }elseif($edit_mode=='start') {
-            $player_position = 0;
-        }
-        $edit_player_position['player_position'] = $player_position;
-        $edit_player_position['is_success'] = true;
-        return $edit_player_position;
-    }
 
     /**
     * ゴールの編集
@@ -46,7 +15,7 @@ class C113_Controller extends Controller
     * @return   strng   $goal_judgments
     * @todo             ゴール到着時の文字を設定する
     */
-    public function judgment_goal($saikoros_i){
+    public function judgment_goal($saikoros_i,$player_position){
         /**
         * judgment_goal
         *
@@ -57,41 +26,25 @@ class C113_Controller extends Controller
         * @var boolean  $goal_judgments['is_success']   
         *               処理結果 true:false
         */
-        $masu_judgments['sugoroku_goal'] = $goal_judgment['sugoroku_goal'];
-        $masu_judgments['sugoroku_saikoro'] = $goal_judgment['sugoroku_saikoro']=$i;
-        $goal_judgments['sugoroku_goal'] = "goal";
-        $goal_judgments['goal_saikoro_count']=$saikoros_i;
-        $goal_judgments['is_success'] = true;
-        return $goal_judgments;
-    } 
-
-    /**
-    * マスの条件がrプラスの場合
-    *
-    * @param    int     $player_position        プレイヤの位置
-    * @param    string  $edit_mode              コマの内容
-    * @return   int     $edit_player_position   処理結果配列
-    * @todo             プレイヤの位置をスタートに戻す
-    */
-    public function start_position($sk,$player_position,$headers){
-        $SET_ZERO = 0;
-        if($sk == 'r'){
-            $player_position = $SET_ZERO;
+        if($player_position >= $headers['masu']){
+            $goal_judgments['sugoroku_goal'] = "goal";
+            $goal_judgments['goal_saikoro_count']=$saikoros_i;
+            return $goal_judgments;
+        }else{
+            $goal_judgments['saikoro_count']=$saikoros_i;
+            return $goal_judgments;
         }
-        return $player_position;
-    }
-
+    } 
     /**
     * マスの条件が+プラスの場合
     *
     * @param    int     $player_position        プレイヤの位置
-    * @param    string  $edit_mode              コマの内容
-    * @return   int     $edit_player_position   処理結果配列
+    * @return   int     $player_position        プレイヤの位置
     * @todo             プレイヤの位置を+1する
     */
-    public function add_position_one($sk,$player_position,$headers){
+    public function add_position_one($masus,$sk,$player_position,$headers){
         $ADD_1 = 1;
-        if($sk == '+'){
+        if($masus[$player_position + $sk] == '+'){
             $player_position += $ADD_1;
             if($masu[$player_position] + $ADD_1 >= $headers['masu']){
                 #ゴール到着
@@ -104,14 +57,13 @@ class C113_Controller extends Controller
     * マスの条件が-マイナスの場合
     *
     * @param    int     $player_position        プレイヤの位置
-    * @param    string  $edit_mode              コマの内容
     * @return   int     $edit_player_position   処理結果配列
     * @todo             プレイヤの位置を-1する
     */
-    public function sub_position_one($sk,$player_position){
+    public function sub_position_one($masus,$sk,$player_position){
         $SUB_1 = 1;
         $SET_ZERO = 0;
-        if($sk == '-'){
+        if($masus[$player_position + $sk] == '-'){
             $player_position -= $SUB_1;
             if($player_position <= 0){
                 #スタートよりさらに戻る
@@ -121,17 +73,29 @@ class C113_Controller extends Controller
         return $player_position;
     }
     /**
+    * マスの条件がrプラスの場合
+    *
+    * @param    int     $player_position    プレイヤの位置
+    * @return   int     $player_position    プレイヤの位置
+    * @todo             プレイヤの位置をスタートに戻す
+    */
+    public function start_position($masus,$sk,$player_position){
+        $SET_ZERO = 0;
+        if($masus[$player_position + $sk] == 'r'){
+            $player_position = $SET_ZERO;
+        }
+        return $player_position;
+    }
+    /**
     * 到着マスでの判断
     *
-    * @param strng  $masu_len           スゴロクの長さ
     * @param int    $player_position    プレイヤーの現在位置
     * @param string $masu_saikoros      スゴロクの内容
     * @param int    $saikoro            サイコロの内容
-    * @return strng $masu_judgment['player_position']  
+    * @return strng $goal_judgments  
     * @todo         到着マスの内容を判断する
     */
-    public function judgment_masu(  $masu_len,
-                                    $player_position,
+    public function judgment_masu(  $player_position,
                                     $saikoros,
                                     $masu_saikoros){
         /**
@@ -139,48 +103,23 @@ class C113_Controller extends Controller
         *
         * @var ini      $masus              マスの内容配列   
         * @var ini      $player_position    プレイヤーの進行状況 
-        * @var ini      $goal_judgments     ゴールした場合の結果配列
-        * @var ini      $masu_judgments['player_position']   
-        *               プレイヤーの現在位置配列
-        * @var ini      $masu_judgments['sugoroku_goal']   
-        *               'goal'の設定配列
-        * @var ini      $edit_mode          プレイヤーの編集フラグ   
-        * @var boolean  $masu_judgment['is_success']   
-        *               処理結果 true:false
+        * @var ini      $goal_judgments['sugoroku_goal']
+        *               ゴールした場合の'Goal'文字
         */
         $masus = $masu_saikoro_datas['masu'];
+        $goal_judgments = null;
         #サイコロを順次実行する
         foreach($saikoros as $saikoros_i=>$sk){
             $player_position +=$sa;
-            $player_position = $this->start_position($player_position,$sk); 
-            $player_position = $this->add_position_one($player_position,$sk);
-            $player_position = $this->sub_position_one($player_position,$sk);
-            $goal_judgments = $this->judgment_goal($player_position);
-            break;
+            $player_position = $this->start_position($masus,$sk,$player_position); 
+            $player_position = $this->add_position_one($masus,$sk,$player_position);
+            $player_position = $this->sub_position_one($masus,$sk,$player_position);
+            $goal_judgments = $this->judgment_goal($saikoros_i,$player_position);
+            if ($goal_judgments['sugoroku_goal'] != null){
+                break;
+            }
         }
-        $masu_judgment['player_position'] = $player_position;
-        return $masu_judgment;
-    }
-
-    /**
-    * スゴロク実行前初期化
-    *
-    * @return array strng $saikoro_move_on_init 
-    * @todo         プレイヤー、ゴールフラグを初期化する
-    */
-    public function init_sugoroku(){    
-        /**
-        * init_sugoroku
-        *
-        * @var ini      $saikoro_move_on_init['player_position']   
-        *               プレイヤ位置初期化 
-        * @var ini      $saikoro_move_on_init['sugoroku_goal']   
-        *               スゴロクゴールフラグ初期化 
-        * @var boolean  $masu_saikoros['is_success']   処理結果 true:false 
-        */
-        $saikoro_move_on_init['player_position']=0;
-        $saikoro_move_on_init['sugoroku_goal']="";
-        return $saikoro_move_on_init; 
+        return $goal_judgments;
     }
 
     /**
@@ -199,10 +138,15 @@ class C113_Controller extends Controller
         * @var ini      $player_position        プレイヤの位置
         * @var ini      $masu_len               スゴロクの長さ
         * @var ini      $saikoros                サイコロの内容配列
+        * @var ini      $saikoro_move_on_init['player_position']   
+        *               プレイヤ位置初期化 
+        * @var ini      $saikoro_move_on_init['sugoroku_goal']   
+        *               スゴロクゴールフラグ初期化 
         * @var boolean  $masu_saikoros['is_success']   処理結果 true:false 
         */
         #スゴロク実行結果初期化
-        $saikoro_move_on_init = $this->init_sugoroku();
+        $saikoro_move_on_init['player_position']=0;
+        $saikoro_move_on_init['sugoroku_goal']="";
         #プレイヤー初期化
         $player_position = $saikoro_move_on_init['player_position'];
         #スゴロクの長さ
@@ -210,11 +154,13 @@ class C113_Controller extends Controller
         #サイコロの内容
         $saikoros = $masu_saikoros['saikoros'];
         #マスの判断
-        $masu_judgment = $this->judgment_masu( $masu_len,
-                                                $player_position,
+        $goal_judgments = $this->judgment_masu( $player_position,
                                                 $saikoro,
                                                 $masu_saikoros);
-        return  $masu_saikoro_datas;
+        if($goal_judgments==null){
+            $goal_judgments['sugoroku_goal'] = null;
+        }
+        return  $goal_judgments;
     }
 
     /**
