@@ -63,6 +63,10 @@ class C113_Controller extends Controller
         return $goal_judgments;
     } 
 
+    public function zero_less($saikoros_i){
+    }
+
+
     /**
     * 到着マスでの判断
     *
