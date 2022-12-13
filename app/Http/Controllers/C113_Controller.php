@@ -57,12 +57,56 @@ class C113_Controller extends Controller
         * @var boolean  $goal_judgments['is_success']   
         *               処理結果 true:false
         */
+        $masu_judgments['sugoroku_goal'] = $goal_judgment['sugoroku_goal'];
+        $masu_judgments['sugoroku_saikoro'] = $goal_judgment['sugoroku_saikoro']=$i;
         $goal_judgments['sugoroku_goal'] = "goal";
         $goal_judgments['goal_saikoro_count']=$saikoros_i;
         $goal_judgments['is_success'] = true;
         return $goal_judgments;
     } 
 
+    /**
+    * マスの条件が+プラスの場合
+    *
+    * @param    int     $player_position        プレイヤの位置
+    * @param    string  $edit_mode              コマの内容
+    * @return   int     $edit_player_position   処理結果配列
+    * @todo             プレイヤの位置を+1する
+    */
+    public function one_add($sk,$player_position,$headers){
+        $ADD_1 = 1;
+        if($sk == '+'){
+            $player_position += $ADD_1;
+            if($masu[$player_position] + $ADD_1 >= $headers['masu']){
+                #ゴール到着
+                $player_position = $headers['masu'];
+            }
+        }
+        return $player_position;
+    }
+
+
+    /**
+    * マスの条件が-マイナスの場合
+    *
+    * @param    int     $player_position        プレイヤの位置
+    * @param    string  $edit_mode              コマの内容
+    * @return   int     $edit_player_position   処理結果配列
+    * @todo             プレイヤの位置を-1する
+    */
+    public function zero_less($sk,$player_position){
+        $SUB_1 = 1;
+        $SET_ZERO = 0;
+        if($sk == '-'){
+            $player_position -= $SUB_1;
+            if($player_position <= 0){
+                #スタートよりさらに戻る
+                $edit_mode='zero';
+                $player_position = $SET_ZERO;
+            }
+        }
+        return $player_position;
+    }
     /**
     * 到着マスでの判断
     *
@@ -93,19 +137,13 @@ class C113_Controller extends Controller
         */
         $masus = $masu_saikoro_datas['masu'];
         #サイコロを順次実行する
-        foreach($saikoros as $saikoros_i=>$sa){
+        foreach($saikoros as $saikoros_i=>$sk){
             $player_position +=$sa;
             if ($masu[$player_position] >= $masu_len){
                 #スゴロクでゴールした場合。
                 $goal_judgments = $this->judgment_goal( $saikoros_i,
                                                         $masu_saikoro_datas);
-                $masu_judgments['sugoroku_goal'] = $goal_judgment['sugoroku_goal'];
-                $masu_judgments['sugoroku_saikoro'] = $goal_judgment['sugoroku_saikoro']=$i;
                 break;
-            } elseif($masu[$player_position] <= 0){
-                #スタートよりさらに戻る
-                $edit_mode='zero';
-                $player_position = $this->edit_player_position($player_position,$edit_mode);
             } elseif($masu[$player_position] == "+"){
                 #マスを1つ進む
                 $edit_mode='add';
