@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use App\Http\Controllers\C113_Controller;
 
-class UserTest extends TestCase
+class UserTest_C113_get_data_header extends TestCase
 {
     /**
      * A basic unit test example.  テスト2
@@ -18,7 +18,7 @@ class UserTest extends TestCase
     type nul > ./C113_get_data_header_result.xml
 
     #UT実行
-    php artisan test --log-junit ./C113_get_data_header_result.xml --filter test_C113_get_data_header tests/Unit/UserTest.php
+    php artisan test --log-junit ./C113_get_data_header_result.xml tests/Unit/UserTest_C113_get_data_header.php --filter test_C113_get_data_header 
     */
     {
         $input_datas[0] = '5 3';

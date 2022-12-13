@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C113_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C113_input_file.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.015714">
-    <testcase name="test_C113_input_file" class="Tests\Unit\UserTest_C113_input_file" classname="Tests.Unit.UserTest_C113_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C113_input_file.php" line="15" assertions="1" time="0.015714">
+  <testsuite name="Tests\Unit\UserTest_C113_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C113_input_file.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.012798">
+    <testcase name="test_C113_input_file" class="Tests\Unit\UserTest_C113_input_file" classname="Tests.Unit.UserTest_C113_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C113_input_file.php" line="15" assertions="1" time="0.012798">
       <system-out>
 ファイル生データ = 5 3&#13;
 x&#13;

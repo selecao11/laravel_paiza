@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest" file="C:\laravel_paiza\tests\Unit\UserTest.php" tests="1" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.014062">
-    <testcase name="test_C113_get_data_header" class="Tests\Unit\UserTest" classname="Tests.Unit.UserTest" file="C:\laravel_paiza\tests\Unit\UserTest.php" line="31" assertions="2" time="0.014062">
+  <testsuite name="Tests\Unit\UserTest_C113_get_data_header" file="C:\laravel_paiza\tests\Unit\UserTest_C113_get_data_header.php" tests="1" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.011455">
+    <testcase name="test_C113_get_data_header" class="Tests\Unit\UserTest_C113_get_data_header" classname="Tests.Unit.UserTest_C113_get_data_header" file="C:\laravel_paiza\tests\Unit\UserTest_C113_get_data_header.php" line="15" assertions="2" time="0.011455">
       <system-out>
 input_datas=Array
 (
@@ -16,8 +16,8 @@ input_datas=Array
 
 masu = 5
 saikoro = 3
-masu = 5
-saikoro = 3
+masu_correct = 5
+saikoro_correct = 3
 </system-out>
     </testcase>
   </testsuite>

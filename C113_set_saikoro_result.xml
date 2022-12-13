@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_C113_set_saikoro" file="C:\laravel_paiza\tests\Unit\UserTest_C113_set_saikoro.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.019862">
+    <testcase name="test_C113_set_saikoro" class="Tests\Unit\UserTest_C113_set_saikoro" classname="Tests.Unit.UserTest_C113_set_saikoro" file="C:\laravel_paiza\tests\Unit\UserTest_C113_set_saikoro.php" line="15" assertions="1" time="0.019862">
+      <system-out>
+c113_datas = Array
+(
+    [0] =&gt; x
+    [1] =&gt; -
+    [2] =&gt; +
+    [3] =&gt; 1
+    [4] =&gt; 1
+    [5] =&gt; 6
+)
+
+saikoro_correct = Array
+(
+    [0] =&gt; 1
+    [1] =&gt; 1
+    [2] =&gt; 6
+)
+
+saikoro_datas = Array
+(
+    [0] =&gt; 1
+    [1] =&gt; 1
+    [2] =&gt; 6
+)
+
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>

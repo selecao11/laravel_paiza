@@ -17,7 +17,7 @@ class UserTest_C113_input_file extends TestCase
     #C113_result.xmlファイル作成
     type nul > ./C113_input_file_result.xml
 
-    #UT実行
+    #UT実行 
     php artisan test --log-junit ./C113_input_file_result.xml --filter test_C113_input_file tests/Unit/UserTest_C113_input_file.php
     */    {
         $c113_file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C113.txt";

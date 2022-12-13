@@ -216,29 +216,31 @@ class C113_Controller extends Controller
     /**
     * サイコロ数値セット
     *
-    * @param    strng $masu_set         初期化済マス配列
-    * @param    strng $c113_datas       全データ配列
-    * @return   strng $saikoro_sets      サイコロ数値設定済配列
+    * @param    string $masu_set         初期化済マス配列
+    * @param    string $c113_datas       全データ配列
+    * @return   int $saikoro_datas      サイコロ数値設定済配列
     * @todo     各サイコロ数値を配列に設定する
     */
-    public function set_saikoro($masu_set,$c113_datas){
+    public function set_saikoro($set_masu,
+                                $masu_saikoros,
+                                $c113_datas){
         /**
         * set_masu
         *
         * @var string   $saikoro_position   サイコロ配列の開始位置
         * @var string   $c113_v             $c113_datasの要素
-        * @var string   $saikoros           設定済サイコロ配列
+        * @var string   $saikoro_datas           設定済サイコロ配列
         * @var boolean  $goal_judgments['is_success']   
         *               処理結果 true:false
         */
         #マス配列の最後のindexを設定する
         $saikoro_position = $set_masu['masu_end_p'];
+        $saikoros = $masu_saikoros['saikoros']; 
         #$c113_datasからmasu_saikoroにサイコロデータをコピーする
         $saikoros = array_slice($c113_datas, $saikoro_position);
         #サイコロ配列のindexを0から振り直す。
-        $saikoro_set['saikoro']=array_map('intval', $saikoros);
-        $saikoro_set['is_success'] = true;
-        return $saikoro_sets;
+        $saikoro_datas=array_map('intval', $saikoros);
+        return $saikoro_datas;
     }
     
     /**
@@ -269,19 +271,19 @@ class C113_Controller extends Controller
             if(is_numeric($c113_v)){
                 break;
             }
-            if ($ms == "+"){
+            if ($c113_v == "+"){
                 $masu[$c113_i]="+";
-            } elseif ($ms == "-"){
+            } elseif ($c113_v == "-"){
                 $masu[$c113_i]="-";
-            } elseif ($ms == "r"){
+            } elseif ($c113_v == "r"){
                 $masu[$c113_i]="r";
-            } elseif ($ms == "x"){
+            } elseif ($c113_v == "x"){
                 $masu[$c113_i]="x";
             }
         }
         $set_masu['masu']=$masu;
-        $set_masu['masu_end_p']=$c113_i+1;
-        return $masu_set;
+        $set_masu['masu_end_p']=$c113_i;
+        return $set_masu;
     }
 
     /**
@@ -310,12 +312,14 @@ class C113_Controller extends Controller
                             'saikoros'=>array_fill($ARRAY_INIT,$ARRAY_VALUE,0),
                             'is_success'=>true
                         );
-
         #マス、サイコロデータ分割実行
-        $masu_saikoro_splits['masu'] = $this->set_masu($masu_saikoro,$c113_datas);
-        $masu_saikoro_splits['saikoro'] = $this->set_saikoro($masu_saikoro,
-                                            $c113_datas,
-                                            $saikoro_shake_datas);
+        $set_masu = $this->set_masu(    $masu_saikoro,
+                                        $c113_datas);
+        $set_saikoro= $this->set_saikoro(   $set_masu,
+                                            $masu_saikoros,
+                                            $c113_datas);
+        $masu_saikoro_splits['masu'] = $set_masu; 
+        $masu_saikoro_splits['saikoro'] = $set_saikoro;
         return $masu_saikoro_splits;
     }
 
