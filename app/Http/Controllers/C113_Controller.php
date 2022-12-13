@@ -100,8 +100,6 @@ class C113_Controller extends Controller
         }
         return $player_position;
     }
-
-
     /**
     * マスの条件が-マイナスの場合
     *
@@ -110,7 +108,7 @@ class C113_Controller extends Controller
     * @return   int     $edit_player_position   処理結果配列
     * @todo             プレイヤの位置を-1する
     */
-    public function less_zero_position($sk,$player_position){
+    public function sub_position_one($sk,$player_position){
         $SUB_1 = 1;
         $SET_ZERO = 0;
         if($sk == '-'){
@@ -156,12 +154,11 @@ class C113_Controller extends Controller
             $player_position +=$sa;
             $player_position = $this->start_position($player_position,$sk); 
             $player_position = $this->add_position_one($player_position,$sk);
-            $goal_judgments = $this->start_position($player_position,$sk); 
+            $player_position = $this->sub_position_one($player_position,$sk);
             $goal_judgments = $this->judgment_goal($player_position);
             break;
         }
         $masu_judgment['player_position'] = $player_position;
-        $masu_judgment['is_success'] = true;
         return $masu_judgment;
     }
 
@@ -183,7 +180,6 @@ class C113_Controller extends Controller
         */
         $saikoro_move_on_init['player_position']=0;
         $saikoro_move_on_init['sugoroku_goal']="";
-        $saikoro_move_on_init['is_success']=true;
         return $saikoro_move_on_init; 
     }
 
