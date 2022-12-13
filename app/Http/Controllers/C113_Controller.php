@@ -50,9 +50,10 @@ class C113_Controller extends Controller
         * @var ini      $ADD_1              加算の１を定義   
         */
         $ADD_1 = 1;
-        if($masus[$player_position + $sk] == '+'){
+        $player_position =+ $sk;
+        if($masus[$player_position] == '+'){
             $player_position += $ADD_1;
-            if($masu[$player_position] + $ADD_1 >= $headers['masu']){
+            if($player_position >= $headers['masu']){
                 #ゴール到着
                 $player_position = $headers['masu'];
             }
@@ -108,9 +109,6 @@ class C113_Controller extends Controller
         }
         return $player_position;
     }
-    public function zero_less($saikoros_i){
-    }
-
 
     /**
     * 到着マスでの判断
