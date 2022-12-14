@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_C113_judgment_goal" file="C:\laravel_paiza\tests\Unit\UserTest_C113_judgment_goal.php" tests="1" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.014134">
+    <testcase name="test_C113_judgment_goal" class="Tests\Unit\UserTest_C113_judgment_goal" classname="Tests.Unit.UserTest_C113_judgment_goal" file="C:\laravel_paiza\tests\Unit\UserTest_C113_judgment_goal.php" line="15" assertions="2" time="0.014134">
+      <system-out>
+input_data = Array
+(
+    [0] =&gt; start
+    [1] =&gt; 
+    [2] =&gt; +
+    [3] =&gt; Goal
+)
+
+goal_judgments_correct = goal
+'sugoroku_goal' = goal
+goal_saikoro_count_correct = 3
+goal_saikoro_count = 3
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -15,7 +15,7 @@ class C113_Controller extends Controller
     * @return   strng   $goal_judgments
     * @todo             ゴール到着時の文字を設定する
     */
-    public function judgment_goal($saikoros_i,$player_position){
+    public function judgment_goal($headers,$saikoros_i,$player_position){
         /**
         * judgment_goal
         *
@@ -23,10 +23,13 @@ class C113_Controller extends Controller
         *               Goal文字配列
         * @var string   $goal_judgments['goal_saikoro_count']
         *               Goal時のサイコロを振った回数配列
+        * @var string   $GOAL_POSION
+        *               すごろくの長さより1つ前
         * @var boolean  $goal_judgments['is_success']   
         *               処理結果 true:false
         */
-        if($player_position >= $headers['masu']){
+        $GOAL_POSION = 1;
+        if($player_position >= $headers['masu'] - $GOAL_POSION){
             $goal_judgments['sugoroku_goal'] = "goal";
             $goal_judgments['goal_saikoro_count']=$saikoros_i;
             return $goal_judgments;
