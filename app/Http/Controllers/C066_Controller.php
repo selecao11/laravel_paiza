@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator; // Validatorだけでも実行できる
 
-class C113_Controller extends Controller
+class C066_Controller extends Controller
 {
 
     /**
@@ -83,17 +83,17 @@ class C113_Controller extends Controller
     /**
     * ファイルの読み込みと配列への格納
     *
-    * @param strng $c113_file_name データファイルPath
-    * @return array strng $c113_datas 全データ配列
+    * @param strng $c066_file_name データファイルPath
+    * @return array strng $c066_datas 全データ配列
     * @todo 	 読み込んだファイルデータを配列にいれる
     */
     public function input_file($c066_file_name){
         //$file_name = "/var/www/html/laravel_app/app/Http/Controllers/C113.txt";
         $c066_file = file_get_contents($c066_file_name);
         //データファイルのファイル末尾改行の削除
-        $c066_file = trim($c113_file);
+        $c066_file = trim($c066_file);
         $c066_datas = explode("\r\n", $c066_file);
-        return $c113_datas;
+        return $c066_datas;
     }
 
     public function output__C113(){

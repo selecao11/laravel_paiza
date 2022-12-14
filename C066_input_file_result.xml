@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_C066_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C066_input_file.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.020882">
+    <testcase name="test_C066_input_file" class="Tests\Unit\UserTest_C066_input_file" classname="Tests.Unit.UserTest_C066_input_file" file="C:\laravel_paiza\tests\Unit\UserTest_C066_input_file.php" line="15" assertions="1" time="0.020882">
+      <system-out>
+期待値 = 
+Array
+(
+    [0] =&gt; 5 2 10
+    [1] =&gt; 5
+    [2] =&gt; 5
+    [3] =&gt; 3
+    [4] =&gt; 1
+    [5] =&gt; 4
+)
+処理結果 = Array
+(
+    [0] =&gt; 5 2 10
+    [1] =&gt; 5
+    [2] =&gt; 5
+    [3] =&gt; 3
+    [4] =&gt; 1
+    [5] =&gt; 4
+)
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>
