@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_C066_get_data_header" file="C:\laravel_paiza\tests\Unit\UserTest_C066_get_data_header.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.011222">
+    <testcase name="test_C066_get_data_header" class="Tests\Unit\UserTest_C066_get_data_header" classname="Tests.Unit.UserTest_C066_get_data_header" file="C:\laravel_paiza\tests\Unit\UserTest_C066_get_data_header.php" line="15" assertions="1" time="0.011222">
+      <system-out>
+期待値 = Array
+(
+    [goldfish_number] =&gt; 5
+    [fish_net] =&gt; 2
+    [goldfish_weight] =&gt; 10
+)
+
+処理結果 = Array
+(
+    [goldfish_number] =&gt; 5
+    [fish_net] =&gt; 2
+    [goldfish_weight] =&gt; 10
+)
+
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>

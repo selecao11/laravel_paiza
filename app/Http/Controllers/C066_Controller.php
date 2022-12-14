@@ -15,19 +15,23 @@ class C066_Controller extends Controller
     * @return strng $headers ヘッダデータ配列
     * @todo         読み込んだ全データ配列からヘッダデータだけを抜き取る
     */
-    public function get_data_header($c113_datas){
+    public function get_data_header($c066_datas){
         /**
         * get_data_header
         *
-        * @var string   $headers['masu']      マスの数
-        * @var string   $headers['saikoro']   サイコロの内容
-        * @var int      $masu_saikoro_count   分割されたマスの数とサイコロを振った数
-        * @var boolean  $headers['is_success'] 処理が正常終了したか。 
+        * @var string   $masu_saikoro_counts
+        *               ヘッダ分割配列
+        * @var int      $headers['goldfish_number']
+        *               金魚の数
+        * @var int      $headers['fish_net']
+        *               パイの数
+        * @var int      $headers['goldfish_weight']
+        *               金魚の重さ
         */
-        #データの空白が２つ以上かCHECK
-        $masu_saikoro_count = explode(" ", $c113_datas[0]);
-        $headers['masu']=intval($masu_saikoro_count[0]);
-        $headers['saikoro']=intval($masu_saikoro_count[1]);
+        $masu_saikoro_count = explode(" ", $c066_datas[0]);
+        $headers['goldfish_number']=intval($masu_saikoro_count[0]);
+        $headers['fish_net']=intval($masu_saikoro_count[1]);
+        $headers['goldfish_weight']=intval($masu_saikoro_count[2]);
         return $headers;
     }
 
