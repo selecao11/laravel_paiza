@@ -11,25 +11,14 @@ class C066_Controller extends Controller
     /**
     * 全データからヘッダデータの取得
     *
-    * @param strng  $c066_datas 全データ配列
-    * @return strng $headers ヘッダデータ配列
+    * @param strng  $c066_datas         全データ配列
+    * @return strng $goldfish_weights   金魚の重さ配列
     * @todo         読み込んだ全データ配列から金魚の重さだけを抜き取る
     */
     public function Goldfish_Data_split($c066_datas){
-        /**
-        * Goldfish_Data_split
-        *
-        * @var string   $masu_saikoro_counts
-        *               ヘッダ分割配列
-        * @var int      $headers['goldfish_number']
-        *               金魚の数
-        * @var int      $headers['fish_net']
-        *               パイの数
-        * @var int      $headers['goldfish_weight']
-        *               金魚の重さ
-        */
         unset($c066_datas['0']);
-        $goldfish_weights = $c066_datas;
+        #配列のindexを振り直し
+        $goldfish_weights = array_merge($c066_datas);
         return $goldfish_weights;
     }
     /**
