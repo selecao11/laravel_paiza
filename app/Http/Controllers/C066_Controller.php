@@ -11,13 +11,37 @@ class C066_Controller extends Controller
     /**
     * 全データからヘッダデータの取得
     *
-    * @param strng  $c113_datas 全データ配列
+    * @param strng  $c066_datas 全データ配列
+    * @return strng $headers ヘッダデータ配列
+    * @todo         読み込んだ全データ配列から金魚の重さだけを抜き取る
+    */
+    public function Goldfish_Data_split($c066_datas){
+        /**
+        * Goldfish_Data_split
+        *
+        * @var string   $masu_saikoro_counts
+        *               ヘッダ分割配列
+        * @var int      $headers['goldfish_number']
+        *               金魚の数
+        * @var int      $headers['fish_net']
+        *               パイの数
+        * @var int      $headers['goldfish_weight']
+        *               金魚の重さ
+        */
+        unset($c066_datas['0']);
+        $goldfish_weights = $c066_datas;
+        return $goldfish_weights;
+    }
+    /**
+    * 全データからヘッダデータの取得
+    *
+    * @param strng  $c066_datas 全データ配列
     * @return strng $headers ヘッダデータ配列
     * @todo         読み込んだ全データ配列からヘッダデータだけを抜き取る
     */
-    public function get_data_header($c066_datas){
+    public function HeadData_Split($c066_datas){
         /**
-        * get_data_header
+        * HeadData_Split
         *
         * @var string   $masu_saikoro_counts
         *               ヘッダ分割配列
@@ -41,7 +65,7 @@ class C066_Controller extends Controller
     * @param    strng   $c113_datas 全データ配列
     * @todo             全データの空白数のCHECK
     */
-    public function check_multiple_blanks($c113_datas){
+    public function check_multiple_blanks($c066_datas){
         /**
         * check_multiple_blanks
         *
@@ -100,8 +124,8 @@ class C066_Controller extends Controller
         return $c066_datas;
     }
 
-    public function output__C113(){
-        //C113データを全て読み込み
+    public function output__C066(){
+        //C066データを全て読み込み
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C066.txt";
         try {
             $c113_datas = $this->input_file($file_name);
@@ -125,10 +149,10 @@ class C066_Controller extends Controller
         } 
 
         //抽出結果で面積を計算する
-        return view_C113('C099',compact('area'));
+        return view_C066('C066',compact('area'));
     }
 
-    public function index_C113(Request $request){
-        return view('C113');
+    public function index_C066(Request $request){
+        return view('C066');
     }
 }
