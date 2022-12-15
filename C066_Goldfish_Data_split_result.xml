@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C066_Goldfish_Data_split" file="C:\laravel_paiza\tests\Unit\UserTest_C066_Goldfish_Data_split.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.011234">
-    <testcase name="test_C066_Goldfish_Data_split" class="Tests\Unit\UserTest_C066_Goldfish_Data_split" classname="Tests.Unit.UserTest_C066_Goldfish_Data_split" file="C:\laravel_paiza\tests\Unit\UserTest_C066_Goldfish_Data_split.php" line="15" assertions="1" time="0.011234">
+  <testsuite name="Tests\Unit\UserTest_C066_Goldfish_Data_split" file="C:\laravel_paiza\tests\Unit\UserTest_C066_Goldfish_Data_split.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.015634">
+    <testcase name="test_C066_Goldfish_Data_split" class="Tests\Unit\UserTest_C066_Goldfish_Data_split" classname="Tests.Unit.UserTest_C066_Goldfish_Data_split" file="C:\laravel_paiza\tests\Unit\UserTest_C066_Goldfish_Data_split.php" line="15" assertions="1" time="0.015634">
       <system-out>
 期待値 = Array
 (

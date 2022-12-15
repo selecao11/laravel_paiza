@@ -30,11 +30,11 @@ class UserTest_C066_Goldfish_Data_split extends TestCase
         $C066_datas[5] = '4';
 
         #期待値
-        $expected_value[0] = '5';
-        $expected_value[1] = '5';
-        $expected_value[2] = '3';
-        $expected_value[3] = '1';
-        $expected_value[4] = '4';
+        $expected_value[0] = 5;
+        $expected_value[1] = 5;
+        $expected_value[2] = 3;
+        $expected_value[3] = 1;
+        $expected_value[4] = 4;
 
         $C066 = new C066_Controller();
         $goldfish_weights = $C066->Goldfish_Data_split($C066_datas);

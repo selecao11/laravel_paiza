@@ -1,12 +1,49 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Validator; // Validatorだけでも実行できる
 
 class C066_Controller extends Controller
 {
+    /**
+    * 金魚すくい
+    *
+    * @param strng  $goldfish_weights 金魚の重さ配列
+    * @return strng $headers ヘッダデータ配列
+    * @todo         ポイがなくなるまで金魚すくいをする
+    */
+    public function Scoop_Goldfish($headers,$goldfish_weights){
+        /**
+        * Scoop_Goldfish
+        *
+        * @var string   $masu_saikoro_counts
+        *               ヘッダ分割配列
+        */
+        $success_goldfish = 0;
+        $gw_index = 0;
+        $goldfish_number = $headers['goldfish_number'];#金魚の数
+        $fish_net = $headers['fish_net'];#網の数
+        $fish_net_durability = $headers['fish_net_durability'];#網の耐久性
+        while($gw_index<=$goldfish_number - 1){
+            #網がぼろぼろ
+            if($fish_net<=0){
+                return $goldfish_number;
+            }
+            if ($fish_net_durability >= $goldfish_weights[$gw_index]){
+                $success_goldfish = $success_goldfish +1;
+                $fish_net_durability = $fish_net_durability - 
+                            $goldfish_weights[$gw_index];#網の耐久がすくなくなる
+                $gw_index++;
+            }else{
+                $fish_net = $fish_net-1;
+                $fish_net_durability = 
+                    $headers['fish_net_durability'];#網の耐久性
+            }
+        }
+        return $goldfish_number;
+    }
 
     /**
     * 全データからヘッダデータの取得
@@ -18,7 +55,10 @@ class C066_Controller extends Controller
     public function Goldfish_Data_split($c066_datas){
         unset($c066_datas['0']);
         #配列のindexを振り直し
-        $goldfish_weights = array_merge($c066_datas);
+        $c066_datas = array_merge($c066_datas);
+        foreach($c066_datas as $c066_dv){
+            $goldfish_weights[] = intval($c066_dv);
+        }
         return $goldfish_weights;
     }
     /**
