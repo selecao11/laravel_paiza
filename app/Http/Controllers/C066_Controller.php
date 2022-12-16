@@ -27,17 +27,17 @@ class C066_Controller extends Controller
         $fish_net = $headers['fish_net'];#網の数
         $fish_net_durability = $headers['fish_net_durability'];#網の耐久性
         while($gw_index<=$goldfish_number - 1){
-            #網がぼろぼろ
             if($fish_net<=0){
                 return $goldfish_number;
             }
             if ($fish_net_durability >= $goldfish_weights[$gw_index]){
-                Log::error("error ログ!");
                 $success_goldfish = $success_goldfish +1;
+                #網の耐久がすくなくなる
                 $fish_net_durability = $fish_net_durability - 
-                            $goldfish_weights[$gw_index];#網の耐久がすくなくなる
-                $gw_index++;
+                            $goldfish_weights[$gw_index];
+                $gw_index=$gw_index + 1;
             }else{
+                #網がぼろぼろ
                 $fish_net = $fish_net-1;
                 $fish_net_durability = 
                     $headers['fish_net_durability'];#網の耐久性
@@ -47,7 +47,7 @@ class C066_Controller extends Controller
     }
 
     /**
-    * 全データからヘッダデータの取得
+    * 全データから金魚の重さデータの取得
     *
     * @param strng  $c066_datas         全データ配列
     * @return strng $goldfish_weights   金魚の重さ配列
@@ -158,28 +158,26 @@ class C066_Controller extends Controller
         //C066データを全て読み込み
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C066.txt";
         try {
-            $c113_datas = $this->input_file($file_name);
-            $this->check_multiple_blanks($c113_datas);
-            $this->check_numerical($c113_datas);
-            $head = $this->get_data_header($c113_datas);
+            $c066_datas = $this->input_file($file_name);
+            $this->check_multiple_blanks($c066_datas);
+            $this->check_numerical($c066_datas);
+            $headers = $this->HeadData_Split($c066_datas);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
         //入力データからヘッダーを削除
         $c113_datas = $this-> unset_data_head($c113_datas);
-        //データファイルからマスとサイコロデータを分割取得
-        $masu_saikoro_datas = $this->split_masu_saikoro($head,$c113_datas);
+        //データファイルからマスと金魚の重さデータを分割取得
+        $goldfish_weights = $this->Goldfish_Data_split($c066_datas);
 
-        //すごろく開始
-        $masu_saikoro_datas=$this-> shake_saikoro($head,$masu_saikoro_datas);
+        //金魚すくい開始
+        $goldfish_number = $this->Scoop_Goldfish($headers,$goldfish_weights);
 
-        //すごろく結果判断
-        if ($masu_saikoro_datas['sugoroku_goal'] == ""){
-            $masu_saikoro_datas['player_position']=$player_position;
-        } 
+        //金魚すくい結果整理
+        $C066['goldfish_number']=$goldfish_number;
 
-        //抽出結果で面積を計算する
-        return view_C066('C066',compact('area'));
+        //金魚すくい結果画面表示
+        return view_C066('C066',compact('C066'));
     }
 
     public function index_C066(Request $request){
