@@ -27,10 +27,11 @@ class C066_Controller extends Controller
         $fish_net = $headers['fish_net'];#網の数
         $fish_net_durability = $headers['fish_net_durability'];#網の耐久性
         while($gw_index<=$goldfish_number - 1){
+            Log::error($goldfish_weights[$gw_index]);
             if($fish_net<=0){
-                return $goldfish_number;
+                return $success_goldfish;
             }
-            if ($fish_net_durability >= $goldfish_weights[$gw_index]){
+            if ($fish_net_durability > $goldfish_weights[$gw_index]){
                 $success_goldfish = $success_goldfish +1;
                 #網の耐久がすくなくなる
                 $fish_net_durability = $fish_net_durability - 
@@ -43,7 +44,7 @@ class C066_Controller extends Controller
                     $headers['fish_net_durability'];#網の耐久性
             }
         }
-        return $goldfish_number;
+        return $success_goldfish;
     }
 
     /**

@@ -34,7 +34,7 @@ class UserTest_C066_Scoop_Goldfish extends TestCase
         $goldfish_weights[4] = 4;
 
         #期待値
-        $expected_value = 5;
+        $expected_value = 4;
 
         $C066 = new C066_Controller();
         $C066_success_goldfish = $C066->Scoop_Goldfish($C066_headers,$goldfish_weights);
