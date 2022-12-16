@@ -11,7 +11,8 @@ class C066_Controller extends Controller
     * 金魚すくい
     *
     * @param strng  $goldfish_weights 金魚の重さ配列
-    * @return strng $headers ヘッダデータ配列
+    * @param strng  $headers ヘッダデータ配列
+    * @return int   $success_goldfish ヘッダデータ配列
     * @todo         ポイがなくなるまで金魚すくいをする
     */
     public function Scoop_Goldfish($headers,$goldfish_weights){
@@ -20,26 +21,38 @@ class C066_Controller extends Controller
         *
         * @var string   $masu_saikoro_counts
         *               ヘッダ分割配列
+        * @var int      $gw_index
+        *               金魚の重さ配列のindex
+        * @var int      $goldfish_number
+        *               金魚の数
+        * @var int      $GOLD_NUMBER_LEN_SUB
+        *               金魚の重さ配列-1減算用定数 while　条件用
+        * @var int      $fish_net
+        *               網の数
+        * @var int      $fish_net_durability
+        *               網の耐久性
         */
+        #定数
+        $GOLD_NUMBER_LEN_SUB_ONE= 1;
+        #変数
         $success_goldfish = 0;
         $gw_index = 0;
-        $goldfish_number = $headers['goldfish_number'];#金魚の数
-        $fish_net = $headers['fish_net'];#網の数
-        $fish_net_durability = $headers['fish_net_durability'];#網の耐久性
-        while($gw_index<=$goldfish_number - 1){
-            Log::error($goldfish_weights[$gw_index]);
+        $goldfish_number = $headers['goldfish_number'];
+        $fish_net = $headers['fish_net'];
+        $fish_net_durability = $headers['fish_net_durability'];
+        while($gw_index<=$goldfish_number - $GOLD_NUMBER_LEN_SUB_ONE){
             if($fish_net<=0){
                 return $success_goldfish;
             }
             if ($fish_net_durability > $goldfish_weights[$gw_index]){
-                $success_goldfish = $success_goldfish +1;
+                ++$success_goldfish;
                 #網の耐久がすくなくなる
                 $fish_net_durability = $fish_net_durability - 
                             $goldfish_weights[$gw_index];
-                $gw_index=$gw_index + 1;
+                ++$gw_index;
             }else{
                 #網がぼろぼろ
-                $fish_net = $fish_net-1;
+                --$fish_net;
                 $fish_net_durability = 
                     $headers['fish_net_durability'];#網の耐久性
             }
@@ -74,8 +87,14 @@ class C066_Controller extends Controller
         /**
         * HeadData_Split
         *
-        * @var string   $masu_saikoro_counts
+        * @var          $masu_saikoro_counts
         *               ヘッダ分割配列
+        * @var int      $GOLDFISH_NUMBER_ZERO
+        *               ヘッダ内の金魚の数の位置
+        * @var int      $FISH_NET_ONE
+        *               ヘッダ内のパイの数の位置
+        * @var int      $FISH_NET_DURABILITY
+        *               ヘッダ内のパイの耐久性
         * @var int      $headers['goldfish_number']
         *               金魚の数
         * @var int      $headers['fish_net']
@@ -83,10 +102,15 @@ class C066_Controller extends Controller
         * @var int      $headers['goldfish_weight']
         *               金魚の重さ
         */
+        #定数
+        $GOLDFISH_NUMBER_ZERO=0;
+        $FISH_NET_ONE=1;
+        $FISH_NET_DURABILITY = 2;
         $masu_saikoro_count = explode(" ", $c066_datas[0]);
-        $headers['goldfish_number']=intval($masu_saikoro_count[0]);
-        $headers['fish_net']=intval($masu_saikoro_count[1]);
-        $headers['goldfish_weight']=intval($masu_saikoro_count[2]);
+        $headers['goldfish_number']=intval(
+            $masu_saikoro_count[$GOLDFISH_NUMBER_ZERO]);
+        $headers['fish_net']=intval($masu_saikoro_count[$FISH_NET_ONE]);
+        $headers['fish_net_durability']=intval($masu_saikoro_count[$FISH_NET_DURABILITY]);
         return $headers;
     }
 
@@ -134,7 +158,7 @@ class C066_Controller extends Controller
         foreach ($datas as $v){
             if(!preg_match('/^[0-9]+$/', $v)){
                 #英字の場合
-                throw new Exception('コマ数かサイコロに数字以外が入力されている。');
+                throw new Exception('金魚の重さに数字以外が入力されている。');
             }
         }
     }
@@ -160,24 +184,25 @@ class C066_Controller extends Controller
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C066.txt";
         try {
             $c066_datas = $this->input_file($file_name);
-            $this->check_multiple_blanks($c066_datas);
-            $this->check_numerical($c066_datas);
+#            $this->check_multiple_blanks($c066_datas);
+#            $this->check_numerical($c066_datas);
             $headers = $this->HeadData_Split($c066_datas);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
         //入力データからヘッダーを削除
-        $c113_datas = $this-> unset_data_head($c113_datas);
+#        $$c066_datas = $this-> unset_data_head($c066_datas);
         //データファイルからマスと金魚の重さデータを分割取得
         $goldfish_weights = $this->Goldfish_Data_split($c066_datas);
 
         //金魚すくい開始
-        $goldfish_number = $this->Scoop_Goldfish($headers,$goldfish_weights);
+        $success_goldfish = $this->Scoop_Goldfish($headers,$goldfish_weights);
 
         //金魚すくい結果整理
-        $C066['goldfish_number']=$goldfish_number;
+        $C066['goldfish_number']=$success_goldfish;
 
         //金魚すくい結果画面表示
+        return $success_goldfish;
         return view_C066('C066',compact('C066'));
     }
 

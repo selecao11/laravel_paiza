@@ -28,6 +28,7 @@ class UserTest_C066_input_file extends TestCase
         $expected_value[4] = '1';
         $expected_value[5] = '4';
 
+
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C066.txt";
         $C066 = new C066_Controller();
         $c066_datas = $C066->input_file($file_name);
