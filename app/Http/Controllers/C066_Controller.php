@@ -32,6 +32,7 @@ class C066_Controller extends Controller
                 return $goldfish_number;
             }
             if ($fish_net_durability >= $goldfish_weights[$gw_index]){
+                Log::error("error ログ!");
                 $success_goldfish = $success_goldfish +1;
                 $fish_net_durability = $fish_net_durability - 
                             $goldfish_weights[$gw_index];#網の耐久がすくなくなる
@@ -89,7 +90,7 @@ class C066_Controller extends Controller
     }
 
     /**
-    * マスデータの複数空白チェック
+    * 金魚すくいヘッダの複数空白チェック
     *
     * @param    strng   $c113_datas 全データ配列
     * @todo             全データの空白数のCHECK
@@ -119,10 +120,10 @@ class C066_Controller extends Controller
     }
 
     /**
-    * サイコロデータの数字チェック
+    * 金魚すくいデータの数字チェック
     *
     * @param    strng   $c113_datas 全データ配列
-    * @todo             ヘッダーとサイコロデータの数字チェック
+    * @todo             金魚すくいデータの数字チェック
     */
     public function check_numerical($datas){
         /**
@@ -140,8 +141,8 @@ class C066_Controller extends Controller
     /**
     * ファイルの読み込みと配列への格納
     *
-    * @param strng $c066_file_name データファイルPath
-    * @return array strng $c066_datas 全データ配列
+    * @param strng $c066_file_name  データファイルPath
+    * @return strng $c066_datas     全データ配列
     * @todo 	 読み込んだファイルデータを配列にいれる
     */
     public function input_file($c066_file_name){
