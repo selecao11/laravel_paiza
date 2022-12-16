@@ -154,7 +154,7 @@ class C066_Controller extends Controller
         return $c066_datas;
     }
 
-    public function output__C066(){
+    public function output_C066(){
         //C066データを全て読み込み
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C066.txt";
         try {
