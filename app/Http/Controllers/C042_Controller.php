@@ -47,13 +47,13 @@ class C066_Controller extends Controller
             if ($fish_net_durability > $goldfish_weights[$gw_index]){
                 ++$success_goldfish;
                 #網の耐久がすくなくなる
-                $fish_net_durability = $fish_net_durability - 
+                $fish_net_durability = $fish_net_durability -
                             $goldfish_weights[$gw_index];
                 ++$gw_index;
             }else{
                 #網がぼろぼろ
                 --$fish_net;
-                $fish_net_durability = 
+                $fish_net_durability =
                     $headers['fish_net_durability'];#網の耐久性
             }
         }
@@ -79,38 +79,24 @@ class C066_Controller extends Controller
     /**
     * 全データからヘッダデータの取得
     *
-    * @param strng  $c066_datas 全データ配列
+    * @param strng  $c042_datas 全データ配列
     * @return strng $headers ヘッダデータ配列
     * @todo         読み込んだ全データ配列からヘッダデータだけを抜き取る
     */
-    public function HeadData_Split($c066_datas){
+    public function HeadData_Split($c042_datas){
         /**
         * HeadData_Split
         *
-        * @var          $masu_saikoro_counts
-        *               ヘッダ分割配列
-        * @var int      $GOLDFISH_NUMBER_ZERO
-        *               ヘッダ内の金魚の数の位置
-        * @var int      $FISH_NET_ONE
-        *               ヘッダ内のパイの数の位置
-        * @var int      $FISH_NET_DURABILITY
-        *               ヘッダ内のパイの耐久性
-        * @var int      $headers['goldfish_number']
-        *               金魚の数
-        * @var int      $headers['fish_net']
-        *               パイの数
-        * @var int      $headers['goldfish_weight']
-        *               金魚の重さ
+        * @var          $Participants_Numbers
+        *               大会参加者配列
+        * @var int      $headers['Total_participants']
+        *               大会の参加者の総数
         */
         #定数
-        $GOLDFISH_NUMBER_ZERO=0;
-        $FISH_NET_ONE=1;
-        $FISH_NET_DURABILITY = 2;
-        $masu_saikoro_count = explode(" ", $c066_datas[0]);
-        $headers['goldfish_number']=intval(
-            $masu_saikoro_count[$GOLDFISH_NUMBER_ZERO]);
-        $headers['fish_net']=intval($masu_saikoro_count[$FISH_NET_ONE]);
-        $headers['fish_net_durability']=intval($masu_saikoro_count[$FISH_NET_DURABILITY]);
+        $TOTAL_PARTCIPANTS_NUMBER_ZERO=0;
+        $Participants_Numbers = explode(" ", $c042_datas[0]);
+        $headers['Total_participants']=intval(
+            $Participants_Number[$TOTAL_PARTCIPANTS_NUMBER_ZERO]);
         return $headers;
     }
 
