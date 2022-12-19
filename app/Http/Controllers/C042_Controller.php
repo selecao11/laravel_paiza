@@ -8,16 +8,16 @@ use Validator; // Validatorだけでも実行できる
 class C042_Controller extends Controller
 {
     /**
-    * 金魚すくい
+    * 成績表作成
     *
     * @param strng  $goldfish_weights 金魚の重さ配列
     * @param strng  $headers ヘッダデータ配列
     * @return int   $success_goldfish ヘッダデータ配列
     * @todo         ポイがなくなるまで金魚すくいをする
     */
-    public function Scoop_Goldfish($headers,$goldfish_weights){
+    public function Aggregate_Grades($headers,$goldfish_weights){
         /**
-        * Scoop_Goldfish
+        * Aggregate_Grades
         *
         * @var string   $masu_saikoro_counts
         *               ヘッダ分割配列
