@@ -170,13 +170,13 @@ class C066_Controller extends Controller
     * @return strng $c066_datas     全データ配列
     * @todo 	 読み込んだファイルデータを配列にいれる
     */
-    public function input_file($c066_file_name){
-        //$file_name = "/var/www/html/laravel_app/app/Http/Controllers/C113.txt";
-        $c066_file = file_get_contents($c066_file_name);
+    public function input_file($c042_file_name){
+        //$file_name = "/var/www/html/laravel_app/app/Http/Controllers/C042.txt";
+        $c042_file = file_get_contents($c042_file_name);
         //データファイルのファイル末尾改行の削除
-        $c066_file = trim($c066_file);
-        $c066_datas = explode("\r\n", $c066_file);
-        return $c066_datas;
+        $c042_file = trim($c042_file);
+        $c042_datas = explode("\r\n", $c042_file);
+        return $c042_datas;
     }
 
     public function output_C042(){
