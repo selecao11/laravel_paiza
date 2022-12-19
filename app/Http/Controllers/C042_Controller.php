@@ -47,13 +47,13 @@ class C066_Controller extends Controller
             if ($fish_net_durability > $goldfish_weights[$gw_index]){
                 ++$success_goldfish;
                 #網の耐久がすくなくなる
-                $fish_net_durability = $fish_net_durability - 
+                $fish_net_durability = $fish_net_durability -
                             $goldfish_weights[$gw_index];
                 ++$gw_index;
             }else{
                 #網がぼろぼろ
                 --$fish_net;
-                $fish_net_durability = 
+                $fish_net_durability =
                     $headers['fish_net_durability'];#網の耐久性
             }
         }
@@ -67,14 +67,14 @@ class C066_Controller extends Controller
     * @return strng $goldfish_weights   金魚の重さ配列
     * @todo         読み込んだ全データ配列から金魚の重さだけを抜き取る
     */
-    public function Goldfish_Data_split($c066_datas){
-        unset($c066_datas['0']);
+    public function Grades_Data_select($c042_datas){
+        unset($c042_datas['0']);
         #配列のindexを振り直し
-        $c066_datas = array_merge($c066_datas);
-        foreach($c066_datas as $c066_dv){
-            $goldfish_weights[] = intval($c066_dv);
+        $c042_datas = array_merge($c042_datas);
+        foreach($c042_datas as $c042_dv){
+            $Grades_Data[] = intval($c042_dv);
         }
-        return $goldfish_weights;
+        return $Grades_Data;
     }
     /**
     * 全データからヘッダデータの取得
