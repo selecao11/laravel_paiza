@@ -207,6 +207,6 @@ class C066_Controller extends Controller
     }
 
     public function index_C066(Request $request){
-        return view('C066');
+        return view('C042');
     }
 }
