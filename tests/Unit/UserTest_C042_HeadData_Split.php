@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use App\Http\Controllers\C042_Controller;
 
-class UserTest_C042_HeadData_Split extends TestCase
+class UserTest_C042_HeadData_Split extends TestCase_a
 {
     /**
      * A basic unit test example.  テスト2
