@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Validator; // Validatorだけでも実行できる
 
-class C066_Controller extends Controller
+class C042_Controller extends Controller
 {
     /**
     * 金魚すくい
@@ -171,11 +171,10 @@ class C066_Controller extends Controller
     * @todo 	 読み込んだファイルデータを配列にいれる
     */
     public function input_file($c042_file_name){
-        //$file_name = "/var/www/html/laravel_app/app/Http/Controllers/C042.txt";
         $c042_file = file_get_contents($c042_file_name);
-        //データファイルのファイル末尾改行の削除
+        //一行になっている入力データのファイル末尾改行の削除
         $c042_file = trim($c042_file);
-        $c042_datas = explode("\r\n", $c042_file);
+        $c042_datas = explode("\n", $c042_file);
         return $c042_datas;
     }
 
