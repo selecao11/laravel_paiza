@@ -61,11 +61,11 @@ class C042_Controller extends Controller
     }
 
     /**
-    * 全データから金魚の重さデータの取得
+    * 全データから成績データの取得
     *
-    * @param strng  $c066_datas         全データ配列
+    * @param strng  $c042_datas         全データ配列
     * @return strng $goldfish_weights   金魚の重さ配列
-    * @todo         読み込んだ全データ配列から金魚の重さだけを抜き取る
+    * @todo         読み込んだ全データ配列から成績だけを抜き取る
     */
     public function Grades_Data_select($c042_datas){
         unset($c042_datas['0']);
