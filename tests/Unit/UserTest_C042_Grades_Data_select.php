@@ -27,9 +27,12 @@ class UserTest_C042_Grades_Data_select extends TestCase
         $c042_datas[3] = '2 3';
 
         #期待値
-        $expected_value[0] = '1 3';
-        $expected_value[1] = '2 1';
-        $expected_value[2] = '2 3';
+        $expected_value[0]['f'] = 1;
+        $expected_value[0]['s'] = 3;
+        $expected_value[1]['f'] = 2;
+        $expected_value[1]['s'] = 1;
+        $expected_value[2]['f'] = 2;
+        $expected_value[2]['s'] = 3;
 
         #        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         $C042 = new C042_Controller() ;
@@ -39,7 +42,7 @@ class UserTest_C042_Grades_Data_select extends TestCase
         print_r("\n");
         print_r($expected_value);
         print_r("処理結果 = ");
-        print_r($headers);
+        print_r($Grades_Data);
         $this->assertEquals($Grades_Data, $expected_value);
     }
 
