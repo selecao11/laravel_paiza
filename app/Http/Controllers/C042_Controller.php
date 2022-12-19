@@ -96,7 +96,7 @@ class C042_Controller extends Controller
         $TOTAL_PARTCIPANTS_NUMBER_ZERO=0;
         $Participants_Numbers = explode(" ", $c042_datas[0]);
         $headers['Total_participants']=intval(
-            $Participants_Number[$TOTAL_PARTCIPANTS_NUMBER_ZERO]);
+            $Participants_Numbers[$TOTAL_PARTCIPANTS_NUMBER_ZERO]);
         return $headers;
     }
 
