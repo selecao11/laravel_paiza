@@ -47,13 +47,13 @@ class C066_Controller extends Controller
             if ($fish_net_durability > $goldfish_weights[$gw_index]){
                 ++$success_goldfish;
                 #網の耐久がすくなくなる
-                $fish_net_durability = $fish_net_durability - 
+                $fish_net_durability = $fish_net_durability -
                             $goldfish_weights[$gw_index];
                 ++$gw_index;
             }else{
                 #網がぼろぼろ
                 --$fish_net;
-                $fish_net_durability = 
+                $fish_net_durability =
                     $headers['fish_net_durability'];#網の耐久性
             }
         }
@@ -179,31 +179,31 @@ class C066_Controller extends Controller
         return $c066_datas;
     }
 
-    public function output_C066(){
-        //C066データを全て読み込み
-        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C066.txt";
+    public function output_C042(){
+        //C042データを全て読み込み
+        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         try {
-            $c066_datas = $this->input_file($file_name);
+            $c042_datas = $this->input_file($file_name);
 #            $this->check_multiple_blanks($c066_datas);
 #            $this->check_numerical($c066_datas);
-            $headers = $this->HeadData_Split($c066_datas);
+            $headers = $this->HeadData_Split($c042_datas);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
         //入力データからヘッダーを削除
 #        $$c066_datas = $this-> unset_data_head($c066_datas);
-        //データファイルからマスと金魚の重さデータを分割取得
-        $goldfish_weights = $this->Goldfish_Data_split($c066_datas);
+        //データファイルから成績データを抽出する。
+        $Gradebooks = $this->Grades_Data_selec($c042_datas);
 
-        //金魚すくい開始
-        $success_goldfish = $this->Scoop_Goldfish($headers,$goldfish_weights);
+        //リーグ表の作成開始
+        $success_goldfish = $this->Aggregate_Grades($headers,$goldfish_weights);
 
-        //金魚すくい結果整理
-        $C066['goldfish_number']=$success_goldfish;
+        //リーグ表の作成結果整理
+        $C042['goldfish_number']=$success_goldfish;
 
-        //金魚すくい結果画面表示
+        //C042_リーグ表の結果画面表示
         return $success_goldfish;
-        return view_C066('C066',compact('C066'));
+        return view_C042('C042',compact('C042'));
     }
 
     public function index_C066(Request $request){
