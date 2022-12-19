@@ -71,8 +71,12 @@ class C042_Controller extends Controller
         unset($c042_datas['0']);
         #配列のindexを振り直し
         $c042_datas = array_merge($c042_datas);
-        foreach($c042_datas as $c042_dv){
-            $Grades_Data[] = intval($c042_dv);
+        foreach($c042_datas as $c042_datas_i=> $c042_dv){
+            $w = explode(" ", $c042_dv);
+            $Grades_Data[$c042_datas_i]['f'] = intval($w[0]);
+            $Grades_Data[$c042_datas_i]['s'] = intval($w[1]);
+            #一時領域解放
+            unset($w);
         }
         return $Grades_Data;
     }
