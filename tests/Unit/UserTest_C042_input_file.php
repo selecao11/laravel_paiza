@@ -27,7 +27,7 @@ class UserTest_C042_input_file extends TestCase
         $expected_value[3] = '2 3';
 
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
-        $C042 = new C042_Controller();
+        $C042 = new C042_Controller() ;
         $c042_datas = $C042->input_file($file_name);
         print_r("\n");
         print_r("期待値 = ");
