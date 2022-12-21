@@ -19,16 +19,6 @@ class C042_Controller extends Controller
         /**
         * Aggregate_Grades
         *
-        * @var string   $masu_saikoro_counts
-        *               ヘッダ分割配列
-        * @var int      $gw_index
-        *               金魚の重さ配列のindex
-        * @var int      $goldfish_number
-        *               金魚の数
-        * @var int      $GOLD_NUMBER_LEN_SUB
-        *               金魚の重さ配列-1減算用定数 while　条件用
-        * @var int      $fish_net
-        *               網の数
         * @var int      $fish_net_durability
         *               網の耐久性
         */
