@@ -1,67 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" tests="1" assertions="1" errors="0" warnings="0" failures="1" skipped="0" time="0.022107">
-    <testcase name="test_C042_Aggregate_Grades" class="Tests\Unit\UserTest_C042_Aggregate_Grades" classname="Tests.Unit.UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" line="15" assertions="1" time="0.022107">
-      <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\UserTest_C042_Aggregate_Grades::test_C042_Aggregate_Grades
-Failed asserting that two arrays are equal.
---- Expected
-+++ Actual
-@@ @@
-     3 =&gt; Array (
-         1 =&gt; 'L'
-         2 =&gt; 'L'
-+        3 =&gt; '-'
-     )
-     2 =&gt; Array (...)
- )
-
-C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php:52</failure>
+  <testsuite name="Tests\Unit\UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.012636">
+    <testcase name="test_C042_Aggregate_Grades_init" class="Tests\Unit\UserTest_C042_Aggregate_Grades" classname="Tests.Unit.UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" line="11" assertions="1" time="0.012392">
       <system-out>
 期待値 = 
 Array
 (
-    [1] =&gt; Array
+    [0] =&gt; Array
         (
-            [3] =&gt; w
+            [0] =&gt; -
             [1] =&gt; -
-            [2] =&gt; L
+            [2] =&gt; -
         )
 
-    [3] =&gt; Array
+    [1] =&gt; Array
         (
-            [1] =&gt; L
-            [3] =&gt; -
-            [2] =&gt; L
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
     [2] =&gt; Array
         (
-            [1] =&gt; w
+            [0] =&gt; -
+            [1] =&gt; -
             [2] =&gt; -
-            [3] =&gt; w
         )
 
 )
 処理結果 = Array
 (
-    [1] =&gt; Array
+    [0] =&gt; Array
         (
-            [3] =&gt; w
+            [0] =&gt; -
             [1] =&gt; -
-            [2] =&gt; L
+            [2] =&gt; -
         )
 
-    [3] =&gt; Array
+    [1] =&gt; Array
         (
-            [1] =&gt; L
-            [2] =&gt; L
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
     [2] =&gt; Array
         (
-            [1] =&gt; w
+            [0] =&gt; -
+            [1] =&gt; -
             [2] =&gt; -
-            [3] =&gt; w
+        )
+
+)
+</system-out>
+    </testcase>
+    <testcase name="test_C042_Aggregate_Grades" class="Tests\Unit\UserTest_C042_Aggregate_Grades" classname="Tests.Unit.UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" line="47" assertions="1" time="0.000244">
+      <system-out>
+期待値 = 
+Array
+(
+    [0] =&gt; Array
+        (
+            [0] =&gt; -
+            [1] =&gt; L
+            [2] =&gt; w
+        )
+
+    [1] =&gt; Array
+        (
+            [0] =&gt; w
+            [1] =&gt; -
+            [2] =&gt; w
+        )
+
+    [2] =&gt; Array
+        (
+            [0] =&gt; L
+            [1] =&gt; L
+            [2] =&gt; -
+        )
+
+)
+処理結果 = Array
+(
+    [0] =&gt; Array
+        (
+            [0] =&gt; -
+            [1] =&gt; L
+            [2] =&gt; w
+        )
+
+    [1] =&gt; Array
+        (
+            [0] =&gt; w
+            [1] =&gt; -
+            [2] =&gt; w
+        )
+
+    [2] =&gt; Array
+        (
+            [0] =&gt; L
+            [1] =&gt; L
+            [2] =&gt; -
         )
 
 )

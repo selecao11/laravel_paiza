@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.013711">
-    <testcase name="test_C042_Aggregate_Grades_init" class="Tests\Unit\UserTest_C042_Aggregate_Grades" classname="Tests.Unit.UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" line="11" assertions="1" time="0.013711">
+  <testsuite name="Tests\Unit\UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.011268">
+    <testcase name="test_C042_Aggregate_Grades_init" class="Tests\Unit\UserTest_C042_Aggregate_Grades" classname="Tests.Unit.UserTest_C042_Aggregate_Grades" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Aggregate_Grades.php" line="11" assertions="1" time="0.011268">
       <system-out>
 期待値 = 
 Array
 (
     [0] =&gt; Array
         (
-            [0] =&gt; 
-            [1] =&gt; 
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
     [1] =&gt; Array
         (
-            [0] =&gt; 
-            [1] =&gt; 
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
     [2] =&gt; Array
         (
-            [0] =&gt; 
-            [1] =&gt; 
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
 )
@@ -29,20 +32,23 @@ Array
 (
     [0] =&gt; Array
         (
-            [0] =&gt; 
-            [1] =&gt; 
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
     [1] =&gt; Array
         (
-            [0] =&gt; 
-            [1] =&gt; 
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
     [2] =&gt; Array
         (
-            [0] =&gt; 
-            [1] =&gt; 
+            [0] =&gt; -
+            [1] =&gt; -
+            [2] =&gt; -
         )
 
 )
