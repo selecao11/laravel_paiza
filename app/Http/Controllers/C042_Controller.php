@@ -8,6 +8,24 @@ use Validator; // Validatorだけでも実行できる
 class C042_Controller extends Controller
 {
     /**
+    * 成績表初期化
+    *
+    * @param strng  $goldfish_weights 金魚の重さ配列
+    * @param strng  $headers ヘッダデータ配列
+    * @return int   $success_goldfish ヘッダデータ配列
+    * @todo         ポイがなくなるまで金魚すくいをする
+    */
+    public function Aggregate_Grades_init($headers){
+        $tp=$headers['Total_participants'];
+        $ARRAY_INIT=0;
+        $MATCH_COUNT=2;
+        for ($i=0;$i<$tp;++$i){
+            $Match_Result=array_fill($ARRAY_INIT, $MATCH_COUNT, "");
+            $Victory_Tables[$i]=$Match_Result;
+        }
+        return $Victory_Tables;
+    }
+    /**
     * 成績表作成
     *
     * @param strng  $goldfish_weights 金魚の重さ配列
@@ -15,7 +33,7 @@ class C042_Controller extends Controller
     * @return int   $success_goldfish ヘッダデータ配列
     * @todo         ポイがなくなるまで金魚すくいをする
     */
-    public function Aggregate_Grades($headers,$goldfish_weights){
+    public function Aggregate_Grades($headers,$Grades_Data){
         /**
         * Aggregate_Grades
         *
@@ -23,31 +41,16 @@ class C042_Controller extends Controller
         *               網の耐久性
         */
         #定数
-        $GOLD_NUMBER_LEN_SUB_ONE= 1;
+        $ARRAY_INIT=0;
         #変数
-        $success_goldfish = 0;
-        $gw_index = 0;
-        $goldfish_number = $headers['goldfish_number'];
-        $fish_net = $headers['fish_net'];
-        $fish_net_durability = $headers['fish_net_durability'];
-        while($gw_index<=$goldfish_number - $GOLD_NUMBER_LEN_SUB_ONE){
-            if($fish_net<=0){
-                return $success_goldfish;
-            }
-            if ($fish_net_durability > $goldfish_weights[$gw_index]){
-                ++$success_goldfish;
-                #網の耐久がすくなくなる
-                $fish_net_durability = $fish_net_durability -
-                            $goldfish_weights[$gw_index];
-                ++$gw_index;
-            }else{
-                #網がぼろぼろ
-                --$fish_net;
-                $fish_net_durability =
-                    $headers['fish_net_durability'];#網の耐久性
-            }
+#        $victory_tables[i][j];
+        $Victory_Tables = $this->Aggregate_Grades_init($headers);
+        foreach($Grades_Data as $gd){
+            $victory_tables[$gd['f']][$gd['s']]='w';#勝者
+            $victory_tables[$gd['f']][$gd['f']]='-';# -
+            $victory_tables[$gd['s']][$gd['f']]='L';#敗者
         }
-        return $success_goldfish;
+        return $victory_tables;
     }
 
     /**
