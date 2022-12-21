@@ -18,9 +18,9 @@ class C042_Controller extends Controller
     public function Aggregate_Grades_init($headers){
         $tp=$headers['Total_participants'];
         $ARRAY_INIT=0;
-        $MATCH_COUNT=2;
+        $GAME_COUNT=3;
         for ($i=0;$i<$tp;++$i){
-            $Match_Result=array_fill($ARRAY_INIT, $MATCH_COUNT, "");
+            $Match_Result=array_fill($ARRAY_INIT, $GAME_COUNT, "-");
             $Victory_Tables[$i]=$Match_Result;
         }
         return $Victory_Tables;
@@ -46,11 +46,10 @@ class C042_Controller extends Controller
 #        $victory_tables[i][j];
         $Victory_Tables = $this->Aggregate_Grades_init($headers);
         foreach($Grades_Data as $gd){
-            $victory_tables[$gd['f']][$gd['s']]='w';#勝者
-            $victory_tables[$gd['f']][$gd['f']]='-';# -
-            $victory_tables[$gd['s']][$gd['f']]='L';#敗者
+            $Victory_Tables[$gd['f']-1][$gd['s']-1]='w';#勝者
+            $Victory_Tables[$gd['s']-1][$gd['f']-1]='L';#敗者
         }
-        return $victory_tables;
+        return $Victory_Tables;
     }
 
     /**

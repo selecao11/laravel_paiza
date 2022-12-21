@@ -17,12 +17,15 @@ class UserTest_C042_Aggregate_Grades extends TestCase
     php artisan test --log-junit ./C042_Aggregate_Grades_init_result.xml --filter test_C042_Aggregate_Grades_init tests/Unit/UserTest_C042_Aggregate_Grades.php
     */
         #期待値
-        $expected_value[0][0] = '';
-        $expected_value[0][1] = '';
-        $expected_value[1][0] = '';
-        $expected_value[1][1] = '';
-        $expected_value[2][0] = '';
-        $expected_value[2][1] = '';
+        $expected_value[0][0] = '-';
+        $expected_value[0][1] = '-';
+        $expected_value[0][2] = '-';
+        $expected_value[1][0] = '-';
+        $expected_value[1][1] = '-';
+        $expected_value[1][2] = '-';
+        $expected_value[2][0] = '-';
+        $expected_value[2][1] = '-';
+        $expected_value[2][2] = '-';
 
         $headers['Total_participants']=3;
         $C042 = new C042_Controller() ;
@@ -58,16 +61,19 @@ class UserTest_C042_Aggregate_Grades extends TestCase
         $c042_datas[2]['s'] = 3;
 
         #期待値
-        $expected_value[1][3] = 'w';
-        $expected_value[3][1] = 'L';
-        $expected_value[2][1] = 'w';
-        $expected_value[1][2] = 'L';
-        $expected_value[2][3] = 'w';
-        $expected_value[3][2] = 'L';
-
+        $expected_value[0][0] = '-';
+        $expected_value[0][1] = 'L';
+        $expected_value[0][2] = 'w';
+        $expected_value[1][0] = 'w';
+        $expected_value[1][1] = '-';
+        $expected_value[1][2] = 'w';
+        $expected_value[2][0] = 'L';
+        $expected_value[2][1] = 'L';
+        $expected_value[2][2] = '-';
+        $headers['Total_participants']=3;
         #        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         $C042 = new C042_Controller() ;
-        $Grades_Data = $C042->Aggregate_Grades($c042_datas);
+        $Grades_Data = $C042->Aggregate_Grades($headers,$c042_datas);
         print_r("\n");
         print_r("期待値 = ");
         print_r("\n");
