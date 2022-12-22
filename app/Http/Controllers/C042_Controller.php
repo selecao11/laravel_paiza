@@ -67,7 +67,7 @@ class C042_Controller extends Controller
     * @return strng $goldfish_weights   金魚の重さ配列
     * @todo         抜き取った成績データをSORTする
     */
-    public function Grades_Data_select_sort($c042_datas){
+    public function Grades_Data_select_sort($Grades_Data){
         foreach( $Grades_Data as $gdkey => $gd_row ) {
             $tmp_f[$gdkey] = $gd_row["f"];
             $tmp_s[$gdkey] = $gd_row["s"];
@@ -94,7 +94,6 @@ class C042_Controller extends Controller
             #一時領域解放
             unset($w);
         }
-        $Grades_Data = $this->Grades_Data_select_sort($Grades_Data);
         return $Grades_Data;
     }
     /**
