@@ -20,7 +20,7 @@ class C042_Controller extends Controller
         $ARRAY_INIT=0;
         $GAME_COUNT=3;
         for ($i=0;$i<$tp;++$i){
-            $Match_Result=array_fill($ARRAY_INIT, $GAME_COUNT, "-");
+            $Match_Result=array_fill($ARRAY_INIT, $tp, "-");
             $Victory_Tables[$i]=$Match_Result;
         }
         return $Victory_Tables;

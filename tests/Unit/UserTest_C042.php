@@ -21,15 +21,33 @@ class UserTest_C042 extends TestCase
     php artisan test --log-junit ./C042_result.xml --filter test_C042 tests/Unit/UserTest_C042.php
     */    {
         #期待値
+
         $expected_value[0][0] = '-';
-        $expected_value[0][1] = 'L';
+        $expected_value[0][1] = 'w';
         $expected_value[0][2] = 'w';
-        $expected_value[1][0] = 'w';
+        $expected_value[0][3] = 'w';
+        $expected_value[0][4] = 'w';
+        $expected_value[1][0] = 'L';
         $expected_value[1][1] = '-';
         $expected_value[1][2] = 'w';
+        $expected_value[1][3] = 'w';
+        $expected_value[1][4] = 'L';
         $expected_value[2][0] = 'L';
         $expected_value[2][1] = 'L';
         $expected_value[2][2] = '-';
+        $expected_value[2][3] = 'w';
+        $expected_value[2][4] = 'L';
+        $expected_value[3][0] = 'L';
+        $expected_value[3][1] = 'L';
+        $expected_value[3][2] = 'L';
+        $expected_value[3][3] = '-';
+        $expected_value[3][4] = 'L';
+        $expected_value[4][0] = 'L';
+        $expected_value[4][1] = 'w';
+        $expected_value[4][2] = 'w';
+        $expected_value[4][3] = 'w';
+        $expected_value[4][4] = '-';
+
 
         $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         $C042 = new C042_Controller() ;
