@@ -179,9 +179,9 @@ class C066_Controller extends Controller
         return $c066_datas;
     }
 
-    public function output_C042(){
+    public function output_C042($file_name){
         //C042データを全て読み込み
-        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
+        #$file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         try {
             $c042_datas = $this->input_file($file_name);
 #            $this->check_multiple_blanks($c066_datas);
