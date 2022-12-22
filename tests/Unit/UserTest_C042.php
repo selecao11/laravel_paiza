@@ -12,13 +12,13 @@ class UserTest_C042 extends TestCase
      *
      * @return void
      */
-    public function test_C042_input_file()
+    public function test_C042()
     /*
-    #C066_result.xmlファイル作成
-    type nul > ./C042_input_file_result.xml
+    #C042_result.xmlファイル作成
+    type nul > ./C042_result.xml
 
     #UT実行
-    php artisan test --log-junit ./C042_input_file_result.xml --filter test_C042_input_file tests/Unit/UserTest_C042_input_file.php
+    php artisan test --log-junit ./C042_result.xml --filter test_C042 tests/Unit/UserTest_C042.php
     */    {
         #期待値
         $expected_value[0] = '3';
