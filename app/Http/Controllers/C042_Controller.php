@@ -160,9 +160,9 @@ class C042_Controller extends Controller
         return $c042_datas;
     }
 
-    public function output_C042(){
+    public function output_C042($file_name){
         //C042データを全て読み込み
-        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
+        #$file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         try {
             $c042_datas = $this->input_file($file_name);
 #            $this->check_multiple_blanks($c066_datas);
@@ -174,10 +174,10 @@ class C042_Controller extends Controller
         //入力データからヘッダーを削除
 #        $$c066_datas = $this-> unset_data_head($c066_datas);
         //データファイルから成績データを抽出する。
-        $Gradebooks = $this->Grades_Data_selec($c042_datas);
+        $Gradebooks = $this->Grades_Data_select($c042_datas);
 
         //リーグ表の作成開始
-        $success_goldfish = $this->Aggregate_Grades($headers,$goldfish_weights);
+        $success_goldfish = $this->Aggregate_Grades($headers,$Gradebooks);
 
         //リーグ表の作成結果整理
         $C042['goldfish_number']=$success_goldfish;
