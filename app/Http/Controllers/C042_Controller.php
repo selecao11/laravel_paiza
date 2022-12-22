@@ -191,11 +191,11 @@ class C042_Controller extends Controller
         //入力データからヘッダーを削除
 #        $$c066_datas = $this-> unset_data_head($c066_datas);
         //データファイルから成績データを抽出する。
-        $Gradebooks = $this->Grades_Data_selec($c042_datas);
+        $Gradebooks = $this->Grades_Data_select($c042_datas);
+        $Gradebooks = $this->Grades_Data_select_sort($Gradebooks);
 
         //リーグ表の作成開始
         $success_goldfish = $this->Aggregate_Grades($headers,$Gradebooks);
-        $Gradebooks = $this->Grades_Data_select_sort($Gradebooks);
         //リーグ表の作成結果整理
         $C042['goldfish_number']=$success_goldfish;
 
