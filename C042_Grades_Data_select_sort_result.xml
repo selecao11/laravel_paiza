@@ -1,52 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C042_Grades_Data_select" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Grades_Data_select.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.011469">
-    <testcase name="test_C042_Grades_Data_select_sort" class="Tests\Unit\UserTest_C042_Grades_Data_select" classname="Tests.Unit.UserTest_C042_Grades_Data_select" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Grades_Data_select.php" line="53" assertions="1" time="0.011469">
-      <system-out>
-期待値 = 
-Array
-(
-    [0] =&gt; Array
-        (
-            [f] =&gt; 1
-            [s] =&gt; 3
-        )
+  <testsuite name="Tests\Unit\UserTest_C042_Grades_Data_select" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Grades_Data_select.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.014330">
+    <testcase name="test_C042_Grades_Data_select_sort" class="Tests\Unit\UserTest_C042_Grades_Data_select" classname="Tests.Unit.UserTest_C042_Grades_Data_select" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Grades_Data_select.php" line="53" assertions="0" time="0.014330">
+      <error type="Error">Tests\Unit\UserTest_C042_Grades_Data_select::test_C042_Grades_Data_select_sort
+Error: Class "App\Http\Controllers\C042_Controller" not found
 
-    [1] =&gt; Array
-        (
-            [f] =&gt; 2
-            [s] =&gt; 1
-        )
-
-    [2] =&gt; Array
-        (
-            [f] =&gt; 2
-            [s] =&gt; 3
-        )
-
-)
-処理結果 = Array
-(
-    [0] =&gt; Array
-        (
-            [f] =&gt; 1
-            [s] =&gt; 3
-        )
-
-    [1] =&gt; Array
-        (
-            [f] =&gt; 2
-            [s] =&gt; 1
-        )
-
-    [2] =&gt; Array
-        (
-            [f] =&gt; 2
-            [s] =&gt; 3
-        )
-
-)
-</system-out>
+C:\laravel_paiza\tests\Unit\UserTest_C042_Grades_Data_select.php:79</error>
     </testcase>
   </testsuite>
 </testsuites>
