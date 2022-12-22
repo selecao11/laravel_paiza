@@ -28,38 +28,50 @@ class C042_Controller extends Controller
     /**
     * 成績表作成
     *
-    * @param strng  $goldfish_weights 金魚の重さ配列
-    * @param strng  $headers ヘッダデータ配列
-    * @return int   $success_goldfish ヘッダデータ配列
-    * @todo         ポイがなくなるまで金魚すくいをする
+    * @param int    $headers ヘッダデータ配列
+    * @param int    $Grades_Data ソート済成績データ配列
+    * @return int   $Victory_Tables 成績処理結果配列
+    * @todo         対戦成績により、「W」「L」を設定する
     */
     public function Aggregate_Grades($headers,$Grades_Data){
         /**
         * Aggregate_Grades
         *
-        * @var int      $fish_net_durability
-        *               網の耐久性
+        * @var int      $ARRAY_SUB_ONE  成績データindex調整用
+        * @var string   $WINNER         勝者用記号 「W」
+        * @var string   $ARRAY_SUB_ONE  敗者用記号 「L」
         */
         #定数
-        $ARRAY_INIT=0;
+        $ARRAY_SUB_ONE=1;
+        $WINNER="W";
+        $LOSER="L";
         #変数
-#        $victory_tables[i][j];
         $Victory_Tables = $this->Aggregate_Grades_init($headers);
         foreach($Grades_Data as $gd){
-            $Victory_Tables[$gd['f']-1][$gd['s']-1]='w';#勝者
-            $Victory_Tables[$gd['s']-1][$gd['f']-1]='L';#敗者
+            $Victory_Tables [$gd['f']-$ARRAY_SUB_ONE]
+                            [$gd['s']-$ARRAY_SUB_ONE]=$WINNER;#勝者
+            $Victory_Tables [$gd['s']-$ARRAY_SUB_ONE]
+                            [$gd['f']-$ARRAY_SUB_ONE]=$LOSER;#敗者
         }
         return $Victory_Tables;
     }
 
     /**
-    * 取得成績データのSORT
+    * 取得成績データ配列のSORT
     *
     * @param strng  $c042_datas         全データ配列
-    * @return strng $goldfish_weights   金魚の重さ配列
-    * @todo         抜き取った成績データをSORTする
+    * @return strng $Grades_Data        SORT成績データ配列
+    * @todo         抜き取った成績データを昇順にSORTする
     */
     public function Grades_Data_select_sort($Grades_Data){
+        /**
+        * Grades_Data_select_sort
+        *
+        * @var  int     $gdkey          成績データ配列のindex
+        * @var  int     $tmp_f          SORT用成績データ配列
+        * @var  int     $gd_row["f"]    勝利者の番号データ
+        * @var  int     $gd_row["s"]    敗者の番号データ
+        */
         foreach( $Grades_Data as $gdkey => $gd_row ) {
             $tmp_f[$gdkey] = $gd_row["f"];
             $tmp_s[$gdkey] = $gd_row["s"];
@@ -72,13 +84,18 @@ class C042_Controller extends Controller
     /**
     * 全データから成績データの取得
     *
-    * @param strng  $c042_datas         全データ配列
-    * @return strng $goldfish_weights   金魚の重さ配列
+    * @param strng  $c042_datas     全データ配列
+    * @return strng $Grades_Data    金魚の重さ配列
     * @todo         読み込んだ全データ配列から成績だけを抜き取る
     */
     public function Grades_Data_select($c042_datas){
-        unset($c042_datas['0']);
-        #配列のindexを振り直し
+        /**
+        * Grades_Data_select
+        *
+        * @var  int     $c042_datas_i
+        *               成績データのindex
+        */
+        unset($c042_datas['0']);#ヘッダを削除し配列のindexを振り直し
         $c042_datas = array_merge($c042_datas);
         foreach($c042_datas as $c042_datas_i=> $c042_dv){
             $w = explode(" ", $c042_dv);
@@ -92,9 +109,9 @@ class C042_Controller extends Controller
     /**
     * 全データからヘッダデータの取得
     *
-    * @param strng  $c042_datas 全データ配列
-    * @return strng $headers ヘッダデータ配列
-    * @todo         読み込んだ全データ配列からヘッダデータだけを抜き取る
+    * @param    strng   $c042_datas 全データ配列
+    * @return   int     $headers ヘッダデータ配列
+    * @todo             読み込んだ全データ配列から参加社数だけを抜き取る
     */
     public function HeadData_Split($c042_datas){
         /**
@@ -114,7 +131,7 @@ class C042_Controller extends Controller
     }
 
     /**
-    * 金魚すくいヘッダの複数空白チェック
+    * 成績表ヘッダの複数空白チェック
     *
     * @param    strng   $c113_datas 全データ配列
     * @todo             全データの空白数のCHECK
@@ -165,8 +182,8 @@ class C042_Controller extends Controller
     /**
     * ファイルの読み込みと配列への格納
     *
-    * @param strng $c066_file_name  データファイルPath
-    * @return strng $c066_datas     全データ配列
+    * @param strng  $c042_file_name  データファイルPath
+    * @return strng $c042_datas     全データ配列
     * @todo 	 読み込んだファイルデータを配列にいれる
     */
     public function input_file($c042_file_name){
