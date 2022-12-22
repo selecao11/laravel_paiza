@@ -192,8 +192,9 @@ class C066_Controller extends Controller
         }
         //入力データからヘッダーを削除
 #        $$c066_datas = $this-> unset_data_head($c066_datas);
-        //データファイルから成績データを抽出する。
+        //データファイルから成績データを抽出してSORTする。
         $Gradebooks = $this->Grades_Data_selec($c042_datas);
+        $Gradebooks = $this->Grades_Data_select_sort($Gradebooks);
 
         //リーグ表の作成開始
         $success_goldfish = $this->Aggregate_Grades($headers,$goldfish_weights);
