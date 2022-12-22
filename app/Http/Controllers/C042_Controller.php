@@ -53,6 +53,22 @@ class C042_Controller extends Controller
     }
 
     /**
+    * 取得成績データのSORT
+    *
+    * @param strng  $c042_datas         全データ配列
+    * @return strng $goldfish_weights   金魚の重さ配列
+    * @todo         抜き取った成績データをSORTする
+    */
+    public function Grades_Data_select_sort($Grades_Data){
+        foreach( $Grades_Data as $gdkey => $gd_row ) {
+            $tmp_f[$gdkey] = $gd_row["f"];
+            $tmp_s[$gdkey] = $gd_row["s"];
+          }
+        $Grades_Data = array_multisort( $tmp_f, SORT_ASC,
+                                        $tmp_s, SORT_ASC);
+        return $Grades_Data;
+    }
+    /**
     * 全データから成績データの取得
     *
     * @param strng  $c042_datas         全データ配列
