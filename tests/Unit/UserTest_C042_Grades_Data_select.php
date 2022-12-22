@@ -59,10 +59,13 @@ class UserTest_C042_Grades_Data_select extends TestCase
     php artisan test --log-junit ./C042_Grades_Data_select_sort_result.xml --filter test_C042_Grades_Data_select_sort tests/Unit/UserTest_C042_Grades_Data_select.php
     */    {
 
-        $c042_datas[0] = '3';
-        $c042_datas[1] = '1 3';
-        $c042_datas[2] = '2 3';
-        $c042_datas[3] = '2 1';
+        $c042_datas[0]['f'] = 1;
+        $c042_datas[0]['s'] = 3;
+        $c042_datas[1]['f'] = 2;
+        $c042_datas[1]['s'] = 3;
+        $c042_datas[2]['f'] = 2;
+        $c042_datas[2]['s'] = 1;
+
 
         #期待値
         $expected_value[0]['f'] = 1;

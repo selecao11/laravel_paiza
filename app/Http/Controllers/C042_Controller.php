@@ -64,8 +64,9 @@ class C042_Controller extends Controller
             $tmp_f[$gdkey] = $gd_row["f"];
             $tmp_s[$gdkey] = $gd_row["s"];
           }
-        $Grades_Data = array_multisort( $tmp_f, SORT_ASC,
-                                        $tmp_s, SORT_ASC);
+            array_multisort( $tmp_f, SORT_ASC,
+                                        $tmp_s, SORT_ASC,
+                                        $Grades_Data);
         return $Grades_Data;
     }
     /**
