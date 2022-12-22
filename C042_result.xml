@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" tests="1" assertions="1" errors="0" warnings="0" failures="1" skipped="0" time="0.019169">
-    <testcase name="test_C042" class="Tests\Unit\UserTest_C042" classname="Tests.Unit.UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" line="15" assertions="1" time="0.019169">
+  <testsuite name="Tests\Unit\UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" tests="1" assertions="1" errors="0" warnings="0" failures="1" skipped="0" time="0.017525">
+    <testcase name="test_C042" class="Tests\Unit\UserTest_C042" classname="Tests.Unit.UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" line="15" assertions="1" time="0.017525">
       <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Unit\UserTest_C042::test_C042
 Failed asserting that two arrays are equal.
 --- Expected
