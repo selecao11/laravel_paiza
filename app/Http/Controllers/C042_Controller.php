@@ -8,56 +8,48 @@ use Validator; // Validatorだけでも実行できる
 class C042_Controller extends Controller
 {
     /**
-    * 金魚すくい
+    * 成績表初期化
     *
     * @param strng  $goldfish_weights 金魚の重さ配列
     * @param strng  $headers ヘッダデータ配列
     * @return int   $success_goldfish ヘッダデータ配列
     * @todo         ポイがなくなるまで金魚すくいをする
     */
-    public function Scoop_Goldfish($headers,$goldfish_weights){
+    public function Aggregate_Grades_init($headers){
+        $tp=$headers['Total_participants'];
+        $ARRAY_INIT=0;
+        $GAME_COUNT=3;
+        for ($i=0;$i<$tp;++$i){
+            $Match_Result=array_fill($ARRAY_INIT, $GAME_COUNT, "-");
+            $Victory_Tables[$i]=$Match_Result;
+        }
+        return $Victory_Tables;
+    }
+    /**
+    * 成績表作成
+    *
+    * @param strng  $goldfish_weights 金魚の重さ配列
+    * @param strng  $headers ヘッダデータ配列
+    * @return int   $success_goldfish ヘッダデータ配列
+    * @todo         ポイがなくなるまで金魚すくいをする
+    */
+    public function Aggregate_Grades($headers,$Grades_Data){
         /**
-        * Scoop_Goldfish
+        * Aggregate_Grades
         *
-        * @var string   $masu_saikoro_counts
-        *               ヘッダ分割配列
-        * @var int      $gw_index
-        *               金魚の重さ配列のindex
-        * @var int      $goldfish_number
-        *               金魚の数
-        * @var int      $GOLD_NUMBER_LEN_SUB
-        *               金魚の重さ配列-1減算用定数 while　条件用
-        * @var int      $fish_net
-        *               網の数
         * @var int      $fish_net_durability
         *               網の耐久性
         */
         #定数
-        $GOLD_NUMBER_LEN_SUB_ONE= 1;
+        $ARRAY_INIT=0;
         #変数
-        $success_goldfish = 0;
-        $gw_index = 0;
-        $goldfish_number = $headers['goldfish_number'];
-        $fish_net = $headers['fish_net'];
-        $fish_net_durability = $headers['fish_net_durability'];
-        while($gw_index<=$goldfish_number - $GOLD_NUMBER_LEN_SUB_ONE){
-            if($fish_net<=0){
-                return $success_goldfish;
-            }
-            if ($fish_net_durability > $goldfish_weights[$gw_index]){
-                ++$success_goldfish;
-                #網の耐久がすくなくなる
-                $fish_net_durability = $fish_net_durability -
-                            $goldfish_weights[$gw_index];
-                ++$gw_index;
-            }else{
-                #網がぼろぼろ
-                --$fish_net;
-                $fish_net_durability =
-                    $headers['fish_net_durability'];#網の耐久性
-            }
+#        $victory_tables[i][j];
+        $Victory_Tables = $this->Aggregate_Grades_init($headers);
+        foreach($Grades_Data as $gd){
+            $Victory_Tables[$gd['f']-1][$gd['s']-1]='w';#勝者
+            $Victory_Tables[$gd['s']-1][$gd['f']-1]='L';#敗者
         }
-        return $success_goldfish;
+        return $Victory_Tables;
     }
 
     /**
@@ -72,8 +64,9 @@ class C042_Controller extends Controller
             $tmp_f[$gdkey] = $gd_row["f"];
             $tmp_s[$gdkey] = $gd_row["s"];
           }
-        $Grades_Data = array_multisort( $tmp_f, SORT_ASC,
-                                        $tmp_s, SORT_ASC);
+            array_multisort( $tmp_f, SORT_ASC,
+                                        $tmp_s, SORT_ASC,
+                                        $Grades_Data);
         return $Grades_Data;
     }
     /**
@@ -184,9 +177,9 @@ class C042_Controller extends Controller
         return $c042_datas;
     }
 
-    public function output_C042(){
+    public function output_C042($file_name){
         //C042データを全て読み込み
-        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
+        #$file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         try {
             $c042_datas = $this->input_file($file_name);
 #            $this->check_multiple_blanks($c066_datas);
@@ -201,8 +194,8 @@ class C042_Controller extends Controller
         $Gradebooks = $this->Grades_Data_selec($c042_datas);
 
         //リーグ表の作成開始
-        $success_goldfish = $this->Aggregate_Grades($headers,$goldfish_weights);
-
+        $success_goldfish = $this->Aggregate_Grades($headers,$Gradebooks);
+        $Gradebooks = $this->Grades_Data_select_sort($Gradebooks);
         //リーグ表の作成結果整理
         $C042['goldfish_number']=$success_goldfish;
 
