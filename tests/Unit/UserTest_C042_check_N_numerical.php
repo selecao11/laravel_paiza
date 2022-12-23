@@ -21,8 +21,6 @@ class UserTest_C042_check_N_numerical extends TestCase
     #UT実行
     php artisan test --log-junit ./C042_check_N_numerical_result.xml --filter test_C042_check_N_numerical tests/Unit/UserTest_C042_check_N_numerical.php
     */    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('エラーです。');
 #https://mutimutisan.com/phpunit-error-exception
         #期待値
         $expected_value['Total_participants'] = 3;
@@ -34,7 +32,7 @@ class UserTest_C042_check_N_numerical extends TestCase
             $C042->check_N_numerical($c042_datas);
 #            $this->sut->テスト対象メソッド();       //   ２：メソッド実行
             } catch  (\Exception $ex)  {
-            $this->assertStringContainsString("Duplicate entry", $ex->getMessage());
+            $this->assertStringContainsString("試合参加者数に数字以外が入力されている。", $ex->getMessage());
             }
 #        $file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
 /*         print_r("\n");

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Validator; // Validatorだけでも実行できる
+use Exception;
 
 class C042_Controller extends Controller
 {
