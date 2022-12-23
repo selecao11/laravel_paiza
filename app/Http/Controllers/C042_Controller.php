@@ -11,16 +11,25 @@ class C042_Controller extends Controller
     /**
     * 成績表初期化
     *
-    * @param strng  $goldfish_weights 金魚の重さ配列
-    * @param strng  $headers ヘッダデータ配列
-    * @return int   $success_goldfish ヘッダデータ配列
-    * @todo         ポイがなくなるまで金魚すくいをする
+    * @param strng  $headers        ヘッダデータ配列
+    * @return int   $Victory_Tables 初期化済成績表配列
+    * @todo         成績表の要素を全て"-"に初期化する。
     */
     public function Aggregate_Grades_init($headers){
+        /**
+        * Aggregate_Grades_init
+        *
+        * @var int      $headers['Total_participants']
+        *               試合参加者数
+        * @var int      $ARRAY_INIT
+        *               初期化開始index位置
+        * @var string   $Match_Result
+        *               初期化済試合結果配列
+        */
         $tp=$headers['Total_participants'];
         $ARRAY_INIT=0;
-        $GAME_COUNT=3;
         for ($i=0;$i<$tp;++$i){
+            #試合別初期化
             $Match_Result=array_fill($ARRAY_INIT, $tp, "-");
             $Victory_Tables[$i]=$Match_Result;
         }
@@ -29,8 +38,8 @@ class C042_Controller extends Controller
     /**
     * 成績表作成
     *
-    * @param int    $headers ヘッダデータ配列
-    * @param int    $Grades_Data ソート済成績データ配列
+    * @param int    $headers        ヘッダデータ配列
+    * @param int    $Grades_Data    ソート済成績データ配列
     * @return int   $Victory_Tables 成績処理結果配列
     * @todo         対戦成績により、「W」「L」を設定する
     */
@@ -77,9 +86,9 @@ class C042_Controller extends Controller
             $tmp_f[$gdkey] = $gd_row["f"];
             $tmp_s[$gdkey] = $gd_row["s"];
           }
-            array_multisort( $tmp_f, SORT_ASC,
-                                        $tmp_s, SORT_ASC,
-                                        $Grades_Data);
+            array_multisort(    $tmp_f, SORT_ASC,
+                                $tmp_s, SORT_ASC,
+                                $Grades_Data);
         return $Grades_Data;
     }
     /**
@@ -150,8 +159,8 @@ class C042_Controller extends Controller
         */
         #定数
         $TOTAL_PARTCIPANTS_NUMBER_ZERO=0;
-        $Participants_Numbers = explode(" ", $c042_datas[0]);
-        return $Participants_Number[0];
+        $Participants_Number = $c042_datas[0];
+        return $Participants_Number;
     }
 
     /**
@@ -207,7 +216,7 @@ class C042_Controller extends Controller
 #            $this->check_multiple_blanks($c066_datas);
 #            $this->check_numerical($c066_datas);
             $Participants_Number = $this->HeadData_Split($c042_datas);
-            $this->check_N_numerical($Participants_Number);
+            $headers = $this->check_N_numerical($Participants_Number);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
