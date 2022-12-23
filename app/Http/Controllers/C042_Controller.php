@@ -166,16 +166,14 @@ class C042_Controller extends Controller
     * @param    strng   $c113_datas 全データ配列
     * @todo             金魚すくいデータの数字チェック
     */
-    public function check_numerical($datas){
+    public function check_N_numerical($headers){
         /**
-        * check_numerical_saikoro
+        * check_N_numerical
         *
         */
-        foreach ($datas as $v){
-            if(!preg_match('/^[0-9]+$/', $v)){
-                #英字の場合
-                throw new Exception('金魚の重さに数字以外が入力されている。');
-            }
+        if(!preg_match('/^[0-9]+$/', $headers['Total_participants'])){
+            #英字の場合
+            throw new Exception('試合参加者数に数字以外が入力されている。');
         }
     }
 
