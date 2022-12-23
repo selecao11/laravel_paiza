@@ -1,106 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.032941">
-    <testcase name="test_C042" class="Tests\Unit\UserTest_C042" classname="Tests.Unit.UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" line="15" assertions="1" time="0.032941">
-      <system-out>
-期待値 = 
-Array
-(
-    [0] =&gt; Array
-        (
-            [0] =&gt; -
-            [1] =&gt; w
-            [2] =&gt; w
-            [3] =&gt; w
-            [4] =&gt; w
-        )
+  <testsuite name="Tests\Unit\UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.023102">
+    <testcase name="test_C042" class="Tests\Unit\UserTest_C042" classname="Tests.Unit.UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" line="15" assertions="0" time="0.023102">
+      <error type="PHPUnit\Framework\Error\Warning">Tests\Unit\UserTest_C042::test_C042
+Undefined variable $headers
 
-    [1] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; -
-            [2] =&gt; w
-            [3] =&gt; w
-            [4] =&gt; L
-        )
-
-    [2] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; L
-            [2] =&gt; -
-            [3] =&gt; w
-            [4] =&gt; L
-        )
-
-    [3] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; L
-            [2] =&gt; L
-            [3] =&gt; -
-            [4] =&gt; L
-        )
-
-    [4] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; w
-            [2] =&gt; w
-            [3] =&gt; w
-            [4] =&gt; -
-        )
-
-)
-処理結果 = Array
-(
-    [0] =&gt; Array
-        (
-            [0] =&gt; -
-            [1] =&gt; w
-            [2] =&gt; w
-            [3] =&gt; w
-            [4] =&gt; w
-        )
-
-    [1] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; -
-            [2] =&gt; w
-            [3] =&gt; w
-            [4] =&gt; L
-        )
-
-    [2] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; L
-            [2] =&gt; -
-            [3] =&gt; w
-            [4] =&gt; L
-        )
-
-    [3] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; L
-            [2] =&gt; L
-            [3] =&gt; -
-            [4] =&gt; L
-        )
-
-    [4] =&gt; Array
-        (
-            [0] =&gt; L
-            [1] =&gt; w
-            [2] =&gt; w
-            [3] =&gt; w
-            [4] =&gt; -
-        )
-
-)
-</system-out>
+C:\laravel_paiza\app\Http\Controllers\C042_Controller.php:217
+C:\laravel_paiza\tests\Unit\UserTest_C042.php:54</error>
     </testcase>
   </testsuite>
 </testsuites>
