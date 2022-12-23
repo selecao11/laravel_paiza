@@ -23,13 +23,13 @@ class UserTest_C042_check_N_numerical extends TestCase
     #https://mutimutisan.com/phpunit-error-exception
     */    {
         #期待値
-        $expected_value = "試合参加者数に数字以外が入力されている。";
+        $expected_value = "参加者データに数字以外が入力されている。";
         #入力値
         $c042_datas = '3ss';
 
         try {
             $C042 = new C042_Controller() ;
-            $C042->check_N_numerical($c042_datas);
+            $C042->check_Head_data($c042_datas);
 #            $this->sut->テスト対象メソッド();       //   ２：メソッド実行
             } catch  (\Exception $ex)  {
                 print_r("\n");

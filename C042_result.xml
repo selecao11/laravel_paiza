@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.023857">
-    <testcase name="test_C042" class="Tests\Unit\UserTest_C042" classname="Tests.Unit.UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" line="15" assertions="1" time="0.023857">
+  <testsuite name="Tests\Unit\UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.033711">
+    <testcase name="test_C042" class="Tests\Unit\UserTest_C042" classname="Tests.Unit.UserTest_C042" file="C:\laravel_paiza\tests\Unit\UserTest_C042.php" line="15" assertions="1" time="0.033711">
       <system-out>
 期待値 = 
 Array

@@ -117,30 +117,39 @@ class C042_Controller extends Controller
         return $Grades_Data;
     }
     /**
-    * 参加者の数字チェック
+    * データの数字チェック
     *
     * @param    strng   $c042_datas 全データ配列
-    * @todo             参加者データの数字チェック
+    * @todo             数字チェック
     */
-    public function check_N_numerical($Participants_Number){
+    public function check_numerical($stage,$check_data){
         /**
         * check_N_numerical
         *
         */
-        if ($Participants_Number == 1) {
-            throw new Exception;
-        }
-        if (!preg_match('/[0-9]+$/', $Participants_Number)) {
+        if (!preg_match('/[0-9]+$/', $check_data)) {
             // 数字の場合
-            throw new Exception('試合参加者数に数字以外が入力されている。');
-
+            throw new Exception($stage.'に数字以外が入力されている。');
         }else {
-            $headers['Total_participants']=intval(
-                $Participants_Number);
-            return $headers;
+            $data = intval($check_data);
+            return $data;
         }
     }
-
+    /**
+    * ヘッダの数字チェック
+    *
+    * @param    strng   $c042_datas 全データ配列
+    * @return   int     $match_result_data
+    *                   数字チェック済ヘッダデータ
+    * @todo             参加者データの数字チェック
+    */
+    public function check_Head_data($Participants_Number){
+        $stage="参加者データ";
+        $check_data = $Participants_Number;
+        $data = $this->check_numerical($stage,$check_data);
+        $headers['Total_participants'] = $data;
+        return $headers;
+        }
     /**
     * 全データからヘッダデータの取得
     *
@@ -213,15 +222,11 @@ class C042_Controller extends Controller
         #$file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
         try {
             $c042_datas = $this->input_file($file_name);
-#            $this->check_multiple_blanks($c066_datas);
-#            $this->check_numerical($c066_datas);
             $Participants_Number = $this->HeadData_Split($c042_datas);
-            $headers = $this->check_N_numerical($Participants_Number);
+            $headers = $this->check_Head_data($Participants_Number);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
-        //入力データからヘッダーを削除
-#        $$c066_datas = $this-> unset_data_head($c066_datas);
         //データファイルから成績データを抽出する。
         $Gradebooks = $this->Grades_Data_select($c042_datas);
         $Gradebooks = $this->Grades_Data_select_sort($Gradebooks);
