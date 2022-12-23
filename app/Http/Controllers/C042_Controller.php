@@ -200,6 +200,7 @@ class C042_Controller extends Controller
 #            $this->check_multiple_blanks($c066_datas);
 #            $this->check_numerical($c066_datas);
             $headers = $this->HeadData_Split($c042_datas);
+            $this->check_N_numerical($headers);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
