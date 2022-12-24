@@ -65,7 +65,6 @@ class C042_Controller extends Controller
         }
         return $Victory_Tables;
     }
-
     /**
     * 取得成績データ配列のSORT
     *
@@ -92,21 +91,6 @@ class C042_Controller extends Controller
         return $Grades_Data;
     }
     /**
-    * 全データからヘッドデータの削除
-    *
-    * @param strng  $c042_datas     全データ配列
-    * @return strng $c042_datas     ヘッドデータ削除済成績配列
-    * @todo         読み込んだ全データ配列からヘッドデータを削除する
-    */
-    public function Unset_Head_data($c042_datas){
-        /**
-        * Unset_Head_data
-        */
-        unset($c042_datas['0']);#ヘッダを削除し配列のindexを振り直し
-        $c042_datas = array_merge($c042_datas);
-        return $c042_datas;
-    }
-    /**
     * 全データから成績データの取得
     *
     * @param strng  $c042_datas     全データ配列
@@ -130,11 +114,48 @@ class C042_Controller extends Controller
         return $Grades_Data;
     }
     /**
-    * 成績データの重複チェック
+    * 全データからヘッドデータの削除
+    *
+    * @param strng  $c042_datas     全データ配列
+    * @return strng $c042_datas     ヘッドデータ削除済成績配列
+    * @todo         読み込んだ全データ配列からヘッドデータを削除する
+    */
+    public function Unset_Head_data($c042_datas){
+        /**
+        * Unset_Head_data
+        */
+        unset($c042_datas['0']);#ヘッダを削除し配列のindexを振り直し
+        $c042_datas = array_merge($c042_datas);
+        return $c042_datas;
+    }
+    /**
+    * 成績データの重複試合チェック
     *
     * @param    int    $c042_datas チェック未成績データ
     * @return   int     $c042_datas チェック済成績データ
-    * @todo             成績データの重複チェックを行う。
+    * @todo             成績データの重複試合のチェックを行う。
+    */
+    public function Check_Duplicate_Match($c042_datas){
+        /**
+        * Check_Duplicate_Match
+        *
+        */
+        $MAX_ONE = 1;
+        foreach($c042_datas as $cd){
+            $list = explode(" ", $cd);
+            $value_count = array_count_values($list);
+            $max = max($value_count); // 最大の出現回数を取得する
+            if ($max != $MAX_ONE){
+                throw new Exception('試合データの重複がある');
+            }
+        }
+    }
+    /**
+    * 成績データの重複要素チェック
+    *
+    * @param    int    $c042_datas チェック未成績データ
+    * @return   int     $c042_datas チェック済成績データ
+    * @todo             成績データの重複要素チェックを行う。
     */
     public function Check_Duplication($c042_datas){
         /**
@@ -146,8 +167,6 @@ class C042_Controller extends Controller
         $unique_c042_datas_len = count($unique_c042_datas);
         if ($unique_c042_datas_len != $c042_datas_len){
             throw new Exception('成績データの重複がある');
-        }else{
-            return $c042_datas = $unique_c042_datas;
         }
     }
     /**
@@ -260,7 +279,8 @@ class C042_Controller extends Controller
             $Participants_Number = $this->HeadData_Split($c042_datas);
             $headers = $this->check_Head_data($Participants_Number);
             $c042_datas = $this->Unset_Head_data($c042_datas);
-            $c042_datas = $this->Check_Duplication($c042_datas);
+            $this->Check_Duplication($c042_datas);
+            $this->Check_Duplicate_Match($c042_datas);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
