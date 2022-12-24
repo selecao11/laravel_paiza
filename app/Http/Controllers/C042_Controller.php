@@ -92,6 +92,21 @@ class C042_Controller extends Controller
         return $Grades_Data;
     }
     /**
+    * 全データからヘッドデータの削除
+    *
+    * @param strng  $c042_datas     全データ配列
+    * @return strng $c042_datas     ヘッドデータ削除済成績配列
+    * @todo         読み込んだ全データ配列からヘッドデータを削除する
+    */
+    public function Unset_Head_data($c042_datas){
+        /**
+        * Unset_Head_data
+        */
+        unset($c042_datas['0']);#ヘッダを削除し配列のindexを振り直し
+        $c042_datas = array_merge($c042_datas);
+        return $c042_datas;
+    }
+    /**
     * 全データから成績データの取得
     *
     * @param strng  $c042_datas     全データ配列
@@ -105,8 +120,6 @@ class C042_Controller extends Controller
         * @var  int     $c042_datas_i
         *               成績データのindex
         */
-        unset($c042_datas['0']);#ヘッダを削除し配列のindexを振り直し
-        $c042_datas = array_merge($c042_datas);
         foreach($c042_datas as $c042_datas_i=> $c042_dv){
             $w = explode(" ", $c042_dv);
             $Grades_Data[$c042_datas_i]['f'] = intval($w[0]);
@@ -117,10 +130,32 @@ class C042_Controller extends Controller
         return $Grades_Data;
     }
     /**
+    * 成績データの重複チェック
+    *
+    * @param    int    $c042_datas チェック未成績データ
+    * @return   int     $c042_datas チェック済成績データ
+    * @todo             成績データの重複チェックを行う。
+    */
+    public function Check_Duplication($c042_datas){
+        /**
+        * Check_Duplication
+        *
+        */
+        $c042_datas_len = count($c042_datas);
+        $unique_c042_datas = array_unique($c042_datas);
+        $unique_c042_datas_len = count($unique_c042_datas);
+        if ($unique_c042_datas_len != $c042_datas_len){
+            throw new Exception($c042_datas.'成績データの重複がある');
+        }else{
+            return $c042_datas = $unique_c042_datas;
+        }
+    }
+    /**
     * データの数字チェック
     *
     * @param    strng   $c042_datas 全データ配列
-    * @todo             数字チェック
+    * @return   int     $data　     チェック済成績データ
+    * @todo     データの数字チェックを行う。
     */
     public function check_numerical($stage,$check_data){
         /**
@@ -224,6 +259,8 @@ class C042_Controller extends Controller
             $c042_datas = $this->input_file($file_name);
             $Participants_Number = $this->HeadData_Split($c042_datas);
             $headers = $this->check_Head_data($Participants_Number);
+            $c042_datas = $this->Unset_Head_data($c042_datas);
+            $c042_datas = $this->Check_Duplication($c042_datas);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
