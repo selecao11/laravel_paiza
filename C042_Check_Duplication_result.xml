@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_C042_Check_Duplication" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Check_Duplication.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.011238">
+    <testcase name="test_Check_Duplication" class="Tests\Unit\UserTest_C042_Check_Duplication" classname="Tests.Unit.UserTest_C042_Check_Duplication" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Check_Duplication.php" line="15" assertions="1" time="0.011238">
+      <system-out>
+期待値 = 成績データの重複がある
+処理結果 = 成績データの重複がある</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>

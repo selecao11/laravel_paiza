@@ -145,7 +145,7 @@ class C042_Controller extends Controller
         $unique_c042_datas = array_unique($c042_datas);
         $unique_c042_datas_len = count($unique_c042_datas);
         if ($unique_c042_datas_len != $c042_datas_len){
-            throw new Exception($c042_datas.'成績データの重複がある');
+            throw new Exception('成績データの重複がある');
         }else{
             return $c042_datas = $unique_c042_datas;
         }
