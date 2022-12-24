@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_C042_Check_C042_Data" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Check_C042_Data.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.011371">
+    <testcase name="test_Check_C042_Data" class="Tests\Unit\UserTest_C042_Check_C042_Data" classname="Tests.Unit.UserTest_C042_Check_C042_Data" file="C:\laravel_paiza\tests\Unit\UserTest_C042_Check_C042_Data.php" line="15" assertions="1" time="0.011371">
+      <system-out>
+期待値 = 成績データの数字が1から20の範囲ではない。
+処理結果 = 成績データの数字が1から20の範囲ではない。</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>

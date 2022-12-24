@@ -132,12 +132,15 @@ class C042_Controller extends Controller
     * 成績データの重複試合チェック
     *
     * @param    int    $c042_datas チェック未成績データ
-    * @return   int     $c042_datas チェック済成績データ
     * @todo             成績データの重複試合のチェックを行う。
     */
     public function Check_Duplicate_Match($c042_datas){
         /**
         * Check_Duplicate_Match
+        * @var  int $MAX_ONE        重複なし
+        * @var  int $list           重複検査用LIST
+        * @var  int $value_count    要素別重複検査結果配列
+        * @var  int $max            最大重複数
         *
         */
         $MAX_ONE = 1;
@@ -154,7 +157,6 @@ class C042_Controller extends Controller
     * 成績データの重複要素チェック
     *
     * @param    int    $c042_datas チェック未成績データ
-    * @return   int     $c042_datas チェック済成績データ
     * @todo             成績データの重複要素チェックを行う。
     */
     public function Check_Duplication($c042_datas){
@@ -167,6 +169,26 @@ class C042_Controller extends Controller
         $unique_c042_datas_len = count($unique_c042_datas);
         if ($unique_c042_datas_len != $c042_datas_len){
             throw new Exception('成績データの重複がある');
+        }
+    }
+    /**
+    * データの範囲チェック
+    *
+    * @param    strng   $c042_datas 全データ配列
+    * @return   int     $data　     チェック済成績データ
+    * @todo     データの範囲チェックを行う。
+    */
+    public function Check_Numerical_Between($stage,$check_data){
+        /**
+        * Check_Numerical_Between
+        *
+        */
+        if ($check_data <= 0 or $check_data >= 21 ) {
+            // 数字の場合
+            throw new Exception($stage.'の数字が1から20の範囲ではない。');
+        }else {
+            $data = intval($check_data);
+            return $data;
         }
     }
     /**
@@ -190,17 +212,33 @@ class C042_Controller extends Controller
         }
     }
     /**
-    * ヘッダの数字チェック
+    * 成績データの数字と範囲チェック
+    *
+    * @param    strng   $c042_datas 全データ配列
+    * @todo             成績データの数字と範囲チェック
+    */
+    public function Check_C042_Data($c042_datas){
+        $STAGE="成績データ";
+        foreach($c042_datas as $match){
+            $match_list = explode(" ", $match);
+            foreach($match_list as $match){
+                $this->Check_Numerical_Between($STAGE,$match);
+            }
+        }
+    }
+    /**
+    * ヘッダの数字と範囲チェック
     *
     * @param    strng   $c042_datas 全データ配列
     * @return   int     $match_result_data
     *                   数字チェック済ヘッダデータ
-    * @todo             参加者データの数字チェック
+    * @todo             参加者データの数字と範囲チェック
     */
     public function check_Head_data($Participants_Number){
         $stage="参加者データ";
         $check_data = $Participants_Number;
         $data = $this->check_numerical($stage,$check_data);
+        $this->Check_Numerical_Between($stage,$check_data);
         $headers['Total_participants'] = $data;
         return $headers;
         }
@@ -281,6 +319,7 @@ class C042_Controller extends Controller
             $c042_datas = $this->Unset_Head_data($c042_datas);
             $this->Check_Duplication($c042_datas);
             $this->Check_Duplicate_Match($c042_datas);
+            $this->Check_C042_Data($c042_datas);
         } catch (Exception $e) {
             echo '捕捉した例外: ',  $e->getMessage(), "\n";
         }
