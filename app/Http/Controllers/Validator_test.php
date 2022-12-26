@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Validator; // Validatorだけでも実行できる
 use Exception;
+use App\Http\Requests\Validator_test_request;
 
 class Validator_test extends Controller
 {
-    public function output_C042(Request $request){
+    public function output_C042(Validator_test_request $request){
         //C042データを全て読み込み
         #$file_name = "C:\\laravel_paiza\\app\\Http\\Controllers\\C042.txt";
-        $validator = Validator::make($request->all(), [
+/*         $validator = Validator::make($request->all(), [
             'title' => 'string|between:5,10',
         ],
         [
@@ -26,7 +27,7 @@ class Validator_test extends Controller
                     ->withErrors($validator)
                     ->withInput();
         }
-        return view('validate');
+ */        return view('validate');
     }
 
     public function index_validate(Request $request){
