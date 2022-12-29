@@ -30,6 +30,8 @@ Route::get('/C113','App\\Http\\Controllers\\C113_Controller@index');
 Route::post('/C113','App\\Http\\Controllers\\C113_Controller@output');
 Route::get('/validate','App\\Http\\Controllers\\Validator_test@index_validate');
 Route::post('/validate','App\\Http\\Controllers\\Validator_test@output_C042');
+Route::get('/regular','App\\Http\\Controllers\\Regular_Controller@index_regular');
+Route::post('/regular','App\\Http\\Controllers\\Regular_Controller@output_regular');
 
 //Route::get('/phpinfo', function () {
 //    phpinfo();
