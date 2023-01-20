@@ -89,7 +89,7 @@ private function comp_Top10($last_Month_total,$the_Month_total){
 //
     private function input(){
         //$file_name = "C:\\test_laravel\\app\Http\\Controllers\\B035.txt";
-        $file_name = "/var/www/html/laravel_app/app/Http/Controllers/b035.txt";
+        $file_name = "/var/www/html/laravel_app/app/Http/Controllers/b023.txt";
         $lines = file($file_name,FILE_IGNORE_NEW_LINES);
         $last_month_data =[];
         $this_month_data =[];
