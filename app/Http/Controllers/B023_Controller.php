@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 class B023_Controller extends Controller
 {
 
-    private $Match_sticks_Len = 0;
     private $Match_Stick = array();
     private $Tmp_Stick = array();
+    private $out_Stick = array();
 
     /**
     * １本追加データの検索処理
@@ -27,19 +27,19 @@ class B023_Controller extends Controller
         * @var string   
         *               データ
         */
-
         $Give_Match_sticks = [1];
-        $Stick_Values[]=('7');
+        $Stick_Values[]=(7);
         $Give_Match_stick_Values['1'] = $Stick_Values;
-        $Result_Match_Stick=$Match_Stick;
 
-        for ($i = $Ms_i + 1;$i <= $Match_sticks_Len;$i++){#取ったマッチの次の位置から開始する。
+        for ($i = $Ms_i + 1;$i < count($this->Match_Stick);$i++){#取ったマッチの次の位置から開始する。
+            $Result_Match_Stick=$this->Match_Stick;#
             foreach ($Give_Match_sticks as $Give_i => $Gms_Value){
-                if ($this->$Match_Stick[$i] == $Gms_Value ){    #加えるマッチの有無を検索する
-                    $Result_Match_Stick[$i]=$Give_Match_stick_Values[$Gms_Value];
+                if ($this->Match_Stick[$i] == $Gms_Value ){    #加えるマッチの有無を検索する
+                    foreach ($Give_Match_stick_Values[$Gms_Value] as $Gmsv_i => $Gmsv_Value){
+                        $Result_Match_Stick[$i]=$Gmsv_Value;
+                    }
                 }
             }
-            $Result_Match_Stick=$Match_Stick;
         }
         return $Result_Match_Stick;
     }
@@ -57,18 +57,22 @@ class B023_Controller extends Controller
         *
         * @var string   
         *               データファイルパス
-        * @var string   
+        * @var string
         *               データ
         */
         $Take_Match_Sticks = [7];
-        $Stick_Values[]=('1');
+        $Stick_Values[]=(1);
         $Take_Match_Stick_Values['7'] = $Stick_Values;
-
  
         foreach($Take_Match_Sticks as $Take_i => $Tms_Value){#取る１本のマッチを選択
-            if ($Ms==$Tms_value){
-                $Result_Match_Stick = $this->Give_Match_Stick($Ms_i);
-                $Result_Match_Stick[$Take_i]=$Tms_Value;
+            if ($Ms==$Tms_Value){
+                foreach ($Take_Match_Stick_Values[$Tms_Value] as $Tmsv_i => $Tmsv_Value){
+                    $Result_Match_Stick = $this->Give_Match_Stick($Ms_i);
+                    $Result_Match_Stick[$Ms_i]=$Tmsv_Value;
+                }
+                dd($Result_Match_Stick);
+            }else{
+                $Result_Match_Stick[$Ms_i]=$Ms;
             }
         }
         return $Result_Match_Stick; 
@@ -113,9 +117,9 @@ class B023_Controller extends Controller
 #        $lines = $this->input();
 #        $match_stick=wordwrap($lines[0], 1, ',',true);
 #        $Result = explode(',', $match_stick);
-        array_push($this->Match_Stick,'0');
-        array_push($this->Match_Stick,'7');
-        array_push($this->Match_Stick,'1');
+#        array_push($this->Match_Stick,'0');
+        array_push($this->Match_Stick,7);
+        array_push($this->Match_Stick,1);
         foreach ($this->Match_Stick as $ms_i => $ms) {
              $Return_Match_Stick = $this->Take_Search_match_stick($ms_i,$ms);
         }
@@ -123,7 +127,6 @@ class B023_Controller extends Controller
         // $r_input['last_month_data'] = $last_month_data;
         // $r_input['this_month_data'] = $this_month_data;
         $r_input = true;
-        dd($Result_Match_Stick);
 
         return view('b023');
         #        return view('b023',compact('comp_Top10','last_Month_total','this_month_data'));
