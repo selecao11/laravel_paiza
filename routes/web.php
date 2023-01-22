@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/B032','App\\Http\\Controllers\\B032_v2_20220929_Controller@test_output');
 // Route::get('/B035','App\\Http\\Controllers\\B035_v1_20221012_Controller@index');
 //Route::get('/B039','App\\Http\\Controllers\\paiza_b039Controller@index');
+Route::get('/B029','App\\Http\\Controllers\\B029_Controller@index');
+Route::post('/B029','App\\Http\\Controllers\\B029_Controller@output');
 Route::get('/B023','App\\Http\\Controllers\\B023_Controller@index');
 Route::post('/B023','App\\Http\\Controllers\\B023_Controller@output');
 Route::get('/C099','App\\Http\\Controllers\\C099_v1_20221124_Controller@index');
