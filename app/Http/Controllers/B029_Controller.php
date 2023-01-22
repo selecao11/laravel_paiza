@@ -158,12 +158,12 @@ class B029_Controller extends Controller
         $K_Nearest_Neighbors = $this->data_value_read($Handle,$N);
         $Resurt_K_nearest_Neighbors = $this->k_nearest_neighbor_method($K_Nearest_Neighbors,$Return_Fixed_Value_Read);
         $Resurt_K_nearest_Neighbors = $this->k_nearest_neighbor_sort($Resurt_K_nearest_Neighbors,$K_Nearest_Neighbors);
-        $this->select_close_to_each_other($Resurt_K_nearest_Neighbors,$Return_Fixed_Value_Read);
+        $Return_select_close_to_each_other = $this->select_close_to_each_other($Resurt_K_nearest_Neighbors,$Return_Fixed_Value_Read);
         // $this_month_data = array_values($this_month_data);//今月の成績のindex降り直し
         // $r_input['last_month_data'] = $last_month_data;
         // $r_input['this_month_data'] = $this_month_data;
-        $r_input = true;
-        return view('b029');
+        $avg = $Return_select_close_to_each_other;
+        return view('b029',compact('avg'));
         #        return view('b023',compact('comp_Top10','last_Month_total','this_month_data'));
     }
 }
