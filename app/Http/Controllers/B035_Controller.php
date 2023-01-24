@@ -55,9 +55,15 @@ class B035_Controller extends Controller
 //　部員のジョギング距離の累積
 //
 //
-    private function Cumulative_jogging_distance($Jogging_Data_For_This_months){
-        foreach($Jogging_Data_For_This_months as $Jdm_name =>$Jdm_value){
-            $Cumulative_jogging_distances[$name] += $Jdm_value;
+    private function Cumulative_jogging_distance(   $Jogging_Data_For_This_months,
+                                                    $Cumulative_jogging_distances){
+        $CJD_DISTANCE = 0;
+        $JDM_DISTANCE = 2;
+        $JDM_NAME = 1;
+        foreach($Jogging_Data_For_This_months as $JDM_NAME =>$Jdm_value){
+            $Cjd_array = $Cumulative_jogging_distances[$Jdm_value[$JDM_NAME]];
+            $Cjd_array[$CJD_DISTANCE] += $Jdm_value[$JDM_DISTANCE];#距離を累積
+            $Cumulative_jogging_distances[$name] = $Cjd_array;
         }
         return $Cumulative_jogging_distances;
     }
@@ -65,15 +71,16 @@ class B035_Controller extends Controller
 //
 //
     private function Member_name_check($Jogging_Data_For_This_months,$Last_Month_Value_Read){
+        $CJD_NEW_MENBER = 'New';
+        $CJD_ZERO_INIT = 0;
         foreach($Jogging_Data_For_This_months as $Jdm_name =>$Jdm_value){
             if (isset($Last_months_jogging_records[$Jdm_name])){
-                $w=[0,''];
-                $Cumulative_jogging_distances[$name] = $w;
-                del($w);
+                $Cjd_array = $Cumulative_jogging_distances[$name];
+                $Cjd_array=[$CJD_ZERO_INIT,''];
+                $Cumulative_jogging_distances[$name] = $Cjd_array;
             }else{
-                $w=[0,'New'];
-                $Cumulative_jogging_distances[$name] = $w;
-                del($w);
+                $Cjd_array=[$CJD_ZERO_INIT,$CJD_NEW_MENBER];
+                $Cumulative_jogging_distances[$name] = $Cjd_array;
             };
         }
         return $Cumulative_jogging_distances;
@@ -89,13 +96,16 @@ class B035_Controller extends Controller
 //
 //
     private function This_Month_Value_Read($Handle){
+        $THIS_MONTH_ERR_BLANK_3 = 3;
+        $THIS_MONTH_ERR_BLANK_1 = 1;
         $Handle = $Fixed_Value_Read['Handle'];
         $M = $Fixed_Value_Read['M'];
         $Jogging_Data_For_This_months = ayyay();
         for ($i = 0;$i < $M;$i++){
             $Read_Value = $this->file_read($Handle);
             $W_Blank_Count = substr_count( $Read_Value, ' ' );
-            if($W_Blank_Count <= 1 or $W_Blank_Count >= 3){
+            if( $W_Blank_Count <= $THIS_MONTH_ERR_BLANK_1 or 
+                $W_Blank_Count >= $THIS_MONTH_ERR_BLANK_3){
                 #err
             }else{
                 $w = explode(" ",$W_Blank_Count);
@@ -108,17 +118,21 @@ class B035_Controller extends Controller
 //
 //
     private function Last_Month_Value_Read($Fixed_Value_Read){
+        $LAST_MONTH_ERR_BLANK_0 = 0;
+        $LAST_MONTH_ERR_BLANK_2 = 2;
+        $LAST_MONTH_DISTNCE_0 = 0;
         $Handle = $Fixed_Value_Read['Handle'];
         $T = $Fixed_Value_Read['T'];
         $Last_months_jogging_records=ayyay();
         for ($i = 0;$i < $T;$i++){
             $Read_Value = $this->file_read($Handle);
             $W_Blank_Count = substr_count( $Read_Value, ' ' );
-            if($W_Blank_Count <= 0 or $W_Blank_Count >= 2){
+            if( $W_Blank_Count <= $LAST_MONTH_ERR_BLANK_0 or 
+                $W_Blank_Count >= $LAST_MONTH_ERR_BLANK_2){
                 #err
             }else{
                 $w = explode(" ",$W_Blank_Count);
-                $Last_months_jogging_records[strval($w[0])]=(int)$w[1];
+                $Last_months_jogging_records[strval($w[$LAST_MONTH_DISTNCE_0])]=(int)$w[1];
             }
         }
         return $Last_Month_Value_Read;
