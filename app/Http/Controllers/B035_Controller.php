@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 
 class B035_Controller extends Controller
 {
-//　成績上位の部員のみ成績表作成
-//
-//
+    /**
+    * 成績上位の部員のみ成績表作成
+    *
+    * @param            
+    * @return int       
+    * @todo             成績上位の部員のみ成績表作成
+    */
     private function Create_gradebook($This_Month_of_Jogging_Performance,$Fixed_Value_Read){
         $Create_gradebook=array();
         for ($i=0;$i<$Fixed_Value_Read['T'];$i++){
@@ -16,9 +20,13 @@ class B035_Controller extends Controller
         }
         return $Create_gradebook;
     }
-//　今月の成績を比較して「UP」「Down」の判断をする
-//
-//
+    /**
+    * 今月の成績を比較して「UP」「Down」の判断をする
+    *
+    * @param            
+    * @return int       
+    * @todo             今月の成績を比較して「UP」「Down」の判断をする
+    */
     private function Grade_judgment($Cumulative_jogging_distances_sorted,$Last_Month_Value_Read){
         $Judg=array('UP!','Down!','same');
         foreach( $Cumulative_jogging_distances_sorted as $Cjd_i => $Cjd_distance) {
@@ -38,9 +46,13 @@ class B035_Controller extends Controller
         }
         return $This_Month_of_Jogging_Performance;
     }
-//　距離集計配列のソート
-//
-//
+    /**
+    * 距離集計配列のソート
+    *
+    * @param            
+    * @return int       
+    * @todo             距離集計配列のソート
+    */
     private function Cumulative_jogging_distance_sort($Cumulative_jogging_distances){
 
             foreach( $Cumulative_jogging_distances as $Cjd_name=> $Cjd_distance) {
@@ -52,9 +64,13 @@ class B035_Controller extends Controller
                             $Cumulative_jogging_distancess);
             return $Cumulative_jogging_distances_sorted;
     }
-//　部員のジョギング距離の累積
-//
-//
+    /**
+    * 部員のジョギング距離の累積
+    *
+    * @param            
+    * @return int       
+    * @todo             部員のジョギング距離の累積
+    */
     private function Cumulative_jogging_distance(   $Jogging_Data_For_This_months,
                                                     $Cumulative_jogging_distances){
         $CJD_DISTANCE = 0;
@@ -67,35 +83,47 @@ class B035_Controller extends Controller
         }
         return $Cumulative_jogging_distances;
     }
-//　部員の氏名の有無のチェック
-//
-//
-    private function Member_name_check($Jogging_Data_For_This_months,$Last_Month_Value_Read){
+    /**
+    * 部員の氏名の有無のチェック
+    *
+    * @param            
+    * @return int       
+    * @todo             部員の氏名の有無のチェック
+    */
+    private function existsMemberName($last_months_joggings,$this_months_joggings){
         $CJD_NEW_MENBER = 'New';
         $CJD_ZERO_INIT = 0;
-        foreach($Jogging_Data_For_This_months as $Jdm_name =>$Jdm_value){
-            if (isset($Last_months_jogging_records[$Jdm_name])){
-                $Cjd_array = $Cumulative_jogging_distances[$name];
-                $Cjd_array=[$CJD_ZERO_INIT,''];
-                $Cumulative_jogging_distances[$name] = $Cjd_array;
+        foreach($this_months_joggings as $this_months_name =>$this_months_distances){
+            if (isset($last_months_joggings[$this_months_name])){
+                $cumulative_distance = $cumulative_distances[$this_months_name];
+                $cumulative_distance=[$CJD_ZERO_INIT,''];
+                $cumulative_distances[$this_months_name] = $cumulative_distance;
             }else{
-                $Cjd_array=[$CJD_ZERO_INIT,$CJD_NEW_MENBER];
-                $Cumulative_jogging_distances[$name] = $Cjd_array;
+                $cumulative_distance=[$CJD_ZERO_INIT,$CJD_NEW_MENBER];
+                $cumulative_distances[$this_months_name] = $cumulative_distance;
             };
         }
-        return $Cumulative_jogging_distances;
+        return $cumulative_distances;
     }
-//　データから改行などの削除
-//
-//
-    private function file_read($Handle){
-        $Rmp_file_read= str_replace(array("\r\n", "\r", "\n"), "", fgets( $Handle ));
-        return $Rmp_file_read;
+    /**
+    * データから改行などの削除
+    *
+    * @param            
+    * @return int       
+    * @todo             データから改行などの削除
+    */
+    private function readFile($handle){
+        $file_read= str_replace(array("\r\n", "\r", "\n"), "", fgets( $handle ));
+        return $file_read;
     }
-//　データファイルから今月のデータ読み込み
-//
-//
-    private function This_Month_Value_Read($Handle){
+    /**
+    * データファイルから今月のデータ読み込み
+    *
+    * @param            
+    * @return int       
+    * @todo             データファイルから今月のデータ読み込み
+    */
+    private function readThisMonthValue($handle){
         $THIS_MONTH_ERR_BLANK_3 = 3;
         $THIS_MONTH_ERR_BLANK_1 = 1;
         $Handle = $Fixed_Value_Read['Handle'];
@@ -114,10 +142,14 @@ class B035_Controller extends Controller
         }
         return $Jogging_Data_For_This_months;
     }
-//　データファイルから先月のデータ読み込み
-//
-//
-    private function Last_Month_Value_Read($Fixed_Value_Read){
+    /**
+    * データファイルから先月のデータ読み込み
+    *
+    * @param            
+    * @return int       
+    * @todo             データファイルから先月のデータ読み込み
+    */
+    private function readLastmonth($fixedread){
         $LAST_MONTH_ERR_BLANK_0 = 0;
         $LAST_MONTH_ERR_BLANK_2 = 2;
         $LAST_MONTH_DISTNCE_0 = 0;
@@ -125,7 +157,7 @@ class B035_Controller extends Controller
         $T = $Fixed_Value_Read['T'];
         $Last_months_jogging_records=ayyay();
         for ($i = 0;$i < $T;$i++){
-            $Read_Value = $this->file_read($Handle);
+            $Read_Value = $this->readFile($Handle);
             $W_Blank_Count = substr_count( $Read_Value, ' ' );
             if( $W_Blank_Count <= $LAST_MONTH_ERR_BLANK_0 or 
                 $W_Blank_Count >= $LAST_MONTH_ERR_BLANK_2){
@@ -137,23 +169,33 @@ class B035_Controller extends Controller
         }
         return $Last_Month_Value_Read;
     }
-//　データファイルから固定データ読み込み
-//
-//
-    private function fixed_value_read($Handle){
-        $Read_Value = $this->file_read($Handle);
-        $W_Blank_Count = substr_count( $Read_Value, ' ' );
-        if($W_Blank_Count ==2){
+    /**
+    * データファイルから固定データ読み込み
+    *
+    * @param            $Handle             ファイルハンドル
+    * @return int       $Fixed_Value_Read   SORT済の各地点別距離配列
+    * @return string    $File_Name          入力ファイルＰａｔｈ
+    * @return           $Handle             ファイルハンドル
+    * @todo             ファイルハンドルを作成する。
+    */
+    private function readFixedvalue($handle){
+        $Fixed_ERR_BLANK_2 = 2;
+        $read_value = $this->readFile($handle);
+        $blank_count = substr_count( $read_value, ' ' );
+        if($blank_count ===Fixed_ERR_BLANK_2){
             $w = explode(" ",$W_Blank_Count);
         }
-        $Fixed_Value_Read['N'] = (int)$W[0];
-        $Fixed_Value_Read['M'] = (int)$W[1];
-        $Fixed_Value_Read['T'] = (int)$W[2];
-        return $Fixed_Value_Read;
+        return array('N'=>(int)$W[0],'M'=>(int)$W[1],'T'=>(int)$W[2]);
     }
-//　B035初期処理
-//
-//
+    /**
+    * B035初期処理
+    *
+    * @param        なし
+    * @return int       $B035_Init      SORT済の各地点別距離配列
+    * @return string    $File_Name      入力ファイルＰａｔｈ
+    * @return           $Handle         ファイルハンドル
+    * @todo             ファイルハンドルを作成する。
+    */
     private function B035_init(){
         $File_Name = "/home/user/docker-laravel/laravel_paiza/app/Http/Controllers/b035.txt";
         $Handle = fopen ( $File_Name, "r" );
@@ -166,11 +208,12 @@ class B035_Controller extends Controller
 //
     public function index(){
         $B035_Init = $this->B035_init();
-        $Handle = $B035_Init;
-        $Fixed_Value_Read = $this->fixed_value_read($Handle);
-        $Last_Month_Value_Read  = $this->last_month_value_read($Fixed_Value_Read);
-        $Jogging_Data_For_This_months = $this->This_Month_Value_Read($Handle);
-        $Cumulative_jogging_distances =   $this->Member_name_check( $Jogging_Data_For_This_months,
+        $handle = $B035_Init;
+        $fixed_value = $this->readfixedvalue($handle);
+        $last_month  = $this->readLastmonth($fixed_value);
+        $this_month_value = $this->This_Month_Value_Read($Handle);
+ 
+        $Cumulative_jogging_distances =   $this->existsMemberName( $Jogging_Data_For_This_months,
                                                                     $Last_Month_Value_Read);
         $Cumulative_jogging_distances   =   $this->Cumulative_jogging_distance( $Jogging_Data_For_This_months,
                                                                                 $Cumulative_jogging_distances);
