@@ -6,6 +6,20 @@ use Illuminate\Http\Request;
 
 class B035_Controller extends Controller
 {
+
+    private $FIXED_ERR_BLANK_2 = 2;
+    private $LAST_MONTH_ERR_BLANK_0 = 0;
+    private $LAST_MONTH_ERR_BLANK_2 = 2;
+    private $LAST_MONTH_DISTNCE_0 = 0;
+    private $THIS_MONTH_ERR_BLANK_3 = 3;
+    private $THIS_MONTH_ERR_BLANK_1 = 1;
+    private $CD_DISTANCE_0 = 0;
+    private $TMJ_DISTANCE_2 = 2;
+    private $TMJ_NAME_1 = 1;
+    private $JUDG_UP = 0;
+    private $JUDG_DOWN = 1;
+    private $JUDG_SAME = 2;
+
     /**
     * 成績上位の部員のみ成績表作成
     *
@@ -20,6 +34,12 @@ class B035_Controller extends Controller
         }
         return $create_gradebook;
     }
+//　成績表作成処理呼び出し
+//
+//
+    public function callGradebook($cumulative_distances,$Fixed_Value_Read){
+        return $this->createGradebook($cumulative_distances,$Fixed_Value_Read);
+    }
     /**
     * 今月の成績に「UP」「Down」「same」を設定する
     *
@@ -32,6 +52,12 @@ class B035_Controller extends Controller
         $JUDG_ARRAY=array('UP!','Down!','same!');
         $Cd_value[1]=$JUDG_ARRAY[$juge];
         return $Cd_value;
+    }
+//　「UP」「Down」「same」ラベル設定処理呼び出し
+//
+//
+    public function callLabel($Cd_value,$juge){
+        return $this->setLabel($Cd_value,$juge);
     }
     /**
     * 今月の成績から「UP」「Down」の判断をする
@@ -54,27 +80,29 @@ class B035_Controller extends Controller
         * @var int      $JUDG_SAME
         *               SAME!ラベルの添字
         */
-        $CD_DISTANCE_0 = 0;
-        $JUDG_UP = 0;
-        $JUDG_DOWN = 1;
-        $JUDG_SAME = 2;
         foreach( $cumulative_distances as $Cd_i => $Cd_value) {
-            $Distance = $Cd_value[$CD_DISTANCE_0];
+            $Distance = $Cd_value[$this->$CD_DISTANCE_0];
             if ($last_months_joggings[strval($Cd_i)]>$Distance){
-                $juge = $JUDG_UP;
+                $juge = $this->JUDG_UP;
                 $Cd_value = setLabel( $Cd_value,$juge);
                 $cumulative_distances[$Cd_i]=$Cd_value;
             }elseif($Last_Month_Value_Read[strval($Cd_i)]<$Distance){
-                $juge = $JUDG_DOWN;
+                $juge = $this->$JUDG_DOWN;
                 $Cd_value = setLabel( $Cd_value,$juge);
                 $cumulative_distances[$Cd_i]=$Cd_value;
             }elseif($Last_Month_Value_Read[strval($Cd_i)]===$Distance){
-                $juge = $JUDG_SAME;
+                $juge = $this->$JUDG_SAME;
                 $Cd_value = setLabel( $Cd_value,$juge);
                 $cumulative_distances[$Cd_i]=$Cd_value;
             };
         }
         return $cumulative_distances;
+    }
+//　「UP」「Down」ラベル更新処理呼び出し
+//
+//
+    public function callGrades($cumulative_distances,$last_months_joggings){
+        return $this->judGrades($cumulative_distances,$last_months_joggings);
     }
     /**
     * 距離集計配列のソート
@@ -94,15 +122,21 @@ class B035_Controller extends Controller
         * @var String   $id_name
         *               SORT用の部員名(昇順)
         */
+    
         foreach( $cumulative_distances as $cd_i=> $cd_value) {
-            $CD_DISTANCE_0 = 0;
-            $id_distance[]  = $cd_value[$CD_DISTANCE_0];
+            $id_distance[]  = $cd_value[$this->CD_DISTANCE_0];
             $id_name[]      = $cd_i;
         }
         array_multisort($id_distance,   SORT_DEC, SORT_NUMERIC, 
                         $id_name,       SORT_ASC, SORT_STRING,
                         $cumulative_distances);
         return $cumulative_distances;
+    }
+//　距離集計配列のソート処理呼び出し
+//
+//
+    public function callCumulativedistances($cumulative_distances){
+        return $this->sortCumulativedistances($cumulative_distances);
     }
     /**
     * 部員のジョギング距離の累積
@@ -112,8 +146,7 @@ class B035_Controller extends Controller
     * @return int       
     * @todo             部員のジョギング距離の累積
     */
-    private function aclDistance(   $this_months_joggings,
-                                    $cumulative_distances){
+    private function aclDistance($this_months_joggings,$cumulative_distances){
         /**
         * aclDistance
         *
@@ -124,25 +157,28 @@ class B035_Controller extends Controller
         * @var int      $TMJ_NAME_1
         *               今月のジョギングデータ配列の部員名の添字
         */
-        $CD_DISTANCE_0 = 0;
-        $TMJ_DISTANCE_2 = 2;
-        $TMJ_NAME_1 = 1;
         foreach($this_months_joggings as $this_month_i =>$this_month_value){
-            $w = $cumulative_distances[$this_month_value[$JDM_NAME_1]];
-            $w[$CD_DISTANCE_0] += $this_months_joggings[$TMJ_DISTANCE_2];#距離を距離集計配列に累積
-            $cumulative_distances[$this_month_value[$TMJ_NAME_1]] = $w;
+            $w = $cumulative_distances[$this_month_value[$this->JDM_NAME_1]];
+            $w[$this->CD_DISTANCE_0] += $this_months_joggings[$this->TMJ_DISTANCE_2];#距離を距離集計配列に累積
+            $cumulative_distances[$this_month_value[$this->TMJ_NAME_1]] = $w;
             del($w);
         }
         return $cumulative_distances;
     }
-/**
-* 不在の部員のラベルのセット
-*
-* @param            $cumulative_distances   距離集計配列
-*                   $member_exists          不在の部員配列
-* @return int       $cumulative_distances   先月には不在の部員の配列                           
-* @todo             先月は不在の部員のLabelのセット。
-*/
+//　ジョギング距離の累積処理呼び出し
+//
+//
+    public function callDistance($this_months_joggings,$cumulative_distances){
+        return $this->aclDistance($this_months_joggings,$cumulative_distances);
+    }
+    /**
+    * 不在の部員のラベルのセット
+    *
+    * @param            $cumulative_distances   距離集計配列
+    *                   $member_exists          不在の部員配列
+    * @return int       $cumulative_distances   先月には不在の部員の配列                           
+    * @todo             先月は不在の部員のLabelのセット。
+    */
     private function setNewLabel(  $cumulative_distances,$member_exists){
         foreach($member_exists as $exists_value){
             $w=[0,'new'];
@@ -150,6 +186,12 @@ class B035_Controller extends Controller
             del($w);
         }
         return $cumulative_distances;
+    }
+//　不在の部員ラベルセット処理呼び出し
+//
+//
+    public function callNewLabel($cumulative_distances,$member_exists){
+        return $this->setNewLabel($cumulative_distances,$member_exists);
     }
     /**
     * 部員の氏名の有無のチェック
@@ -160,13 +202,19 @@ class B035_Controller extends Controller
     * @todo             部員の氏名がない場合不在配列に追加する。
     */
     private function existsMemberName($last_months_joggings,$this_months_joggings){
-        $CJD_ZERO_INIT = 0;
+
         foreach($this_months_joggings as $this_months_name =>$this_months_distances){
             if (!isset($last_months_joggings[$this_months_name])){
                 $member_exists[]=$this_months_name;
             };
         }
         return $member_exists;
+    }
+//　部員の氏名の有無のチェック処理呼び出し
+//
+//
+    public function callMemberName($last_months_joggings,$this_months_joggings){
+        return $this->existsMemberName($last_months_joggings,$this_months_joggings);
     }
     /**
     * データから改行などの削除
@@ -178,6 +226,12 @@ class B035_Controller extends Controller
     private function replaceData($handle){
         $data= str_replace(array("\r\n", "\r", "\n"), "", fgets( $handle ));
         return $data;
+    }
+//　改行削除処理呼び出し
+//
+//
+    public function callreplaceData($handle){
+        return $this->replaceData($handle);
     }
     /**
     * データファイルから今月のデータ読み込み
@@ -191,15 +245,13 @@ class B035_Controller extends Controller
     *                   ジョギングした日、部員名、ジョギングした距離を読み込みする。 
     */
     private function readThisMonthValue($handle){
-        $THIS_MONTH_ERR_BLANK_3 = 3;
-        $THIS_MONTH_ERR_BLANK_1 = 1;
         $handle = $fixed_value_read['handle'];
         $m = $fixed_value_read['M'];
         for ($i = 0;$i < $m;$i++){
             $data = $this->replaceData($handle);
             $blank_count = substr_count( $data, ' ' );
-            if( $blank_count <= $THIS_MONTH_ERR_BLANK_1 or 
-                $blank_count >= $THIS_MONTH_ERR_BLANK_3){
+            if( $blank_count <= $this->THIS_MONTH_ERR_BLANK_1 or 
+                $blank_count >= $this->THIS_MONTH_ERR_BLANK_3){
                 #err
             }else{
                 $w = explode(" ",$blank_count);
@@ -207,6 +259,12 @@ class B035_Controller extends Controller
             }
         }
         return $this_month_value;
+    }
+//　今月のデータ読み込み処理呼び出し
+//
+//
+    public function callThisMonthValue($handle){
+        return $this->readThisMonthValue($handle);
     }
     /**
     * データファイルから先月のデータ読み込み
@@ -218,23 +276,26 @@ class B035_Controller extends Controller
     * @todo             データファイルから先月のデータの部員名、距離の読み込み
     */
     private function readLastmonth($fixedread){
-        $LAST_MONTH_ERR_BLANK_0 = 0;
-        $LAST_MONTH_ERR_BLANK_2 = 2;
-        $LAST_MONTH_DISTNCE_0 = 0;
         $handle = $fixed_value_read['handle'];
         $t = $fixed_value_read['T'];
         for ($i = 0;$i < $t;$i++){
             $data = $this->replaceData($handle);
             $blank_count = substr_count( $data, ' ' );
-            if( $blank_count <= $LAST_MONTH_ERR_BLANK_0 or 
-                $blank_count >= $LAST_MONTH_ERR_BLANK_2){
+            if( $blank_count <= $this->LAST_MONTH_ERR_BLANK_0 or 
+                $blank_count >= $this->$LAST_MONTH_ERR_BLANK_2){
                 #err
             }else{
                 $w = explode(" ",$read_value);
-                $Last_months_jogging_records[strval($w[$LAST_MONTH_DISTNCE_0])]=(int)$w[1];
+                $Last_months_jogging_records[strval($w[$this->LAST_MONTH_DISTNCE_0])]=(int)$w[1];
             }
         }
         return $last_month_value_read;
+    }
+//　先月のデータ読み込み処理呼び出し
+//
+//
+    public function callLastmonth($fixedread){
+        return $this->readLastmonth($fixedread);
     }
     /**
     * データファイルから固定データ読み込み
@@ -246,13 +307,18 @@ class B035_Controller extends Controller
     * @todo             入力ファイルから固定データを読み込む
     */
     private function readFixedvalue($handle){
-        $FIXED_ERR_BLANK_2 = 2;
         $read_value = $this->readFile($handle);
         $blank_count = substr_count( $read_value, ' ' );
-        if($blank_count ===$FIXED_ERR_BLANK_2){
+        if($blank_count ===$this->$FIXED_ERR_BLANK_2){
             $w = explode(" ",$read_value);
         }
         return array('N'=>(int)$W[0],'M'=>(int)$W[1],'T'=>(int)$W[2]);
+    }
+//　固定データ読み込み処理呼び出し
+//
+//
+    public function callFixedvalue($handle){
+        return $this->readFixedvalue($handle);
     }
     /**
     * B035初期処理
@@ -263,19 +329,25 @@ class B035_Controller extends Controller
     * @return           $Handle         ファイルハンドル
     * @todo             ファイルハンドルを作成する。
     */
-    private function B035_init(){
+    private function initB035(){
         $file_name = "/home/user/docker-laravel/laravel_paiza/app/Http/Controllers/b035.txt";
         $handle = fopen ( $file_name, "r" );
         $B035_Init['file_name'] =$file_name;
         $B035_Init['handle']    =$handle;
         return $B035_Init;
     }
+//　B035初期処理呼び出し
+//
+//
+    public function callB035(){
+        return $this->initB035();
+    }
 //　メイン処理
 //
 //
     public function index(){
-        $B035_Init = $this->B035_init();
-        $handle = $B035_Init;
+        $B035_Init = $this->init_B035()();
+        $handle = $B035_Init['handle'];
         $fixed_value = $this->readfixedvalue($handle);
         $last_month  = $this->readLastmonth($fixed_value);
         $this_month_value = $this->This_Month_Value_Read($Handle);

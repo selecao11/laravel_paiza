@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.003489">
+    <testcase name="test_B035init" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" line="15" assertions="1" time="0.003489">
+      <system-out>
+期待値 = 
+Array
+(
+    [file_name] =&gt; /home/user/docker-laravel/laravel_paiza/app/Http/Controllers/b035.txt
+)
+処理結果 = Array
+(
+    [file_name] =&gt; /home/user/docker-laravel/laravel_paiza/app/Http/Controllers/b035.txt
+    [handle] =&gt; Resource id #179
+)
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>
