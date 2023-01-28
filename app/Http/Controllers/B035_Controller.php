@@ -244,9 +244,9 @@ class B035_Controller extends Controller
     * @todo             データファイルから今月のデータの
     *                   ジョギングした日、部員名、ジョギングした距離を読み込みする。 
     */
-    private function readThisMonthValue($handle){
-        $handle = $fixed_value_read['handle'];
-        $m = $fixed_value_read['M'];
+    private function readThisMonthValue($fixed_read_value){
+        $handle = $fixed_read_value['handle'];
+        $m = $fixed_read_value['M'];
         for ($i = 0;$i < $m;$i++){
             $data = $this->replaceData($handle);
             $blank_count = substr_count( $data, ' ' );
@@ -275,27 +275,27 @@ class B035_Controller extends Controller
     *                                           p_i 距離
     * @todo             データファイルから先月のデータの部員名、距離の読み込み
     */
-    private function readLastmonth($fixedread){
-        $handle = $fixed_value_read['handle'];
-        $t = $fixed_value_read['T'];
+    private function readLastmonth($fixed_read_value){
+        $handle = $fixed_read_value['handle'];
+        $t = $fixed_read_value['T'];
         for ($i = 0;$i < $t;$i++){
-            $data = $this->replaceData($handle);
-            $blank_count = substr_count( $data, ' ' );
+            $read_value = $this->replaceData($handle);
+            $blank_count = substr_count( $read_value, ' ' );
             if( $blank_count <= $this->LAST_MONTH_ERR_BLANK_0 or 
-                $blank_count >= $this->$LAST_MONTH_ERR_BLANK_2){
+                $blank_count >= $this->LAST_MONTH_ERR_BLANK_2){
                 #err
             }else{
                 $w = explode(" ",$read_value);
-                $Last_months_jogging_records[strval($w[$this->LAST_MONTH_DISTNCE_0])]=(int)$w[1];
+                $last_month_read_value[strval($w[$this->LAST_MONTH_DISTNCE_0])]=(int)$w[1];
             }
         }
-        return $last_month_value_read;
+        return $last_month_read_value;
     }
 //　先月のデータ読み込み処理呼び出し
 //
 //
-    public function callLastmonth($fixedread){
-        return $this->readLastmonth($fixedread);
+    public function callLastmonth($fixed_read_value){
+        return $this->readLastmonth($fixed_read_value);
     }
     /**
     * データファイルから固定データ読み込み
@@ -307,12 +307,12 @@ class B035_Controller extends Controller
     * @todo             入力ファイルから固定データを読み込む
     */
     private function readFixedvalue($handle){
-        $read_value = $this->readFile($handle);
+        $read_value = $this->replaceData($handle);
         $blank_count = substr_count( $read_value, ' ' );
-        if($blank_count ===$this->$FIXED_ERR_BLANK_2){
+        if($blank_count ===$this->FIXED_ERR_BLANK_2){
             $w = explode(" ",$read_value);
         }
-        return array('N'=>(int)$W[0],'M'=>(int)$W[1],'T'=>(int)$W[2]);
+        return array('N'=>(int)$w[0],'M'=>(int)$w[1],'T'=>(int)$w[2]);
     }
 //　固定データ読み込み処理呼び出し
 //

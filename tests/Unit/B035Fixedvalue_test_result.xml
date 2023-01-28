@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" tests="1" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.003416">
+    <testcase name="testB035Fixedvalue" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" line="38" assertions="3" time="0.003416">
+      <system-out>
+期待値 = 
+Array
+(
+    [N] =&gt; 6
+    [M] =&gt; 7
+    [T] =&gt; 4
+)
+処理結果 = Array
+(
+    [N] =&gt; 6
+    [M] =&gt; 7
+    [T] =&gt; 4
+)
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>
