@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.003513">
+    <testcase name="testB035ThisMonthValue" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" line="102" assertions="1" time="0.003513">
+      <system-out>
+期待値 = 
+Array
+(
+    [0] =&gt; Array
+        (
+            [0] =&gt; 3
+            [1] =&gt; alice
+            [2] =&gt; 6
+        )
+
+    [1] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; alice
+            [2] =&gt; 1
+        )
+
+    [2] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; franca
+            [2] =&gt; 3
+        )
+
+    [3] =&gt; Array
+        (
+            [0] =&gt; 5
+            [1] =&gt; cathy
+            [2] =&gt; 7
+        )
+
+    [4] =&gt; Array
+        (
+            [0] =&gt; 9
+            [1] =&gt; dad
+            [2] =&gt; 2
+        )
+
+    [5] =&gt; Array
+        (
+            [0] =&gt; 12
+            [1] =&gt; betty
+            [2] =&gt; 4
+        )
+
+)
+処理結果 = Array
+(
+    [0] =&gt; Array
+        (
+            [0] =&gt; 3
+            [1] =&gt; alice
+            [2] =&gt; 6
+        )
+
+    [1] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; alice
+            [2] =&gt; 1
+        )
+
+    [2] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; franca
+            [2] =&gt; 3
+        )
+
+    [3] =&gt; Array
+        (
+            [0] =&gt; 5
+            [1] =&gt; cathy
+            [2] =&gt; 7
+        )
+
+    [4] =&gt; Array
+        (
+            [0] =&gt; 9
+            [1] =&gt; dad
+            [2] =&gt; 2
+        )
+
+    [5] =&gt; Array
+        (
+            [0] =&gt; 12
+            [1] =&gt; betty
+            [2] =&gt; 4
+        )
+
+)
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -202,10 +202,13 @@ class B035_Controller extends Controller
     * @todo             部員の氏名がない場合不在配列に追加する。
     */
     private function existsMemberName($last_months_joggings,$this_months_joggings){
-
+        $member_exists = array();
+        $last_months = array_column( $last_months_joggings, 0);
         foreach($this_months_joggings as $this_months_name =>$this_months_distances){
-            if (!isset($last_months_joggings[$this_months_name])){
-                $member_exists[]=$this_months_name;
+            $wn = $this_months_distances[1];
+
+            if (array_search( $wn,$last_months )===false){
+                $member_exists[]=$wn;
             };
         }
         return $member_exists;
@@ -254,8 +257,10 @@ class B035_Controller extends Controller
                 $blank_count >= $this->THIS_MONTH_ERR_BLANK_3){
                 #err
             }else{
-                $w = explode(" ",$blank_count);
-                $this_month_value[]=(int)$w;
+                $w = explode(" ",$data);
+                $w[0] =(int)$w[0];
+                $w[2] =(int)$w[2];
+                $this_month_value[]=$w;
             }
         }
         return $this_month_value;

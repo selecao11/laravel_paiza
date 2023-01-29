@@ -6,7 +6,7 @@ dad 3
 betty 5
 franca 1
 2 eijiro 1
-3 alice 6
+3 ngng 6
 4 alice 1
 4 franca 3
 5 cathy 7
