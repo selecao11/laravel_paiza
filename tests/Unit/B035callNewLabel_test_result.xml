@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.029164">
+    <testcase name="testB035callNewLabel" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" line="180" assertions="1" time="0.029164">
+      <system-out>
+期待値 = 
+Array
+(
+    [ngng] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; new
+        )
+
+)
+処理結果 = Array
+(
+    [ngng] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; new
+        )
+
+)
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>

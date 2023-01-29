@@ -158,10 +158,11 @@ class B035_Controller extends Controller
         *               今月のジョギングデータ配列の部員名の添字
         */
         foreach($this_months_joggings as $this_month_i =>$this_month_value){
-            $w = $cumulative_distances[$this_month_value[$this->JDM_NAME_1]];
+            dd($this_month_value);
+            $w = $cumulative_distances[$this_month_value[$this->TMJ_NAME_1]];
             $w[$this->CD_DISTANCE_0] += $this_months_joggings[$this->TMJ_DISTANCE_2];#距離を距離集計配列に累積
             $cumulative_distances[$this_month_value[$this->TMJ_NAME_1]] = $w;
-            del($w);
+            unset($w);
         }
         return $cumulative_distances;
     }
@@ -179,11 +180,11 @@ class B035_Controller extends Controller
     * @return int       $cumulative_distances   先月には不在の部員の配列                           
     * @todo             先月は不在の部員のLabelのセット。
     */
-    private function setNewLabel(  $cumulative_distances,$member_exists){
+    private function setNewLabel($cumulative_distances,$member_exists){
         foreach($member_exists as $exists_value){
             $w=[0,'new'];
             $cumulative_distances[$exists_value]=$w;
-            del($w);
+            unset($w);
         }
         return $cumulative_distances;
     }
@@ -194,24 +195,24 @@ class B035_Controller extends Controller
         return $this->setNewLabel($cumulative_distances,$member_exists);
     }
     /**
-    * 部員の氏名の有無のチェック
+    * 部員の氏名の有無のチェックと有の場合の処理  未完成
     *
     * @param            $last_months_joggings   先月のジョギングデータ配列
     *                   $this_months_joggings   今月のジョギングデータ配列
-    * @return int       $member_exists          先月には不在の部員の配列                           
-    * @todo             部員の氏名がない場合不在配列に追加する。
+    * @return int       $cumulative_distances                              
+    * @todo             部員の氏名がない場合のラベルの初期化と有の場合の距離の初期化
     */
     private function existsMemberName($last_months_joggings,$this_months_joggings){
-        $member_exists = array();
         $last_months = array_column( $last_months_joggings, 0);
         foreach($this_months_joggings as $this_months_name =>$this_months_distances){
             $wn = $this_months_distances[1];
-
             if (array_search( $wn,$last_months )===false){
-                $member_exists[]=$wn;
-            };
+                $cumulative_distances[$wn]=[0,'New'];
+            }else{
+                $cumulative_distances[$this_months_name]=[0,''];
+            }
         }
-        return $member_exists;
+        return $cumulative_distances;
     }
 //　部員の氏名の有無のチェック処理呼び出し
 //

@@ -158,7 +158,7 @@ class UserTest_B035 extends TestCase
         );
         $this_months_joggings = array(
             array(3,'alice',6),
-            array(4,'ngng',1),
+            array(4,'alice',1),
             array(4,'franca',3),
             array(5,'aaaaa',7),
             array(9,'dad',2),
@@ -176,4 +176,66 @@ class UserTest_B035 extends TestCase
         print_r($success_callLastmonth);
         $this->assertEquals($success_callLastmonth, $expected_value);
     }
+
+    public function testB035callNewLabel(){
+        /* 
+        #B035callNewLabel_test_result.xmlファイル作成
+            type nul > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callNewLabel_test_result.xml
+            echo "" > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callNewLabel_test_result.xml
+        #UT実行
+        php artisan test    --log-junit /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callNewLabel_test_result.xml --filter testB035callNewLabel tests/Unit/UserTest_B035.php
+        */
+        $B035 = new B035_Controller();
+        #期待値取得
+        $newLabel_value = array('ngng');
+        $expected_value['ngng'] = [0,'new'];
+        $cumulative_distances = array();
+        $success_callLastmonth = $B035->callNewLabel($cumulative_distances,$newLabel_value);
+        print_r("\n");
+        print_r("期待値 = ");
+        print_r("\n");
+        print_r($expected_value);
+        print_r("処理結果 = ");
+        print_r($success_callLastmonth);
+        $this->assertEquals($success_callLastmonth, $expected_value);
+    }
+
+    public function testB035callDistance(){
+        /* 
+        #B035callDistance_test_result.xmlファイル作成
+            type nul > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callDistance_test_result.xml
+            echo "" > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callDistance_test_result.xml
+        #UT実行
+        php artisan test    --log-junit /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callDistance_test_result.xml --filter testB035callDistance tests/Unit/UserTest_B035.php
+        */
+        $B035 = new B035_Controller();
+        #期待値取得
+        $expected_value['ngng'] = [4,'new'];
+        $expected_value['alice'] = [7,'new'];
+        $expected_value['franca'] = [3,'new'];
+        $expected_value['aaaaa'] = [7,'new'];
+        $expected_value['dad'] = [2,'new'];
+        $expected_value['betty'] = [4,'new'];
+
+        $this_months_joggings = array(
+            array(3,'alice',6),
+            array(4,'alice',1),
+            array(4,'franca',3),
+            array(5,'aaaaa',7),
+            array(8,'ngng',4),
+            array(9,'dad',2),
+            array(12,'betty',4)
+        );
+        $cumulative_distances['ngng'] = [0,'new'];
+        $success_callLastmonth = $B035->callDistance($this_months_joggings,$cumulative_distances);
+
+        print_r("\n");
+        print_r("期待値 = ");
+        print_r("\n");
+        print_r($expected_value);
+        print_r("処理結果 = ");
+        print_r($success_callLastmonth);
+        $this->assertEquals($success_callLastmonth, $expected_value);
+    }
+
 }
