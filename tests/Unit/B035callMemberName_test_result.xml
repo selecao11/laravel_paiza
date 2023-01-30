@@ -1,16 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.003739">
-    <testcase name="testB035callMemberName" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" line="142" assertions="1" time="0.003739">
+  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.003377">
+    <testcase name="testB035callMemberName" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" line="142" assertions="1" time="0.003377">
       <system-out>
 期待値 = 
 Array
 (
-    [0] =&gt; ngng
+    [alice] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
+    [franca] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
+    [NGNG] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; New
+        )
+
+    [dad] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
+    [betty] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
 )
 処理結果 = Array
 (
-    [0] =&gt; ngng
+    [alice] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
+    [franca] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
+    [NGNG] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; New
+        )
+
+    [dad] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
+    [betty] =&gt; Array
+        (
+            [0] =&gt; 0
+            [1] =&gt; 
+        )
+
 )
 </system-out>
     </testcase>

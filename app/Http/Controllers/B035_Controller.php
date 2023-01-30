@@ -14,6 +14,7 @@ class B035_Controller extends Controller
     private $THIS_MONTH_ERR_BLANK_3 = 3;
     private $THIS_MONTH_ERR_BLANK_1 = 1;
     private $CD_DISTANCE_0 = 0;
+    private $CD_DISTANCE_1 = 1;
     private $TMJ_DISTANCE_2 = 2;
     private $TMJ_NAME_1 = 1;
     private $JUDG_UP = 0;
@@ -28,9 +29,15 @@ class B035_Controller extends Controller
     * @return int       $Create_gradebook       B035成績上位配列       
     * @todo             成績上位の部員のみの成績表作成
     */
-    private function createGradebook($cumulative_distances,$Fixed_Value_Read){
-        for ($i=0;$i<$Fixed_Value_Read['T'];$i++){
-            $create_gradebook[] = $cumulative_distances[$i];
+    private function createGradebook($cumulative_distances,$fixed_value_read){
+        $i = 0;
+        foreach($cumulative_distances as $cd_k => $cd_value){
+            if ($i >= $fixed_value_read['T']){
+                break;
+            }
+            array_unshift($cd_value,$cd_k);
+            $create_gradebook[] = $cd_value;
+            $i+=1;
         }
         return $create_gradebook;
     }
@@ -81,18 +88,20 @@ class B035_Controller extends Controller
         *               SAME!ラベルの添字
         */
         foreach( $cumulative_distances as $Cd_i => $Cd_value) {
-            $Distance = $Cd_value[$this->$CD_DISTANCE_0];
-            if ($last_months_joggings[strval($Cd_i)]>$Distance){
+            $Distance = $Cd_value[$this->CD_DISTANCE_0];
+            if ($Cd_value[$this->CD_DISTANCE_1]==='New'){
+                continue;
+            }elseif ($last_months_joggings[strval($Cd_i)]>$Distance){
                 $juge = $this->JUDG_UP;
-                $Cd_value = setLabel( $Cd_value,$juge);
+                $Cd_value = $this->callLabel( $Cd_value,$juge);
                 $cumulative_distances[$Cd_i]=$Cd_value;
-            }elseif($Last_Month_Value_Read[strval($Cd_i)]<$Distance){
-                $juge = $this->$JUDG_DOWN;
-                $Cd_value = setLabel( $Cd_value,$juge);
+            }elseif($last_months_joggings[strval($Cd_i)]<$Distance){
+                $juge = $this->JUDG_DOWN;
+                $Cd_value = $this->callLabel( $Cd_value,$juge);
                 $cumulative_distances[$Cd_i]=$Cd_value;
-            }elseif($Last_Month_Value_Read[strval($Cd_i)]===$Distance){
-                $juge = $this->$JUDG_SAME;
-                $Cd_value = setLabel( $Cd_value,$juge);
+            }elseif($last_months_joggings[strval($Cd_i)]===$Distance){
+                $juge = $this->JUDG_SAME;
+                $Cd_value = $this->callLabel( $Cd_value,$juge);
                 $cumulative_distances[$Cd_i]=$Cd_value;
             };
         }
@@ -127,8 +136,8 @@ class B035_Controller extends Controller
             $id_distance[]  = $cd_value[$this->CD_DISTANCE_0];
             $id_name[]      = $cd_i;
         }
-        array_multisort($id_distance,   SORT_DEC, SORT_NUMERIC, 
-                        $id_name,       SORT_ASC, SORT_STRING,
+        array_multisort($id_distance,   SORT_DESC, SORT_STRING,
+                        $id_name,       SORT_ASC,SORT_NUMERIC,
                         $cumulative_distances);
         return $cumulative_distances;
     }
@@ -158,9 +167,8 @@ class B035_Controller extends Controller
         *               今月のジョギングデータ配列の部員名の添字
         */
         foreach($this_months_joggings as $this_month_i =>$this_month_value){
-            dd($this_month_value);
-            $w = $cumulative_distances[$this_month_value[$this->TMJ_NAME_1]];
-            $w[$this->CD_DISTANCE_0] += $this_months_joggings[$this->TMJ_DISTANCE_2];#距離を距離集計配列に累積
+            $w=$cumulative_distances[$this_month_value[$this->TMJ_NAME_1]];
+            $w[$this->CD_DISTANCE_0] += $this_month_value[$this->TMJ_DISTANCE_2];#距離を距離集計配列に累積
             $cumulative_distances[$this_month_value[$this->TMJ_NAME_1]] = $w;
             unset($w);
         }
@@ -173,43 +181,24 @@ class B035_Controller extends Controller
         return $this->aclDistance($this_months_joggings,$cumulative_distances);
     }
     /**
-    * 不在の部員のラベルのセット
-    *
-    * @param            $cumulative_distances   距離集計配列
-    *                   $member_exists          不在の部員配列
-    * @return int       $cumulative_distances   先月には不在の部員の配列                           
-    * @todo             先月は不在の部員のLabelのセット。
-    */
-    private function setNewLabel($cumulative_distances,$member_exists){
-        foreach($member_exists as $exists_value){
-            $w=[0,'new'];
-            $cumulative_distances[$exists_value]=$w;
-            unset($w);
-        }
-        return $cumulative_distances;
-    }
-//　不在の部員ラベルセット処理呼び出し
-//
-//
-    public function callNewLabel($cumulative_distances,$member_exists){
-        return $this->setNewLabel($cumulative_distances,$member_exists);
-    }
-    /**
-    * 部員の氏名の有無のチェックと有の場合の処理  未完成
+    * 部員の氏名の有無のチェックと有の場合の処理
     *
     * @param            $last_months_joggings   先月のジョギングデータ配列
     *                   $this_months_joggings   今月のジョギングデータ配列
-    * @return int       $cumulative_distances                              
+    * @return int       $cumulative_distances    距離集計配列                          
     * @todo             部員の氏名がない場合のラベルの初期化と有の場合の距離の初期化
     */
     private function existsMemberName($last_months_joggings,$this_months_joggings){
         $last_months = array_column( $last_months_joggings, 0);
+        $cumulative_distances= [];
         foreach($this_months_joggings as $this_months_name =>$this_months_distances){
             $wn = $this_months_distances[1];
-            if (array_search( $wn,$last_months )===false){
-                $cumulative_distances[$wn]=[0,'New'];
-            }else{
-                $cumulative_distances[$this_months_name]=[0,''];
+            $cumulative=array_column( $cumulative_distances, 0);
+            if (in_array ( $wn , $last_months ,True)===False && #距離集計配列にもない完全新規氏名 
+                in_array ( $wn , array_column( $cumulative_distances, 0) ,True)===False){
+                    $cumulative_distances[$wn]=[0,'New']; #距離集計配列にもない完全新規氏名
+            }elseif(in_array ( $wn , array_column( $cumulative_distances, 0) ,True)===False) { #距離集計配列のみない新規氏名
+                $cumulative_distances[$wn]=[0,''];
             }
         }
         return $cumulative_distances;
