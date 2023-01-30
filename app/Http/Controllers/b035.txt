@@ -5,10 +5,10 @@ alice 6
 dad 3
 betty 5
 franca 1
-2 eijiro 1
-3 ngng 6
-4 alice 1
-4 franca 3
 5 cathy 7
+2 eijiro 1
+4 alice 1
 9 dad 2
 12 betty 4
+4 franca 3
+3 ngng 6

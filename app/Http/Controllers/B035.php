@@ -139,6 +139,7 @@ class B035 extends Controller
         array_multisort($id_distance,   SORT_DESC, SORT_STRING,
                         $id_name,       SORT_ASC,SORT_NUMERIC,
                         $cumulative_distances);
+
         return $cumulative_distances;
     }
 //　距離集計配列のソート処理呼び出し
@@ -189,15 +190,15 @@ class B035 extends Controller
     * @todo             部員の氏名がない場合のラベルの初期化と有の場合の距離の初期化
     */
     private function existsMemberName($last_months_joggings,$this_months_joggings){
-        $last_months = array_column( $last_months_joggings, 0);
+        $last_months = $last_months_joggings;
+        #    $last_months = array_column( $last_months_joggings, 0);
         $cumulative_distances= [];
         foreach($this_months_joggings as $this_months_name =>$this_months_distances){
             $wn = $this_months_distances[1];
             $cumulative=array_column( $cumulative_distances, 0);
-            if (in_array ( $wn , $last_months ,True)===False && #距離集計配列にもない完全新規氏名 
-                in_array ( $wn , array_column( $cumulative_distances, 0) ,True)===False){
-                    $cumulative_distances[$wn]=[0,'New']; #距離集計配列にもない完全新規氏名
-            }elseif(in_array ( $wn , array_column( $cumulative_distances, 0) ,True)===False) { #距離集計配列のみない新規氏名
+            if (array_key_exists($wn , $last_months)===False){
+                $cumulative_distances[$wn]=[0,'New']; #距離集計配列にもない完全新規氏名
+            }else{
                 $cumulative_distances[$wn]=[0,''];
             }
         }
@@ -243,7 +244,7 @@ class B035 extends Controller
         for ($i = 0;$i < $m;$i++){
             $data = $this->callreplaceData($handle);
             $blank_count = substr_count( $data, ' ' );
-            if( $blank_count <= $this->THIS_MONTH_ERR_BLANK_1 or 
+            if( $blank_count <= $this->THIS_MONTH_ERR_BLANK_1 && 
                 $blank_count >= $this->THIS_MONTH_ERR_BLANK_3){
                 #err
             }else{
@@ -272,13 +273,12 @@ class B035 extends Controller
     */
     private function readLastmonth($fixed_read_value){
         $handle = $fixed_read_value['handle'];
-        $t = $fixed_read_value['T'];
-        for ($i = 0;$i < $t;$i++){
+        $n = $fixed_read_value['N'];
+        for ($i = 0;$i < $n;$i++){
             $read_value = $this->callreplaceData($handle);
             $blank_count = substr_count( $read_value, ' ' );
-            if( $blank_count <= $this->LAST_MONTH_ERR_BLANK_0 or 
+            if( $blank_count <= $this->LAST_MONTH_ERR_BLANK_0 && 
                 $blank_count >= $this->LAST_MONTH_ERR_BLANK_2){
-                #err
             }else{
                 $w = explode(" ",$read_value);
                 $last_month_read_value[strval($w[$this->LAST_MONTH_DISTNCE_0])]=(int)$w[1];

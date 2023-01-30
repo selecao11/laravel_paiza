@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/B035/UserTest_B035.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.003187">
+    <testcase name="test_B035index" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/B035/UserTest_B035.php" line="15" assertions="0" time="0.003187">
+      <error type="PHPUnit\Framework\RiskyTestError">Tests\Unit\UserTest_B035::test_B035index
+This test did not perform any assertions
+
+/home/user/docker-laravel/laravel_paiza/tests/Unit/B035/UserTest_B035.php:15</error>
+      <system-out>Array
+(
+    [0] =&gt; Array
+        (
+            [0] =&gt; cathy
+            [1] =&gt; 7
+            [2] =&gt; Down!
+        )
+
+    [1] =&gt; Array
+        (
+            [0] =&gt; ngng
+            [1] =&gt; 6
+            [2] =&gt; New
+        )
+
+    [2] =&gt; Array
+        (
+            [0] =&gt; betty
+            [1] =&gt; 4
+            [2] =&gt; UP!
+        )
+
+    [3] =&gt; Array
+        (
+            [0] =&gt; franca
+            [1] =&gt; 3
+            [2] =&gt; Down!
+        )
+
+)
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>
