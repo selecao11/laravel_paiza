@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Unit\UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.003393">
+    <testcase name="testB035Grades" class="Tests\Unit\UserTest_B035" classname="Tests.Unit.UserTest_B035" file="/home/user/docker-laravel/laravel_paiza/tests/Unit/UserTest_B035.php" line="277" assertions="1" time="0.003393">
+      <system-out>
+期待値 = 
+Array
+(
+    [alice] =&gt; Array
+        (
+            [0] =&gt; 7
+            [1] =&gt; UP!
+        )
+
+    [betty] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; UP!
+        )
+
+    [ngng] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; New
+        )
+
+    [franca] =&gt; Array
+        (
+            [0] =&gt; 3
+            [1] =&gt; Down!
+        )
+
+    [dad] =&gt; Array
+        (
+            [0] =&gt; 2
+            [1] =&gt; Down!
+        )
+
+)
+処理結果 = Array
+(
+    [alice] =&gt; Array
+        (
+            [0] =&gt; 7
+            [1] =&gt; UP!
+        )
+
+    [betty] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; UP!
+        )
+
+    [ngng] =&gt; Array
+        (
+            [0] =&gt; 4
+            [1] =&gt; New
+        )
+
+    [franca] =&gt; Array
+        (
+            [0] =&gt; 3
+            [1] =&gt; Down!
+        )
+
+    [dad] =&gt; Array
+        (
+            [0] =&gt; 2
+            [1] =&gt; Down!
+        )
+
+)
+</system-out>
+    </testcase>
+  </testsuite>
+</testsuites>
