@@ -243,35 +243,27 @@ class UserTest_B035 extends TestCase
 
     public function testB035CumulativeDistances(){
         /* 
-        #B035callDistance_test_result.xmlファイル作成
-            type nul > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callDistance_test_result.xml
-            echo "" > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callDistance_test_result.xml
+        #B035sortCumulativeDistances_test_result.xmlファイル作成
+            type nul > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035sortCumulativeDistances_test_result.xml
+            echo "" > /home/user/docker-laravel/laravel_paiza/tests/Unit/B035sortCumulativeDistances_test_result.xml
         #UT実行
-        php artisan test    --log-junit /home/user/docker-laravel/laravel_paiza/tests/Unit/B035callDistance_test_result.xml --filter testB035callDistance tests/Unit/UserTest_B035.php
+        php artisan test    --log-junit /home/user/docker-laravel/laravel_paiza/tests/Unit/B035sortCumulativeDistances_test_result.xml --filter testB035CumulativeDistances tests/Unit/UserTest_B035.php
         */
         $B035 = new B035_Controller();
         #期待値取得
         $expected_value['alice'] = [7,''];
-        $expected_value['franca'] = [3,''];
-        $expected_value['ngng'] = [4,'New'];
-        $expected_value['dad'] = [2,''];
         $expected_value['betty'] = [4,''];
+        $expected_value['ngng'] = [4,'New'];
+        $expected_value['franca'] = [3,''];
+        $expected_value['dad'] = [2,''];
 
-        $this_months_joggings = array(
-            array(3,'alice',6),
-            array(4,'alice',1),
-            array(4,'franca',3),
-            array(8,'ngng',4),
-            array(9,'dad',2),
-            array(12,'betty',4)
-        );
-        $cumulative_distances['alice'] = [0,''];
-        $cumulative_distances['ngng'] = [0,'New'];
-        $cumulative_distances['franca'] = [0,''];
-        $cumulative_distances['dad'] = [0,''];
-        $cumulative_distances['betty'] = [0,''];
+        $cumulative_distances['alice'] = [7,''];
+        $cumulative_distances['franca'] = [3,''];
+        $cumulative_distances['ngng'] = [4,'New'];
+        $cumulative_distances['dad'] = [2,''];
+        $cumulative_distances['betty'] = [4,''];
 
-        $success_callLastmonth = $B035->callDistance($this_months_joggings,$cumulative_distances);
+        $success_callLastmonth = $B035->callCumulativedistances($cumulative_distances);
 
         print_r("\n");
         print_r("期待値 = ");
