@@ -26,9 +26,24 @@ class A015 extends Controller
         return $B035_Init;
     }
 
+    //　データから改行などの削除    
+    private function replaceData($handle){
+        $data= str_replace(array("\r\n", "\r", "\n"), "", fgets( $handle ));
+        return $data;
+    }
+    public function callreplaceData($handle){
+        return $this->replaceData($handle);
+    }
+
     //　データファイルからM_ijを取得する。    
     public function readCompletePuzzles(){
-
+        $file_name = "/home/user/docker-laravel/laravel_paiza/app/Http/Controllers/A015.txt";
+        $complete_puzzles=[];
+        $handle = fopen ( $file_name, "r" );
+        for ($i=0;$i<8;$i++){
+            $complete_puzzles[] = $this->split($this->callreplaceData($handle));
+        }
+        return $complete_puzzles;
     }
 
     //　M_ijを２次元の配列Mにする
